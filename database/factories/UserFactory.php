@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Faker\Generator as Faker;
 
@@ -22,3 +23,8 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->state(App\User::class, 'superAdmin', [
+    'name' => 'Henry',
+    'email' => 'phuongdm1987@gmail.com'
+]);

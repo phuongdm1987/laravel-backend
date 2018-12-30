@@ -4,17 +4,17 @@ declare(strict_types=1);
 use Illuminate\Database\Seeder;
 
 /**
- * Class DatabaseSeeder
+ * Class UsersTableSeeder
  */
-class DatabaseSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run(): void
     {
-         $this->call(UsersTableSeeder::class);
+        factory(App\User::class)->state('superAdmin')->create();
     }
 }

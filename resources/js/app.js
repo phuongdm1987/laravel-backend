@@ -29,5 +29,15 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        navbar: {
+            is_active: false
+        }
+    },
+    methods: {
+        toggleNavbar() {
+            this.navbar.is_active = !this.navbar.is_active
+        }
+    }
 });
