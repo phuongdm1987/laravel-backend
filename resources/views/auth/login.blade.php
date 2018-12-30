@@ -4,6 +4,7 @@
     <div class="container">
         <div class="columns is-mobile is-centered">
             <div class="column is-half">
+                <h1 class="is-size-3 has-text-centered">{{ __('Login') }}</h1>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
@@ -12,7 +13,7 @@
                         <div class="control has-icons-left">
                             <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" name="email" type="email" value="{{ old('email') }}" required autofocus>
                             <span class="icon is-small is-left">
-                              <i class="fas fa-envelope"></i>
+                                <i class="fas fa-envelope"></i>
                             </span>
                         </div>
                         @if ($errors->has('email'))
@@ -25,7 +26,7 @@
                         <div class="control has-icons-left">
                             <input class="input{{ $errors->has('password') ? ' is-danger' : '' }}" name="password" type="password" required>
                             <span class="icon is-small is-left">
-                              <i class="fas fa-key"></i>
+                                <i class="fas fa-key"></i>
                             </span>
                         </div>
                         @if ($errors->has('password'))
