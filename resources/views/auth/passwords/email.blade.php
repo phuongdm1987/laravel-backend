@@ -5,10 +5,7 @@
     <div class="columns is-mobile is-centered">
         <div class="column is-half">
             @if (session('status'))
-                <div class="notification is-success">
-                    <button class="delete"></button>
-                    {{ session('status') }}
-                </div>
+                <notification>{{ session('status') }}</notification>
             @endif
 
             <h1 class="is-size-3 has-text-centered">{{ __('Reset Password') }}</h1>
