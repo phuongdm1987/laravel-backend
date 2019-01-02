@@ -20,3 +20,14 @@ Auth::routes(['verify' => true]);
 Route::get('logout', 'Auth\LoginController@logout');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/set-language/{locale}', function($locale) {
+    $locales = config('language', []);
+
+    if (!array_key_exists($locale, $locales)) {
+        $locale = array_first(array_keys($locales));
+    }
+
+    session(['locale' => $locale]);
+
+    return redirect()->back();
+})->name('setLanguage');

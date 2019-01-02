@@ -8,14 +8,14 @@
                 <notification>{{ session('status') }}</notification>
             @endif
 
-            <h1 class="is-size-3 has-text-centered">{{ __('Reset Password') }}</h1>
+            <h1 class="is-size-3 has-text-centered">@lang('Reset Password')</h1>
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 
                 <div class="field">
-                    <label class="label">{{ __('E-Mail Address') }}</label>
+                    <label class="label" for="email">{{ __('E-Mail Address') }}</label>
                     <div class="control has-icons-left">
-                        <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" name="email" type="email" value="{{ old('email') }}" required autofocus>
+                        <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
                         <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
@@ -28,7 +28,7 @@
                 <div class="field">
                     <div class="control">
                         <button type="submit" class="button is-primary is-fullwidth">
-                            {{ __('Send Password Reset Link') }}
+                            @lang('Send Password Reset Link')
                         </button>
                     </div>
                 </div>
