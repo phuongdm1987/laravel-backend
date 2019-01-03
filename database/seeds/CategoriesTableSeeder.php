@@ -4,9 +4,9 @@ declare(strict_types=1);
 use Illuminate\Database\Seeder;
 
 /**
- * Class UsersTableSeeder
+ * Class CategoriesTableSeeder
  */
-class UsersTableSeeder extends Seeder
+class CategoriesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        factory(\App\Entities\User::class)->state('superAdmin')->create();
+        factory(\App\Entities\Category::class, 10)->create();
     }
 }

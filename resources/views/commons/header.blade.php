@@ -12,6 +12,12 @@
     </div>
 
     <div id="navbarBasicExample" class="navbar-menu" :class="{'is-active': navbar.is_active}">
+        <div class="navbar-start">
+            <ul class="is-multi-level">
+                @include('commons.menu-multi-level', ['nodes' => $nodes])
+            </ul>
+        </div>
+
         <div class="navbar-end">
 
             <!-- Authentication Links -->

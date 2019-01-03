@@ -16804,3 +16804,44 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+.is-multi-level {
+  position: relative;
+}
+
+.is-multi-level li:hover > .is-child-menu {
+  display: inherit;
+}
+
+.is-multi-level li {
+  display: inline-block;
+}
+
+.is-child-menu {
+  display: none;
+  position: absolute;
+  top: 40px;
+  min-width: auto;
+}
+
+.is-child-menu li {
+  width: 170px;
+  float: none;
+  display: list-item;
+  position: relative;
+}
+
+.is-child-menu li .navbar-link:not(.is-arrowless)::after {
+  border: 3px solid;
+  border-left: 0;
+  border-top: 0;
+}
+
+.is-child-menu ul {
+  left: 170px;
+  top: -10px;
+}
+
+.is-child-menu ul li {
+  position: relative;
+}
+
