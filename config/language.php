@@ -2,6 +2,6 @@
 declare(strict_types=1);
 
 return [
-    'vi' => 'Vietnamese',
-    'en' => 'English'
+    'vi' => 'commons.vietnamese',
+    'en' => 'commons.english'
 ];

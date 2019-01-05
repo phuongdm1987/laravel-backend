@@ -1,0 +1,25 @@
++from($navbar-breakpoint)
+    .navbar-item
+
+        &.is-active,
+        &.is-hoverable:hover
+            .navbar-dropdown
+                display: none
+                .navbar.is-spaced &,
+                &.is-boxed
+                    opacity: 0
+                    pointer-events: none
+                    transform: translateY(-5px)
+
+        &.is-active,
+        &.is-hoverable:hover
+            > .navbar-dropdown
+                display: block
+                .navbar.is-spaced &,
+                &.is-boxed
+                    opacity: 1
+                    pointer-events: auto
+                    transform: translateY(0)
+    .navbar-dropdown.navbar-sub-item
+        left: 100%
+        top: 0

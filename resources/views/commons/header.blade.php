@@ -13,18 +13,16 @@
 
     <div id="navbarBasicExample" class="navbar-menu" :class="{'is-active': navbar.is_active}">
         <div class="navbar-start">
-            <ul class="is-multi-level">
-                @include('commons.menu-multi-level', ['nodes' => $nodes])
-            </ul>
+            @include('commons.menu-multi-level', ['menus' => $menus])
         </div>
 
         <div class="navbar-end">
 
             <!-- Authentication Links -->
             @guest
-                <a class="navbar-item" href="{{ route('login') }}">@lang('Login')</a>
+                <a class="navbar-item" href="{{ route('login') }}">@lang('commons.login')</a>
                 @if (Route::has('register'))
-                    <a class="navbar-item" href="{{ route('register') }}">@lang('Register')</a>
+                    <a class="navbar-item" href="{{ route('register') }}">@lang('commons.register')</a>
                 @endif
             @else
             <div class="navbar-item has-dropdown is-hoverable">
@@ -34,7 +32,7 @@
 
                 <div class="navbar-dropdown">
                     <a class="navbar-item" href="{{ route('logout') }}">
-                        @lang('Logout')
+                        @lang('commons.logout')
                     </a>
                 </div>
             </div>
@@ -42,7 +40,7 @@
 
             <div class="navbar-item has-dropdown is-hoverable">
                 <a class="navbar-link">
-                    @lang('Language')
+                    @lang('commons.language')
                 </a>
 
                 <div class="navbar-dropdown">

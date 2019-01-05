@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\View\Composers;
 
 
-use App\Entities\Category;
+use App\Repositories\CategoryRepositoryInterface;
 use Illuminate\View\View;
 
 /**
@@ -14,12 +14,28 @@ use Illuminate\View\View;
 class AppComposer
 {
     /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
+
+    /**
+     * AppComposer constructor.
+     * @param CategoryRepositoryInterface $categoryRepository
+     */
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    /**
      * @param View $view
      */
     public function compose(View $view): void
     {
-//        Category::rebuildTree([], false);
-        $nodes = Category::get()->toTree();
-        $view->with('nodes', $nodes);
+//        $this->categoryRepository->rebuildTree();
+        $menus = $this->categoryRepository->getAllMenusToTree();
+        $categories = $this->categoryRepository->getAllCategoriesToTree();
+        $view->with(compact('menus', 'categories'));
     }
 }

@@ -20,7 +20,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::composer(
+        view()->composer(
             'layouts.app', AppComposer::class
         );
     }

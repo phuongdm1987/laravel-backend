@@ -31,12 +31,15 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Category extends Model
 {
-    public $timestamps = false;
-
     use Sluggable , NodeTrait {
         NodeTrait::replicate as replicateNode;
         Sluggable::replicate as replicateSlug;
     }
+
+    public const TYPE_MENU = 'menu';
+    public const TYPE_CATEGORY = 'category';
+
+    public $timestamps = false;
 
     /**
      * Clone the model into a new, non-existing instance.
