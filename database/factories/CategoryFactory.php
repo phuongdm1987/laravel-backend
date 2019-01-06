@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Faker\Generator as Faker;
 
-$factory->define(\App\Entities\Category::class, function (Faker $faker) {
+$factory->define(\Henry\Domain\Category\Category::class, function (Faker $faker) {
     $types = ['category' => 'category', 'menu' => 'menu'];
     return [
         'name' => $faker->unique()->name,

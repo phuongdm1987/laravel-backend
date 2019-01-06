@@ -15,6 +15,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        factory(\App\Entities\User::class)->state('superAdmin')->create();
+        factory(\Henry\Domain\User\User::class)->state('superAdmin')->create();
     }
 }

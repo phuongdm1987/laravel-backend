@@ -1,20 +1,15 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: henry
- * Date: 04/01/2019
- * Time: 21:57
- */
 
-namespace App\Repositories;
+namespace Henry\Domain\Category\Repositories;
 
 
 use Illuminate\Database\Eloquent\Collection;
+use Henry\Domain\RepositoryInterface;
 
 /**
  * Interface CategoryRepositoryInterface
- * @package App\Repositories
+ * @package Henry\Domain\Category\Repositories
  */
 interface CategoryRepositoryInterface extends RepositoryInterface
 {

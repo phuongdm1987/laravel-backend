@@ -18,6 +18,22 @@
 
         <div class="navbar-end">
 
+            <!-- Language links -->
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link">
+                    @lang('commons.language')
+                </a>
+
+                <div class="navbar-dropdown">
+                    @forelse(config('language', []) as $localeCode => $language)
+                        <a class="navbar-item {{isCurrentLocale($localeCode) ? 'is-active' : ''}}" href="{{route('setLanguage', $localeCode)}}">
+                            @lang($language)
+                        </a>
+                    @empty
+                    @endforelse
+                </div>
+            </div>
+
             <!-- Authentication Links -->
             @guest
                 <a class="navbar-item" href="{{ route('login') }}">@lang('commons.login')</a>
@@ -37,21 +53,6 @@
                 </div>
             </div>
             @endguest
-
-            <div class="navbar-item has-dropdown is-hoverable">
-                <a class="navbar-link">
-                    @lang('commons.language')
-                </a>
-
-                <div class="navbar-dropdown">
-                    @forelse(config('language', []) as $localeCode => $language)
-                    <a class="navbar-item {{isCurrentLocale($localeCode) ? 'is-active' : ''}}" href="{{route('setLanguage', $localeCode)}}">
-                        @lang($language)
-                    </a>
-                    @empty
-                    @endforelse
-                </div>
-            </div>
         </div>
     </div>
 </nav>

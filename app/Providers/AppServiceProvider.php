@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Repositories\CategoryRepositoryInterface;
-use App\Repositories\EloquentCategoryRepository;
-use App\Repositories\EloquentRepository;
-use App\Repositories\RepositoryInterface;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Infrastructure\Category\Repositories\EloquentCategoryRepository;
+use Henry\Infrastructure\EloquentRepository;
+use Henry\Domain\RepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 /**

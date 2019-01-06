@@ -7,21 +7,23 @@ declare(strict_types=1);
  * Time: 21:58
  */
 
-namespace App\Repositories;
+namespace Henry\Infrastructure\Category\Repositories;
 
 
-use App\Entities\Category;
+use Henry\Infrastructure\EloquentRepository;
+use Henry\Domain\Category\Category;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class EloquentCategoryRepository
- * @package App\Repositories
+ * @package Henry\Infrastructure\Category\Repositories
  */
 class EloquentCategoryRepository extends EloquentRepository implements CategoryRepositoryInterface
 {
     /**
      * EloquentRepository constructor.
-     * @param Category $model
+     * @param \Henry\Domain\Category\Category $model
      */
     public function __construct(Category $model)
     {

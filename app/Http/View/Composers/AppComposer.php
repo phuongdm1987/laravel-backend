@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace App\Http\View\Composers;
 
 
-use App\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Category\Category;
 use Illuminate\View\View;
 
 /**
@@ -20,7 +21,7 @@ class AppComposer
 
     /**
      * AppComposer constructor.
-     * @param CategoryRepositoryInterface $categoryRepository
+     * @param \Henry\Domain\Category\Repositories\CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
     {
@@ -33,7 +34,7 @@ class AppComposer
      */
     public function compose(View $view): void
     {
-//        $this->categoryRepository->rebuildTree();
+        $this->categoryRepository->rebuildTree();
         $menus = $this->categoryRepository->getAllMenusToTree();
         $categories = $this->categoryRepository->getAllCategoriesToTree();
         $view->with(compact('menus', 'categories'));

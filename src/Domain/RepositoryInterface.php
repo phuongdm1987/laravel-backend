@@ -1,13 +1,7 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: henry
- * Date: 04/01/2019
- * Time: 21:45
- */
 
-namespace App\Repositories;
+namespace Henry\Domain;
 
 
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Interface RepositoryInterface
- * @package App\Repositories
+ * @package Henry\Domain
  */
 interface RepositoryInterface
 {
