@@ -15,13 +15,13 @@ if (!function_exists('isCurrentLocale')) {
     }
 }
 
-if (!function_exists('generateMenuMultiLevel')) {
+if (!function_exists('generateMenusMultiLevel')) {
     /**
      * @param Collection $menus
      * @param bool $subItem
      * @return string
      */
-    function generateMenuMultiLevel(Collection $menus, bool $subItem = false): string
+    function generateMenusMultiLevel(Collection $menus, bool $subItem = false): string
     {
         $html = [];
         $subItemClass = $subItem ? 'navbar-sub-item' : '';
@@ -34,9 +34,35 @@ if (!function_exists('generateMenuMultiLevel')) {
                 $html[] = '<div class="navbar-item has-dropdown is-hoverable">';
                 $html[] = '<a class="navbar-link">' . $menu->getName() . '</a>';
                 $html[] = '<div class="navbar-dropdown ' . $subItemClass . '">';
-                $html[] = generateMenuMultiLevel($menu->children, true);
+                $html[] = generateMenusMultiLevel($menu->children, true);
                 $html[] = '</div>';
                 $html[] = '</div>';
+            }
+        }
+
+        return $html ? implode('', $html) : '';
+    }
+}
+
+if (!function_exists('generateCategoriesMultiLevel')) {
+    /**
+     * @param Collection $categories
+     * @return string
+     */
+    function generateCategoriesMultiLevel(Collection $categories): string
+    {
+        $html = [];
+
+        foreach ($categories as $category) {
+            /** @var Category $category */
+            if ($category->isLeaf()) {
+                $html[] = '<li><a>' . $category->getName() . '</a></li>';
+            } else {
+                $html[] = '<li><a>' . $category->getName() . '</a>';
+                $html[] = '<ul>';
+                $html[] = generateMenusMultiLevel($category->children);
+                $html[] = '</ul>';
+                $html[] = '</li>';
             }
         }
 
