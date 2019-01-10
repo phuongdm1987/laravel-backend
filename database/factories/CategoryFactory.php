@@ -11,3 +11,7 @@ $factory->define(\Henry\Domain\Category\Category::class, function (Faker $faker)
         'type' => $faker->randomKey($types),
     ];
 });
+
+$factory->state(\Henry\Domain\Category\Category::class, 'withProducts', function(Faker $faker) {
+
+});

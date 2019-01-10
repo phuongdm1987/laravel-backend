@@ -7,7 +7,7 @@ $factory->define(\Henry\Domain\Product\Product::class, function (Faker $faker) {
     return [
         $faker->unique()->name,
         $faker->unique()->slug,
-        $faker->unique()->name,
-        $faker->unique()->name,
+        $faker->paragraphs,
+        $faker->randomDigit,
     ];
 });
