@@ -5,6 +5,8 @@ namespace Henry\Domain\Category;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Henry\Domain\CustomizeSlugEngine;
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
@@ -54,5 +56,17 @@ class Category extends Model
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    /**
+     * @return string
+     * @throws TypeException
+     */
+    public function getType(): string
+    {
+        $type = new Type();
+        $type->setType($this->type);
+
+        return (string)$type;
     }
 }
