@@ -9,10 +9,10 @@ use Henry\Domain\Category\Category;
 use Illuminate\View\View;
 
 /**
- * Class AppComposer
+ * Class CategoryComposer
  * @package App\Http\View\Composers
  */
-class AppComposer
+class CategoryComposer
 {
     /**
      * @var CategoryRepositoryInterface
@@ -20,7 +20,7 @@ class AppComposer
     private $categoryRepository;
 
     /**
-     * AppComposer constructor.
+     * MenuComposer constructor.
      * @param \Henry\Domain\Category\Repositories\CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(CategoryRepositoryInterface $categoryRepository)
@@ -35,8 +35,7 @@ class AppComposer
     public function compose(View $view): void
     {
 //        $this->categoryRepository->rebuildTree();
-        $menus = $this->categoryRepository->getAllMenusToTree();
         $categories = $this->categoryRepository->getAllCategoriesToTree();
-        $view->with(compact('menus', 'categories'));
+        $view->with(compact('categories'));
     }
 }
