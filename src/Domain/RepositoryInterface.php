@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Henry\Domain;
 
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,9 +15,17 @@ use Illuminate\Database\Eloquent\Model;
 interface RepositoryInterface
 {
     /**
+     * @param array $conditions
      * @return Collection
      */
-    public function all(): Collection;
+    public function all(array $conditions = []): Collection;
+
+    /**
+     * @param array $conditions
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function withPaginate(array $conditions = [], $perPage = 15): LengthAwarePaginator;
 
     /**
      * @param array $data
