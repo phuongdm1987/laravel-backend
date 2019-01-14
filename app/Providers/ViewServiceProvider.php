@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Http\View\Composers\AppComposer;
+use App\Http\View\Composers\CategoryComposer;
+use App\Http\View\Composers\MenuComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,7 +22,11 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer(
-            ['commons.header', 'commons.side-bar'], AppComposer::class
+            ['commons.header'], MenuComposer::class
+        );
+
+        view()->composer(
+            ['commons.side-bar'], CategoryComposer::class
         );
     }
 

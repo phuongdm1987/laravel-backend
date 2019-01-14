@@ -12,6 +12,6 @@ $factory->define(\Henry\Domain\Category\Category::class, function (Faker $faker)
     ];
 });
 
-$factory->state(\Henry\Domain\Category\Category::class, 'withProducts', function(Faker $faker) {
-
-});
+$factory->state(\Henry\Domain\Category\Category::class, 'category', [
+    'type' => 'category',
+]);

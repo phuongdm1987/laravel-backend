@@ -15,6 +15,14 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run(): void
     {
-        factory(\Henry\Domain\Category\Category::class, 10)->create();
+        factory(\Henry\Domain\Category\Category::class, 10)
+            ->create()
+            ->each(function ($category) {
+                /** @var \Henry\Domain\Category\Category $category */
+                if ($category->isTypeCategory()) {
+                    $category->products()
+                        ->saveMany(factory(\Henry\Domain\Product\Product::class, 5)->make());
+                }
+            });
     }
 }

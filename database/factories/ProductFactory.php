@@ -5,9 +5,9 @@ use Faker\Generator as Faker;
 
 $factory->define(\Henry\Domain\Product\Product::class, function (Faker $faker) {
     return [
-        $faker->unique()->name,
-        $faker->unique()->slug,
-        $faker->paragraphs,
-        $faker->randomDigit,
+        'name' => $faker->unique()->name,
+        'slug' => $faker->unique()->slug,
+        'description' => $faker->paragraph,
+        'amount' => $faker->randomDigit,
     ];
 });

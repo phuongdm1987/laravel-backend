@@ -21,7 +21,7 @@
                 </div>
                 <div class="column">
                     <div class="columns is-multiline">
-                        @foreach([1,2,3,4,5,6,7] as $seed)
+                        @foreach($products as $product)
                             <div class="column is-one-third">
                                 <div class="card card-equal-height">
                                     <div class="card-image">
@@ -31,12 +31,11 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="content">
-                                            <h3 class="title is-5">HDD Intel</h3>
-                                            <p class="subtitle is-6">Intel® SSD 545s Series (256GB, 2.5in SATA 6Gb/s, 3D2, TLC)</p>
+                                            <p class="subtitle is-6">{{$product->name}}</p>
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <span href="#" class="card-footer-item has-text-info">1,740,000vnd</span>
+                                        <span href="#" class="card-footer-item has-text-info">{{$product->amount}}vnd</span>
                                         <a href="#" class="card-footer-item has-background-info has-text-white">Detail</a>
                                     </footer>
                                 </div>
@@ -45,6 +44,8 @@
                     </div>
                 </div>
             </div>
+
+            {{$products->appends(request()->all())->links()}}
         </div>
     </section>
 @endsection

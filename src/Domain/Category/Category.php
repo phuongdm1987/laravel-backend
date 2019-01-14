@@ -8,7 +8,9 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Henry\Domain\Category\ValueObjects\Type\Type;
 use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Henry\Domain\CustomizeSlugEngine;
+use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
 
 /**
@@ -27,15 +29,16 @@ class Category extends Model
 
     public $timestamps = false;
     protected $fillable = ['name', 'parent_id', 'type'];
+    protected $with = ['children'];
 
     /**
-     * Clone the model into a new, non-existing instance.
-     *
-     * @param  array|null  $except
-     * @return static
+     * @param array|null $except
+     * @return Model
      */
-    public function replicate(array $except = null)
+    public function replicate(array $except = null): Model
     {
+        parent::replicate($except);
+
         $instance = $this->replicateNode($except);
         (new SlugService())->slug($instance, true);
 
@@ -59,14 +62,31 @@ class Category extends Model
     }
 
     /**
-     * @return string
+     * @return Type
      * @throws TypeException
      */
-    public function getType(): string
+    public function getType(): Type
     {
         $type = new Type();
         $type->setType($this->type);
 
-        return (string)$type;
+        return $type;
+    }
+
+    /**
+     * @return bool
+     * @throws TypeException
+     */
+    public function isTypeCategory(): bool
+    {
+        return $this->getType()->isCategory();
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 }

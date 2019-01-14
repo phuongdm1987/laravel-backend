@@ -60,7 +60,7 @@ if (!function_exists('generateCategoriesMultiLevel')) {
             } else {
                 $html[] = '<li><a>' . $category->getName() . '</a>';
                 $html[] = '<ul>';
-                $html[] = generateMenusMultiLevel($category->children);
+                $html[] = generateCategoriesMultiLevel($category->children);
                 $html[] = '</ul>';
                 $html[] = '</li>';
             }

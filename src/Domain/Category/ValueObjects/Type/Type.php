@@ -58,6 +58,14 @@ class Type
     }
 
     /**
+     * @return bool
+     */
+    public function isCategory(): bool
+    {
+        return $this->type === self::TYPE_CATEGORY;
+    }
+
+    /**
      * @param string $type
      * @return string
      * @throws TypeException

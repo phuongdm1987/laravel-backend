@@ -3,10 +3,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Product\Filters\ProductFilterInterface;
+use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
+use Henry\Infrastructure\Category\Filters\EloquentCategoryFilter;
 use Henry\Infrastructure\Category\Repositories\EloquentCategoryRepository;
-use Henry\Infrastructure\EloquentRepository;
-use Henry\Domain\RepositoryInterface;
+use Henry\Infrastructure\Product\Filters\EloquentProductFilter;
+use Henry\Infrastructure\Product\Repositories\EloquentProductRepository;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -16,8 +20,11 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
     public $bindings = [
-        RepositoryInterface::class => EloquentRepository::class,
         CategoryRepositoryInterface::class => EloquentCategoryRepository::class,
+        CategoryFilterInterface::class => EloquentCategoryFilter::class,
+
+        ProductRepositoryInterface::class => EloquentProductRepository::class,
+        ProductFilterInterface::class => EloquentProductFilter::class,
     ];
 
     /**
