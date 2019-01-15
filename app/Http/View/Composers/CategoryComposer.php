@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Http\View\Composers;
 
 
-use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
-use Henry\Domain\Category\Category;
+use App\Jobs\GetCategoriesWithTreeFormat;
+use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Illuminate\View\View;
 
 /**
@@ -14,28 +15,17 @@ use Illuminate\View\View;
  */
 class CategoryComposer
 {
-    /**
-     * @var CategoryRepositoryInterface
-     */
-    private $categoryRepository;
-
-    /**
-     * MenuComposer constructor.
-     * @param \Henry\Domain\Category\Repositories\CategoryRepositoryInterface $categoryRepository
-     */
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
-    {
-
-        $this->categoryRepository = $categoryRepository;
-    }
 
     /**
      * @param View $view
+     * @throws TypeException
      */
     public function compose(View $view): void
     {
-//        $this->categoryRepository->rebuildTree();
-        $categories = $this->categoryRepository->getAllCategoriesToTree();
+        $type = new Type();
+        $type->setType(Type::TYPE_CATEGORY);
+        $categories = GetCategoriesWithTreeFormat::dispatchNow($type);
+
         $view->with(compact('categories'));
     }
 }

@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace Henry\Infrastructure\Category\Repositories;
 
 
-use Henry\Domain\Category\Filters\CategoryFilterInterface;
-use Henry\Infrastructure\AbstractEloquentRepository;
 use Henry\Domain\Category\Category;
+use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -27,19 +28,18 @@ class EloquentCategoryRepository extends AbstractEloquentRepository implements C
     }
 
     /**
+     * @param Type $type
      * @return Collection
+     * @throws \Exception
      */
-    public function getAllMenusToTree(): Collection
+    public function getAllToTree(Type $type): Collection
     {
-        return $this->model->get()->where('type', Category::TYPE_MENU)->toTree();
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getAllCategoriesToTree(): Collection
-    {
-        return $this->model->get()->where('type', Category::TYPE_CATEGORY)->toTree();
+        return cache()->remember('category_' . $type->getValue(), 15, function () use($type) {
+            return $this->model
+                ->where('type', $type->getValue())
+                ->get()
+                ->toTree();
+        });
     }
 
     /**

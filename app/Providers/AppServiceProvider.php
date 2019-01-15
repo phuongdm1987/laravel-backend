@@ -11,6 +11,7 @@ use Henry\Infrastructure\Category\Filters\EloquentCategoryFilter;
 use Henry\Infrastructure\Category\Repositories\EloquentCategoryRepository;
 use Henry\Infrastructure\Product\Filters\EloquentProductFilter;
 use Henry\Infrastructure\Product\Repositories\EloquentProductRepository;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -34,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Paginator::defaultView('vendor.pagination.bulma');
     }
 
     /**

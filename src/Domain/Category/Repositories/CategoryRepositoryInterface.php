@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace Henry\Domain\Category\Repositories;
 
 
-use Illuminate\Database\Eloquent\Collection;
+use Henry\Domain\Category\ValueObjects\Type\Type;
 use Henry\Domain\RepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Interface CategoryRepositoryInterface
@@ -14,14 +15,10 @@ use Henry\Domain\RepositoryInterface;
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
     /**
+     * @param Type $type
      * @return Collection
      */
-    public function getAllMenusToTree(): Collection;
-
-    /**
-     * @return Collection
-     */
-    public function getAllCategoriesToTree(): Collection;
+    public function getAllToTree(Type $type): Collection;
 
     /**
      * @param array $data
