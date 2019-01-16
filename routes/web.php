@@ -31,3 +31,6 @@ Route::get('/set-language/{locale}', function($locale) {
 
     return redirect()->back();
 })->name('setLanguage');
+
+
+Route::resource('/api/project', 'ProjectController');
