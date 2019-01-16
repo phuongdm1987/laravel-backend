@@ -24,9 +24,6 @@ class Category extends Model
         Sluggable::replicate as replicateSlug;
     }
 
-    public const TYPE_MENU = 'menu';
-    public const TYPE_CATEGORY = 'category';
-
     public $timestamps = false;
     protected $fillable = ['name', 'parent_id', 'type'];
     protected $with = ['children'];

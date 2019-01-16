@@ -35,17 +35,16 @@
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <span href="#" class="card-footer-item has-text-info">{{$product->amount}}vnd</span>
-                                        <a href="#" class="card-footer-item has-background-info has-text-white">Detail</a>
+                                        <span class="card-footer-item has-text-info">{{$product->amount}}vnd</span>
+                                        <a href="{{route('products.show', $product->id)}}" class="card-footer-item has-background-info has-text-white">Detail</a>
                                     </footer>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+                    {{$products->appends(request()->all())->links()}}
                 </div>
             </div>
-
-            {{$products->appends(request()->all())->links()}}
         </div>
     </section>
 @endsection

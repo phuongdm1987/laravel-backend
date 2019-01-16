@@ -90,4 +90,12 @@ class Type
     {
         return $this->type;
     }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->type;
+    }
 }
