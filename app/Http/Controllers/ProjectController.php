@@ -18,7 +18,23 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            [
+                'name' => 'Project 1',
+                'description' => 'Description 1',
+                'created_at' => now()->subMinutes(5)
+            ],
+            [
+                'name' => 'Project 2',
+                'description' => 'Description 2',
+                'created_at' => now()->subHours(2)
+            ],
+            [
+                'name' => 'Project 3',
+                'description' => 'Description 3',
+                'created_at' => now()->subMinutes(15)
+            ]
+        ]);
     }
 
     /**
