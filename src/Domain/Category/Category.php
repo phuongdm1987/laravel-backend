@@ -26,7 +26,6 @@ class Category extends Model
 
     public $timestamps = false;
     protected $fillable = ['name', 'parent_id', 'type'];
-    protected $with = ['children'];
 
     /**
      * @param array|null $except
@@ -40,6 +39,24 @@ class Category extends Model
         (new SlugService())->slug($instance, true);
 
         return $instance;
+    }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     /**

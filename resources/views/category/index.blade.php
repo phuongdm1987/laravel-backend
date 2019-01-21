@@ -1,17 +1,5 @@
 @extends('layouts.app')
 
-@section('hero-content')
-    <section class="hero is-link is-fullheight-with-navbar is-bold">
-        <div class="hero-body">
-            <div class="container is-fluid">
-                <p class="title">
-                    Fullheight hero with navbar
-                </p>
-            </div>
-        </div>
-    </section>
-@endsection
-
 @section('content')
     <section class="section">
         <div class="container is-fluid">
@@ -20,6 +8,7 @@
                     @include('commons.side-bar')
                 </div>
                 <div class="column">
+                    {{ Breadcrumbs::render('category', $category) }}
                     <div class="columns is-multiline">
                         @foreach($products as $product)
                             <div class="column is-one-third">
@@ -31,11 +20,11 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="content">
-                                            <p class="subtitle is-6">{{$product->getName()}}</p>
+                                            <p class="subtitle is-6">{{$product->name}}</p>
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <span class="card-footer-item has-text-info">{{$product->getAmount()}}vnd</span>
+                                        <span class="card-footer-item has-text-info">{{$product->amount}}vnd</span>
                                         <a href="{{route('products.show', $product->getSlug())}}" class="card-footer-item has-background-info has-text-white">Detail</a>
                                     </footer>
                                 </div>

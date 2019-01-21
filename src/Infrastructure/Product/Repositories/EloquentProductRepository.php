@@ -8,6 +8,7 @@ use Henry\Domain\Product\Filters\ProductFilterInterface;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Henry\Infrastructure\AbstractEloquentRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 /**
  * Class EloquentProductRepository
@@ -23,5 +24,17 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
     public function __construct(Product $model, ProductFilterInterface $filter)
     {
         parent::__construct($model, $filter);
+    }
+
+    /**
+     * @param int $categoryId
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function getPaginateByCategoryId(int $categoryId, $perPage = 15): LengthAwarePaginator
+    {
+        return $this->withPaginate([
+            'category_id' => $categoryId
+        ], $perPage);
     }
 }

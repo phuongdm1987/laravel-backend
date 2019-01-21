@@ -22,6 +22,9 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/home', 'HomeController@index')
     ->name('home');
 
+Route::get('/categories/{category}', 'CategoryController@index')
+    ->name('category.index');
+
 Route::resource('products', 'ProductController');
 
 Route::get('/set-language/{locale}', 'LanguageController@update')

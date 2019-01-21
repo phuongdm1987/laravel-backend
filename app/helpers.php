@@ -53,12 +53,24 @@ if (!function_exists('generateCategoriesMultiLevel')) {
     {
         $html = [];
 
+        $currentCategory = request()->route()->parameter('category');
+
         foreach ($categories as $category) {
+
+            $isActive = false;
+
+            if ($currentCategory && $currentCategory->getId() === $category->getId()) {
+                $isActive = true;
+            }
+
+            $classActive = $isActive ? ' class="is-active"' : '';
+            $url = route('category.index', $category->getSlug());
+
             /** @var Category $category */
             if ($category->isLeaf()) {
-                $html[] = '<li><a>' . $category->getName() . '</a></li>';
+                $html[] = '<li><a' . $classActive . ' href="' . $url . '">' . $category->getName() . '</a></li>';
             } else {
-                $html[] = '<li><a>' . $category->getName() . '</a>';
+                $html[] = '<li><a' . $classActive . ' href="' . $url . '">' . $category->getName() . '</a>';
                 $html[] = '<ul>';
                 $html[] = generateCategoriesMultiLevel($category->children);
                 $html[] = '</ul>';
