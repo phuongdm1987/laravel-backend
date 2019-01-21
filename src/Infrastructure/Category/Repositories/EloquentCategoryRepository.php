@@ -34,6 +34,7 @@ class EloquentCategoryRepository extends AbstractEloquentRepository implements C
      */
     public function getAllToTree(Type $type): Collection
     {
+//        $this->rebuildTree();
         return cache()->remember('category_' . $type->getValue(), 15, function () use($type) {
             return $this->model
                 ->where('type', $type->getValue())

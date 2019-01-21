@@ -55,7 +55,10 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function withPaginate(array $conditions = [], $prePage = 15): LengthAwarePaginator
     {
-        $query = $this->filter->filter($this->getModelQueryBuilder(), $conditions);
+        $queryParam = array_get($conditions, 'q', '');
+        $queryBuild = $this->getModelQueryBuilder($queryParam);
+
+        $query = $this->filter->filter($queryBuild, $conditions);
 
         return $query->paginate($prePage);
     }
@@ -101,10 +104,11 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
     }
 
     /**
+     * @param string $query
      * @return \Illuminate\Database\Eloquent\Builder|Model
      */
-    public function getModelQueryBuilder()
+    public function getModelQueryBuilder(string $query = '')
     {
-        return $this->model->newModelQuery();
+        return $query ? $this->model->search($query) : $this->model->newModelQuery();
     }
 }

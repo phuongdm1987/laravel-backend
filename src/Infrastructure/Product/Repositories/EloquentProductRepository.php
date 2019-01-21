@@ -25,16 +25,4 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
     {
         parent::__construct($model, $filter);
     }
-
-    /**
-     * @param int $categoryId
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function getPaginateByCategoryId(int $categoryId, $perPage = 15): LengthAwarePaginator
-    {
-        return $this->withPaginate([
-            'category_id' => $categoryId
-        ], $perPage);
-    }
 }

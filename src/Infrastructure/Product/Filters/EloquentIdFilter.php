@@ -5,9 +5,8 @@ namespace Henry\Infrastructure\Product\Filters;
 
 
 use Henry\Domain\Product\Filters\ProductFilterInterface;
-use Henry\Infrastructure\AbstractEloquentFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Class EloquentIdFilter
@@ -18,22 +17,22 @@ class EloquentIdFilter implements ProductFilterInterface
     protected $field = 'id';
 
     /**
-     * @param Builder $queryBuilder
+     * @param ScoutBuilder|Builder $queryBuilder
      * @param array $conditions
-     * @return Builder
+     * @return ScoutBuilder|Builder
      */
-    public function filter(Builder $queryBuilder, array $conditions = []): Builder
+    public function filter($queryBuilder, array $conditions = [])
     {
-        $categoryId = array_get($conditions, $this->field);
+        $id = array_get($conditions, $this->field);
 
-        if (!$categoryId) {
+        if (!$id) {
             return $queryBuilder;
         }
 
-        if (!\is_array($categoryId)) {
-            return $queryBuilder->where($this->field, $categoryId);
+        if (!\is_array($id)) {
+            return $queryBuilder->where($this->field, $id);
         }
 
-        return $queryBuilder->whereIn($this->field, $categoryId);
+        return $queryBuilder->whereIn($this->field, $id);
     }
 }

@@ -6,6 +6,7 @@ namespace Henry\Infrastructure;
 
 use Henry\Domain\FilterInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Class AbstractEloquentFilter
@@ -16,11 +17,11 @@ abstract class AbstractEloquentFilter
     protected $filters = [];
 
     /**
-     * @param Builder $queryBuilder
+     * @param ScoutBuilder|Builder $queryBuilder
      * @param array $conditions
-     * @return Builder
+     * @return ScoutBuilder|Builder
      */
-    public function filter(Builder $queryBuilder, array $conditions = []): Builder
+    public function filter($queryBuilder, array $conditions = [])
     {
         if (!$conditions) {
             return $queryBuilder;

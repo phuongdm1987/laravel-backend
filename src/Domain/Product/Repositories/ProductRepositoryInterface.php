@@ -13,10 +13,5 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 interface ProductRepositoryInterface extends RepositoryInterface
 {
-    /**
-     * @param int $categoryId
-     * @param int $perPage
-     * @return LengthAwarePaginator
-     */
-    public function getPaginateByCategoryId(int $categoryId, $perPage = 15): LengthAwarePaginator;
+
 }

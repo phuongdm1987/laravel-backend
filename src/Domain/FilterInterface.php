@@ -5,6 +5,7 @@ namespace Henry\Domain;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Interface FilterInterface
@@ -13,9 +14,9 @@ use Illuminate\Database\Eloquent\Builder;
 interface FilterInterface
 {
     /**
-     * @param Builder $queryBuilder
+     * @param ScoutBuilder|Builder $queryBuilder
      * @param array $conditions
-     * @return Builder
+     * @return ScoutBuilder|Builder
      */
-    public function filter(Builder $queryBuilder, array $conditions = []): Builder;
+    public function filter($queryBuilder, array $conditions = []);
 }

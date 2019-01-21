@@ -8,6 +8,7 @@ use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Laravel\Scout\Searchable;
 
 /**
  * Class Product
@@ -15,7 +16,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Product extends Model
 {
-    use Sluggable, CustomizeSlugEngine;
+    use Sluggable, CustomizeSlugEngine, Searchable;
+
+    /**
+     * Get the index name for the model.
+     *
+     * @return string
+     */
+    public function searchableAs(): string
+    {
+        return 'products_index';
+    }
 
     /**
      * Get the route key for the model.
@@ -25,6 +36,22 @@ class Product extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId(): int
+    {
+        return $this->category_id;
     }
 
     /**
@@ -49,6 +76,20 @@ class Product extends Model
     public function getAmount(): int
     {
         return $this->amount;
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'category_id' => $this->getCategoryId(),
+        ];
     }
 
     /**

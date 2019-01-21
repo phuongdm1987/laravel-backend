@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Jobs\GetProductsByCategory;
+use App\Jobs\GetProductsByCategoryId;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
+use Illuminate\Http\Request;
 
 /**
  * Class CategoryController
@@ -27,12 +30,13 @@ class CategoryController extends Controller
     }
 
     /**
+     * @param Request $request
      * @param Category $category
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Category $category)
+    public function index(Request $request, Category $category)
     {
-        $products = $this->productRepository->getPaginateByCategoryId($category->getId());
+        $products = GetProductsByCategory::dispatchNow($category, $request->all());
 
         return view('category.index', compact('category', 'products'));
     }
