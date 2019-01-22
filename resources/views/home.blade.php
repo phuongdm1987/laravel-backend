@@ -6,13 +6,14 @@
             <div class="container is-fluid">
                 <div class="columns">
                     <div class="column is-three-fifths is-offset-one-fifth">
-                        <form action="">
+                        <form action="{{route('home')}}" method="get">
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input class="input is-large" type="text" placeholder="Search every thing">
+                                    {{-- TODO: https://github.com/mattrosendin/vue-bulma-typeahead --}}
+                                    <input class="input is-large" type="text" name="q" value="{{old('q', request('q', ''))}}" placeholder="Search every thing" autocomplete="false">
                                     <span class="icon is-medium is-left">
-                                <i class="fas fa-search"></i>
-                            </span>
+                                        <i class="fas fa-search"></i>
+                                    </span>
                                 </p>
                             </div>
                         </form>

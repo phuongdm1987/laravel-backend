@@ -55,7 +55,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function withPaginate(array $conditions = [], $prePage = 15): LengthAwarePaginator
     {
-        $queryParam = array_get($conditions, 'q', '');
+        $queryParam = (string)array_get($conditions, 'q', '');
         $queryBuild = $this->getModelQueryBuilder($queryParam);
 
         $query = $this->filter->filter($queryBuild, $conditions);
