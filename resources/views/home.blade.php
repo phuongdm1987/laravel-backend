@@ -1,12 +1,23 @@
 @extends('layouts.app')
 
 @section('hero-content')
-    <section class="hero is-link is-fullheight-with-navbar is-bold">
+    <section class="hero is-primary is-large">
         <div class="hero-body">
             <div class="container is-fluid">
-                <p class="title">
-                    Fullheight hero with navbar
-                </p>
+                <div class="columns">
+                    <div class="column is-three-fifths is-offset-one-fifth">
+                        <form action="">
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input class="input is-large" type="text" placeholder="Search every thing">
+                                    <span class="icon is-medium is-left">
+                                <i class="fas fa-search"></i>
+                            </span>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
