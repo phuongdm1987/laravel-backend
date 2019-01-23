@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Jobs\GetProductsByCategory;
-use App\Jobs\GetProductsByCategoryId;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;

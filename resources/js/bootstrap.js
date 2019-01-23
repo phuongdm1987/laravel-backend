@@ -1,9 +1,8 @@
 import Form from './classes/form'
-import Event from './classes/event'
 
+require('./classes/event')
 window._ = require('lodash');
 window.Form = Form
-window.Event = Event
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

@@ -8,14 +8,7 @@
                     <div class="column is-three-fifths is-offset-one-fifth">
                         <form action="{{route('home')}}" method="get">
                             <div class="field">
-                                <p class="control has-icons-left">
-                                    <product-suggestion></product-suggestion>
-                                    {{-- TODO: https://github.com/anjaneyasivan/v-suggestions --}}
-                                    <input class="input is-large" type="text" name="q" value="{{old('q', request('q', ''))}}" placeholder="Search every thing" autocomplete="false">
-                                    <span class="icon is-medium is-left">
-                                        <i class="fas fa-search"></i>
-                                    </span>
-                                </p>
+                                <product-suggestion></product-suggestion>
                             </div>
                         </form>
                     </div>

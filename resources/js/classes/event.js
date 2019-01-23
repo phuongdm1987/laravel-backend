@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-class Event {
+window.Event = new class {
     constructor() {
         this.vue = new Vue();
     }
@@ -12,6 +12,4 @@ class Event {
     listen(event, callback) {
         this.vue.$on(event, callback);
     }
-}
-
-export default Event
+};

@@ -18,6 +18,8 @@ class Product extends Model
 {
     use Sluggable, CustomizeSlugEngine, Searchable;
 
+    protected $with = ['category'];
+
     /**
      * Get the index name for the model.
      *
