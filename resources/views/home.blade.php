@@ -9,7 +9,8 @@
                         <form action="{{route('home')}}" method="get">
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    {{--TODO: https://github.com/anjaneyasivan/v-suggestions--}}
+                                    <product-suggestion></product-suggestion>
+                                    {{-- TODO: https://github.com/anjaneyasivan/v-suggestions --}}
                                     <input class="input is-large" type="text" name="q" value="{{old('q', request('q', ''))}}" placeholder="Search every thing" autocomplete="false">
                                     <span class="icon is-medium is-left">
                                         <i class="fas fa-search"></i>
@@ -60,3 +61,9 @@
         </div>
     </section>
 @endsection
+<script>
+    import ProductSuggestion from "../js/components/ProductSuggestion";
+    export default {
+        components: {ProductSuggestion}
+    }
+</script>
