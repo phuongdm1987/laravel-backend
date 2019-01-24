@@ -8,7 +8,7 @@ use Henry\Domain\Product\Filters\ProductFilterInterface;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Henry\Infrastructure\AbstractEloquentRepository;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class EloquentProductRepository
@@ -24,5 +24,16 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
     public function __construct(Product $model, ProductFilterInterface $filter)
     {
         parent::__construct($model, $filter);
+    }
+
+    /**
+     * @param array $conditions
+     * @return Collection
+     */
+    public function getTopBySearch(array $conditions = []): Collection
+    {
+        $query = $this->filter->filter($this->getModelQueryBuilder(), $conditions);
+
+        return $query->take(10)->get();
     }
 }

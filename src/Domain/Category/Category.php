@@ -6,7 +6,6 @@ namespace Henry\Domain\Category;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Henry\Domain\Category\ValueObjects\Type\Type;
-use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -77,7 +76,6 @@ class Category extends Model
 
     /**
      * @return Type
-     * @throws TypeException
      */
     public function getType(): Type
     {
@@ -89,7 +87,6 @@ class Category extends Model
 
     /**
      * @return bool
-     * @throws TypeException
      */
     public function isTypeCategory(): bool
     {

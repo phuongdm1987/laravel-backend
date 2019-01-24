@@ -24,7 +24,7 @@ trait JsonResponseTrait
      * @param array $data
      * @return JsonResponse
      */
-    public function getSuccess(array $data = []): JsonResponse
+    public function success(array $data = []): JsonResponse
     {
         return response()->json($data);
     }

@@ -6,7 +6,6 @@ namespace App\Http\View\Composers;
 
 use App\Jobs\GetCategoriesWithTreeFormat;
 use Henry\Domain\Category\ValueObjects\Type\Type;
-use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Illuminate\View\View;
 
 /**
@@ -18,7 +17,6 @@ class CategoryComposer
 
     /**
      * @param View $view
-     * @throws TypeException
      */
     public function compose(View $view): void
     {

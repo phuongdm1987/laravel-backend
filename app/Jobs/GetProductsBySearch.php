@@ -38,6 +38,6 @@ class GetProductsBySearch implements ShouldQueue
      */
     public function handle(ProductRepositoryInterface $productRepository): Collection
     {
-        return $productRepository->all($this->conditions);
+        return $productRepository->getTopBySearch($this->conditions);
     }
 }
