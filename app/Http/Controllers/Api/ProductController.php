@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Jobs\GetProductsBySearch;
 use Henry\Application\Http\JsonResponseTrait;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -23,8 +24,9 @@ class ProductController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
+        /** @var Collection $products */
         $products = GetProductsBySearch::dispatchNow($request->all());
 
-        return $this->getSuccess($products->toArray());
+        return $this->success($products->toArray());
     }
 }

@@ -49,7 +49,7 @@ interface RepositoryInterface
 
     /**
      * @param $id
-     * @return mixed
+     * @return Model
      */
     public function findById($id): Model;
 }

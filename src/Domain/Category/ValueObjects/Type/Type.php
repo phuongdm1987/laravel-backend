@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Henry\Domain\Category\ValueObjects\Type;
 
 
+use Illuminate\Validation\ValidationException;
 use ReflectionClass;
 use ReflectionException;
 
@@ -32,7 +33,6 @@ class Type
     /**
      * @param string $type
      * @return $this
-     * @throws TypeException
      */
     public function setType(string $type): self
     {
@@ -68,7 +68,6 @@ class Type
     /**
      * @param string $type
      * @return string
-     * @throws TypeException
      */
     private function assertType(string $type): string
     {
@@ -77,7 +76,9 @@ class Type
         });
 
         if (!$isExist) {
-            throw new TypeException('Type is invalid');
+            throw ValidationException::withMessages([
+                'type' => [__('validation.in', ['attribute' => 'type'])],
+            ]);
         }
 
         return $type;

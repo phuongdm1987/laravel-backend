@@ -5,7 +5,6 @@ namespace App\Jobs;
 
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\ValueObjects\Type\Type;
-use Henry\Domain\Category\ValueObjects\Type\TypeException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -39,7 +38,6 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
     /**
      * @param Request $request
      * @return GetCategoriesWithTreeFormat
-     * @throws TypeException
      */
     public static function fromRequest(Request $request): self
     {

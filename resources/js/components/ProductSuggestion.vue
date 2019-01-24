@@ -5,7 +5,7 @@
         :onItemSelected="onItemSelected"
         :onInputChange="onInputChange">
         <div slot="item" slot-scope="props" class="single-item">
-            <a :href="'http://backend.local:8080/home?q=' + props.item">{{props.item}}</a>
+            <a>{{props.item.name}}</a>
         </div>
     </suggestion>
 </template>
@@ -23,7 +23,8 @@
                     inputClass: 'input is-large',
                     placeholder: 'Search every thing',
                     debounce: 200
-                }
+                },
+                product: new Product()
             }
         },
         methods: {
@@ -33,15 +34,14 @@
                     return null
                 }
 
-                let product = new Product()
-                return product.all(products => this.items = products, query)
+                return this.product.all(products => this.items = products, query)
                 // return the matching countries as an array
                 // return this.items.filter((country) => {
                 //     return country.toLowerCase().includes(query.toLowerCase())
                 // })
             },
             onItemSelected (item) {
-                window.location.href = 'http://backend.local:8080/home?q=' + item
+                window.location.href = this.product.getUrl(item.slug)
             }
         }
     }

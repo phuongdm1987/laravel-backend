@@ -5,7 +5,7 @@ namespace Henry\Domain\Product\Repositories;
 
 
 use Henry\Domain\RepositoryInterface;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Interface ProductRepositoryInterface
@@ -13,5 +13,9 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
  */
 interface ProductRepositoryInterface extends RepositoryInterface
 {
-
+    /**
+     * @param array $conditions
+     * @return Collection
+     */
+    public function getTopBySearch(array $conditions = []): Collection;
 }
