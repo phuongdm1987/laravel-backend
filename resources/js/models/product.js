@@ -9,8 +9,7 @@ class Product {
 
     all(then, query = '') {
         let url = this.endpoint + '?q=' + query
-        return axios.get(url)
-            .then(({data}) => then(data))
+        return Api.get(url).then(({data}) => then(data))
     }
 
     getUrl(slug) {

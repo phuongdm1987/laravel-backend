@@ -1,15 +1,17 @@
 import Vue from 'vue'
 
-window.Event = new class {
+class Event {
     constructor() {
-        this.vue = new Vue();
+        this.vue = new Vue()
     }
 
     fire(event, data = null) {
-        this.vue.$emit(event, data);
+        this.vue.$emit(event, data)
     }
 
     listen(event, callback) {
-        this.vue.$on(event, callback);
+        this.vue.$on(event, callback)
     }
-};
+}
+
+export default new Event

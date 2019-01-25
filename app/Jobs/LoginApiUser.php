@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -71,6 +72,13 @@ class LoginApiUser implements ShouldQueue
      */
     public function handle(): Response
     {
+        $credentials = ['email' => $this->email, 'password' => $this->password];
+        if (!auth()->guard('api')->attempt($credentials)) {
+            throw ValidationException::withMessages([
+                'email' => [__('auth.failed')],
+            ]);
+        }
+
         $data = [
             'grant_type' => 'password',
             'client_id' => $this->clientId,

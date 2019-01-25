@@ -1,8 +1,14 @@
 import Form from './classes/form'
+import Event from './classes/event'
+import Auth from './classes/auth'
+import Api from './classes/api'
 
 require('./classes/event')
 window._ = require('lodash');
 window.Form = Form
+window.Event = Event
+window.Auth = Auth
+window.Api = Api
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

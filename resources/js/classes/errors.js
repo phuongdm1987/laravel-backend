@@ -31,4 +31,4 @@ class Errors {
     }
 }
 
-export default Errors
+export default new Errors

@@ -8,7 +8,7 @@ class Form {
             this[field] = data[field]
         }
         this.submitting = false;
-        this.errors = new Errors()
+        this.errors = Errors
     }
 
     reset() {
@@ -64,4 +64,4 @@ class Form {
     }
 }
 
-export default Form
+export default new Form
