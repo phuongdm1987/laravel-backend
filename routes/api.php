@@ -18,7 +18,7 @@ Route::namespace('Api')->group(function() {
     Route::post('/login', 'AuthController@login');
 });
 
-Route::middleware('auth:api')->namespace('Api')->group(function() {
+Route::namespace('Api')->group(function() {
     Route::get('/logout', 'AuthController@logout');
     Route::get('/products', 'ProductController@index')->name('api.products.index');
 });

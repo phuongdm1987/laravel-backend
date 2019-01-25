@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Collection;
 interface ProductRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param array $conditions
+     * @param string $query
      * @return Collection
      */
-    public function getTopBySearch(array $conditions = []): Collection;
+    public function getTopBySearch(string $query = ''): Collection;
 }

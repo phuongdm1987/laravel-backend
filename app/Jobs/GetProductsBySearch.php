@@ -19,17 +19,17 @@ class GetProductsBySearch implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
-     * @var array
+     * @var string
      */
-    private $conditions;
+    private $query;
 
     /**
-     * Create a new job instance.
-     * @param array $conditions
+     * GetProductsBySearch constructor.
+     * @param string $query
      */
-    public function __construct(array $conditions = [])
+    public function __construct(string $query = '')
     {
-        $this->conditions = $conditions;
+        $this->query = $query;
     }
 
     /**
@@ -38,6 +38,6 @@ class GetProductsBySearch implements ShouldQueue
      */
     public function handle(ProductRepositoryInterface $productRepository): Collection
     {
-        return $productRepository->getTopBySearch($this->conditions);
+        return $productRepository->getTopBySearch($this->query);
     }
 }

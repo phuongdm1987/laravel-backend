@@ -27,12 +27,14 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
     }
 
     /**
-     * @param array $conditions
+     * @param string $query
      * @return Collection
      */
-    public function getTopBySearch(array $conditions = []): Collection
+    public function getTopBySearch(string $query = ''): Collection
     {
-        $query = $this->filter->filter($this->getModelQueryBuilder(), $conditions);
+        $queryBuild = $this->getModelQueryBuilder($query);
+
+        $query = $this->filter->filter($queryBuild);
 
         return $query->take(10)->get();
     }
