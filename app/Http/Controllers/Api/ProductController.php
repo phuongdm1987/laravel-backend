@@ -24,10 +24,8 @@ class ProductController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $params = $request->all();
-
         /** @var Collection $products */
-        $products = GetProductsBySearch::dispatchNow($request->all());
+        $products = GetProductsBySearch::dispatchNow($request->get('q', ''));
 
         return $this->success($products->toArray());
     }
