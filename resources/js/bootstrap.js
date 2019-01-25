@@ -4,7 +4,6 @@ import Auth from './classes/auth'
 import Api from './classes/api'
 import Configuration from './configs/config'
 
-require('./classes/event')
 window._ = require('lodash');
 window.Configuration = Configuration
 window.Event = Event
