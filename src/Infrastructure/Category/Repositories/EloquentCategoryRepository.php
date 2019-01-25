@@ -7,6 +7,7 @@ namespace Henry\Infrastructure\Category\Repositories;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Category\Sorters\CategorySorterInterface;
 use Henry\Domain\Category\ValueObjects\Type\Type;
 use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,10 +22,11 @@ class EloquentCategoryRepository extends AbstractEloquentRepository implements C
      * AbstractEloquentRepository constructor.
      * @param \Henry\Domain\Category\Category $model
      * @param CategoryFilterInterface $filter
+     * @param CategorySorterInterface $sorter
      */
-    public function __construct(Category $model, CategoryFilterInterface $filter)
+    public function __construct(Category $model, CategoryFilterInterface $filter, CategorySorterInterface $sorter)
     {
-        parent::__construct($model, $filter);
+        parent::__construct($model, $filter, $sorter);
     }
 
     /**

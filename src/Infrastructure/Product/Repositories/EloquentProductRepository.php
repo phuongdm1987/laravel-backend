@@ -7,6 +7,7 @@ namespace Henry\Infrastructure\Product\Repositories;
 use Henry\Domain\Product\Filters\ProductFilterInterface;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
+use Henry\Domain\Product\Sorters\ProductSorterInterface;
 use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -20,10 +21,11 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
      * AbstractEloquentRepository constructor.
      * @param Product $model
      * @param ProductFilterInterface $filter
+     * @param ProductSorterInterface $sorter
      */
-    public function __construct(Product $model, ProductFilterInterface $filter)
+    public function __construct(Product $model, ProductFilterInterface $filter, ProductSorterInterface $sorter)
     {
-        parent::__construct($model, $filter);
+        parent::__construct($model, $filter, $sorter);
     }
 
     /**

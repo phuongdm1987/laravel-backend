@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace Henry\Domain\Category\ValueObjects\Type;
 
 
+use Henry\Domain\ValueObjects\ConstantTrait;
 use Illuminate\Validation\ValidationException;
-use ReflectionClass;
-use ReflectionException;
 
 /**
  * Class Type
@@ -14,6 +13,8 @@ use ReflectionException;
  */
 class Type
 {
+    use ConstantTrait;
+
     public const TYPE_MENU = 'menu';
     public const TYPE_CATEGORY = 'category';
 
@@ -45,16 +46,7 @@ class Type
      */
     public static function getAll(): array
     {
-        try {
-            $refClass = new ReflectionClass(__CLASS__);
-        } catch (ReflectionException $e) {
-            return [];
-        }
-        $constants = $refClass->getConstants();
-
-        return array_where($constants, function($value, $key){
-            return starts_with($key, 'TYPE_');
-        });
+        return self::getAllConstants();
     }
 
     /**

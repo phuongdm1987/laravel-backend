@@ -6,6 +6,8 @@ namespace Henry\Infrastructure;
 
 use Henry\Domain\FilterInterface;
 use Henry\Domain\RepositoryInterface;
+use Henry\Domain\SorterInterface;
+use Henry\Domain\ValueObjects\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -25,16 +27,22 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      * @var FilterInterface
      */
     protected $filter;
+    /**
+     * @var SorterInterface
+     */
+    private $sorter;
 
     /**
      * AbstractEloquentRepository constructor.
      * @param Model $model
      * @param FilterInterface $filter
+     * @param SorterInterface $sorter
      */
-    public function __construct(Model $model, FilterInterface $filter)
+    public function __construct(Model $model, FilterInterface $filter, SorterInterface $sorter)
     {
         $this->model = $model;
         $this->filter = $filter;
+        $this->sorter = $sorter;
     }
 
     /**
@@ -43,7 +51,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function all(array $conditions = []): Collection
     {
-        $query = $this->filter->filter($this->getModelQueryBuilder(), $conditions);
+        $query = $this->generateQueryBuilder($conditions);
 
         return $query->get();
     }
@@ -55,10 +63,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function withPaginate(array $conditions = [], $prePage = 15): LengthAwarePaginator
     {
-        $queryParam = (string)array_get($conditions, 'q', '');
-        $queryBuild = $this->getModelQueryBuilder($queryParam);
-
-        $query = $this->filter->filter($queryBuild, $conditions);
+        $query = $this->generateQueryBuilder($conditions);
 
         return $query->paginate($prePage);
     }
@@ -110,5 +115,32 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
     public function getModelQueryBuilder(string $query = '')
     {
         return $query ? $this->model->search($query) : $this->model->newModelQuery();
+    }
+
+    /**
+     * @param array $conditions
+     * @return Order
+     */
+    private function generateOrderInfoByQueryParams(array $conditions = []): Order
+    {
+        $orderBy = array_get($conditions, 'orderBy', '');
+        $order = array_get($conditions, 'order', 'asc');
+        return new Order($orderBy, $order);
+    }
+
+    /**
+     * @param array $conditions
+     * @return \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
+     */
+    private function generateQueryBuilder(array $conditions)
+    {
+        $queryParam = (string)array_get($conditions, 'q', '');
+        $queryBuild = $this->getModelQueryBuilder($queryParam);
+
+        $query = $this->filter->filter($queryBuild, $conditions);
+        $orderObject = $this->generateOrderInfoByQueryParams($conditions);
+        $query = $this->sorter->order($query, $orderObject);
+
+        return $query;
     }
 }

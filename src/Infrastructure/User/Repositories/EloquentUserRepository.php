@@ -6,6 +6,7 @@ namespace Henry\Infrastructure\User\Repositories;
 
 use Henry\Domain\User\Filters\UserFilterInterface;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
+use Henry\Domain\User\Sorters\UserSorterInterface;
 use Henry\Domain\User\User;
 use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Model;
@@ -20,10 +21,11 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
      * EloquentUserRepository constructor.
      * @param User $model
      * @param UserFilterInterface $filter
+     * @param UserSorterInterface $sorter
      */
-    public function __construct(User $model, UserFilterInterface $filter)
+    public function __construct(User $model, UserFilterInterface $filter, UserSorterInterface $sorter)
     {
-        parent::__construct($model, $filter);
+        parent::__construct($model, $filter, $sorter);
     }
 
     /**

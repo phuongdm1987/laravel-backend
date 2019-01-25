@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\GetProductsByCategory;
 use Henry\Domain\Category\Category;
-use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -14,20 +13,6 @@ use Illuminate\Http\Request;
  */
 class CategoryController extends Controller
 {
-    /**
-     * @var ProductRepositoryInterface
-     */
-    private $productRepository;
-
-    /**
-     * CategoryController constructor.
-     * @param ProductRepositoryInterface $productRepository
-     */
-    public function __construct(ProductRepositoryInterface $productRepository)
-    {
-        $this->productRepository = $productRepository;
-    }
-
     /**
      * @param Request $request
      * @param Category $category
