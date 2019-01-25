@@ -23,7 +23,14 @@ class AuthController extends Controller
      */
     public function login(LoginApiRequest $request)
     {
-        return $this->dispatchNow(LoginApiUser::fromRequest(app(LoginApiRequest::class)));
+        $response = $this->dispatchNow(LoginApiUser::fromRequest(app(LoginApiRequest::class)));
+        $data = json_decode($response->getContent());
+
+        return $this->success([
+            'status' => 200,
+            'token' => $data->access_token,
+            'user' => auth()->user()
+        ]);
     }
 
     /**

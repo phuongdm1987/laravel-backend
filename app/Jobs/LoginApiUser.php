@@ -73,7 +73,7 @@ class LoginApiUser implements ShouldQueue
     public function handle(): Response
     {
         $credentials = ['email' => $this->email, 'password' => $this->password];
-        if (!auth()->guard('api')->attempt($credentials)) {
+        if (!auth()->attempt($credentials)) {
             throw ValidationException::withMessages([
                 'email' => [__('auth.failed')],
             ]);

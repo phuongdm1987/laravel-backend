@@ -1,9 +1,9 @@
-class Api {
-    constructor() {
+import Auth from './auth'
 
-    }
+class Api {
 
     _call(requestType, url, data = null) {
+        Auth.login()
         return new Promise((resolve, reject) => {
             axios[requestType](url, data)
                 .then(response => {
