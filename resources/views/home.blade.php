@@ -6,7 +6,7 @@
             <div class="container is-fluid">
                 <div class="columns">
                     <div class="column is-three-fifths is-offset-one-fifth">
-                        <form action="{{route('home')}}" method="get">
+                        <form>
                             <div class="field">
                                 <product-suggestion></product-suggestion>
                             </div>

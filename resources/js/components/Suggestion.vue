@@ -1,6 +1,6 @@
 <template>
     <div class="v-suggestions">
-        <p class="control has-icons-left">
+        <p class="control has-icons-left has-icons-right">
             <input type="text"
                    v-bind="$attrs"
                    :class="extendedOptions.inputClass"
@@ -12,6 +12,9 @@
                    v-model="query"/>
             <span class="icon is-medium is-left">
                 <i class="fas fa-search"></i>
+            </span>
+            <span v-show="isLoading" class="icon is-medium is-right">
+                <i class="fas fa-spinner fa-spin"></i>
             </span>
         </p>
         <div class="suggestions">
@@ -46,6 +49,10 @@
             },
             onItemSelected: {
                 type: Function
+            },
+            isLoading: {
+                type: Boolean,
+                require: true
             }
         },
         data() {
@@ -62,7 +69,7 @@
                 items: [],
                 lastSetQuery: null,
                 activeItemIndex: -1,
-                showItems: false
+                showItems: false,
             }
         },
         beforeMount() {
@@ -90,6 +97,7 @@
             },
             onQueryChanged(value) {
                 const result = this.onInputChange(value)
+
                 this.items = []
                 if (typeof result === 'undefined' || typeof result === 'boolean' || result === null) {
                     return
