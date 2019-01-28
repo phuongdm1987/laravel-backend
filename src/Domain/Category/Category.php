@@ -5,7 +5,7 @@ namespace Henry\Domain\Category;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +16,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * Class Category
  * @package Henry\Domain\Category
  */
-class Category extends Model
+class   Category extends Model
 {
     use Sluggable, CustomizeSlugEngine , NodeTrait {
         NodeTrait::replicate as replicateNode;

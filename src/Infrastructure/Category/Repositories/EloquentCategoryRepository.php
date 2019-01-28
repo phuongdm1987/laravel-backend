@@ -8,7 +8,7 @@ use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\Sorters\CategorySorterInterface;
-use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 

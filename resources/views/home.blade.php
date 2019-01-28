@@ -41,7 +41,7 @@
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <span class="card-footer-item has-text-info">{{$product->getAmount()}}vnd</span>
+                                        <span class="card-footer-item has-text-info">{{$product->getAmount()->format()}}</span>
                                         <a href="{{route('products.show', $product->getSlug())}}" class="card-footer-item has-background-info has-text-white">Detail</a>
                                     </footer>
                                 </div>

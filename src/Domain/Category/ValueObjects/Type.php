@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Henry\Domain\Category\ValueObjects\Type;
+namespace Henry\Domain\Category\ValueObjects;
 
 
 use Henry\Domain\ValueObjects\ConstantTrait;

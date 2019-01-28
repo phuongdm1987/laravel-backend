@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Henry\Domain\Category\Repositories;
 
 
-use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Domain\RepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Collection;
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param Type $type
+     * @param \Henry\Domain\Category\ValueObjects\Type $type
      * @return Collection
      */
     public function getAllToTree(Type $type): Collection;

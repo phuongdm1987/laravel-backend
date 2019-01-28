@@ -40,11 +40,6 @@
 
                 return this.product.all((products) => this.items = products, query)
                     .then(this.setLoaded())
-
-                // return the matching countries as an array
-                // return this.items.filter((country) => {
-                //     return country.toLowerCase().includes(query.toLowerCase())
-                // })
             },
             onItemSelected (item) {
                 window.location.href = this.product.getUrl(item.slug)

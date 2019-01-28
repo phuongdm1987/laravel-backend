@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs;
 
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
-use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,13 +22,13 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var Type
+     * @var \Henry\Domain\Category\ValueObjects\Type
      */
     private $type;
 
     /**
      * GetCategoriesWithTreeFormat constructor.
-     * @param Type $type
+     * @param \Henry\Domain\Category\ValueObjects\Type $type
      */
     public function __construct(Type $type)
     {

@@ -6,6 +6,7 @@ namespace Henry\Domain\Product;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
+use Henry\Domain\User\ValueObjects\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Laravel\Scout\Searchable;
@@ -73,11 +74,11 @@ class Product extends Model
     }
 
     /**
-     * @return int
+     * @return Currency
      */
-    public function getAmount(): int
+    public function getAmount(): Currency
     {
-        return $this->amount;
+        return new Currency($this->amount);
     }
 
     /**

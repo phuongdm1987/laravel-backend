@@ -5,7 +5,7 @@ namespace App\Http\View\Composers;
 
 
 use App\Jobs\GetCategoriesWithTreeFormat;
-use Henry\Domain\Category\ValueObjects\Type\Type;
+use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\View\View;
 
 /**
