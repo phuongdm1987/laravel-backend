@@ -11,7 +11,10 @@
                     <div class="field">
                         <label class="label" for="email">@lang('E-Mail Address')</label>
                         <div class="control has-icons-left">
-                            <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
+                            <input
+                                    class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                    value="{{ old('email') }}"
+                                    id="email" name="email" type="email" required autofocus>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>
@@ -24,7 +27,9 @@
                     <div class="field">
                         <label class="label" for="password">@lang('Password')</label>
                         <div class="control has-icons-left">
-                            <input class="input{{ $errors->has('password') ? ' is-danger' : '' }}" id="password" name="password" type="password" required>
+                            <input
+                                    class="input{{ $errors->has('password') ? ' is-danger' : '' }}"
+                                    id="password" name="password" type="password" required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-key"></i>
                             </span>
@@ -37,7 +42,9 @@
                     <div class="field">
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <input
+                                        {{ old('remember') ? 'checked' : '' }}
+                                        type="checkbox" name="remember">
                                 @lang('Remember Me')
                             </label>
                         </div>

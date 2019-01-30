@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace Henry\Domain\Product;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\User\ValueObjects\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
 
 /**
@@ -100,5 +102,13 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class);
     }
 }

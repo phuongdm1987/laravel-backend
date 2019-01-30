@@ -20,8 +20,19 @@ class CategoriesTableSeeder extends Seeder
             ->each(function ($category) {
                 /** @var \Henry\Domain\Category\Category $category */
                 if ($category->isTypeCategory()) {
-                    $category->products()
-                        ->saveMany(factory(\Henry\Domain\Product\Product::class, 5)->make());
+                    $category->attributes()
+                        ->saveMany(factory(\Henry\Domain\Attribute\Attribute::class, 5)->create()
+                        ->each(function ($attribute) use ($category) {
+                            /** @var \Henry\Domain\Attribute\Attribute $attribute */
+                            $attribute->attributeValues()
+                                ->saveMany(factory(\Henry\Domain\AttributeValue\AttributeValue::class, 5)->create()
+                                ->each(function ($attributeValue) use ($category) {
+                                    $attributeValue->products()
+                                        ->saveMany(factory(\Henry\Domain\Product\Product::class, 5)->make([
+                                            'category_id' => $category->id
+                                        ]));
+                                }));
+                        }));
                 }
             });
     }

@@ -15,7 +15,10 @@
                 <div class="field">
                     <label class="label" for="email">@lang('form.email_address')</label>
                     <div class="control has-icons-left">
-                        <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" id="email" name="email" type="email" value="{{ old('email') }}" required autofocus>
+                        <input
+                                class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                value="{{ old('email') }}"
+                                id="email" name="email" type="email" required autofocus>
                         <span class="icon is-small is-left">
                                 <i class="fas fa-envelope"></i>
                             </span>

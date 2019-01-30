@@ -1,0 +1,24 @@
+
+
+<form action="" method="get">
+    @foreach($category->attributes as $attribute)
+        <nav class="panel">
+            <p class="panel-heading">{{$attribute->getName()}}</p>
+            @foreach($attribute->attributeValues as $attributeValue)
+                <label class="panel-block">
+                    <input type="checkbox"
+                           {{ in_array($attributeValue->getId(), request('attributes', [])) ? 'checked' : '' }}
+                           name="attributes[]"
+                           value="{{$attributeValue->getId()}}">
+                    {{$attributeValue->getValue()}}
+                </label>
+            @endforeach
+            <div class="panel-block">
+                <button class="button is-link is-outlined is-fullwidth" type="submit">
+                    apply filters
+                </button>
+            </div>
+        </nav>
+    @endforeach
+</form>
+

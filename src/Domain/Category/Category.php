@@ -5,10 +5,12 @@ namespace Henry\Domain\Category;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Henry\Domain\Attribute\Attribute;
 use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
 
@@ -16,9 +18,9 @@ use Kalnoy\Nestedset\NodeTrait;
  * Class Category
  * @package Henry\Domain\Category
  */
-class   Category extends Model
+class Category extends Model
 {
-    use Sluggable, CustomizeSlugEngine , NodeTrait {
+    use Sluggable, CustomizeSlugEngine, NodeTrait {
         NodeTrait::replicate as replicateNode;
         Sluggable::replicate as replicateSlug;
     }
@@ -42,7 +44,6 @@ class   Category extends Model
 
     /**
      * Get the route key for the model.
-     *
      * @return string
      */
     public function getRouteKeyName()
@@ -75,6 +76,14 @@ class   Category extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isTypeCategory(): bool
+    {
+        return $this->getType()->isCategory();
+    }
+
+    /**
      * @return Type
      */
     public function getType(): Type
@@ -86,18 +95,18 @@ class   Category extends Model
     }
 
     /**
-     * @return bool
-     */
-    public function isTypeCategory(): bool
-    {
-        return $this->getType()->isCategory();
-    }
-
-    /**
      * @return HasMany
      */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class);
     }
 }
