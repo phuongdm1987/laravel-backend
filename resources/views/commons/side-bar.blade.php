@@ -3,7 +3,7 @@
         {!! generateCategoriesMultiLevel($categories) !!}
     </ul>
 
-        @if($category)
+        @if(isset($category))
             @include('commons.attributes')
         @endif
 </aside>
