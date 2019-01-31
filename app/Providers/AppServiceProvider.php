@@ -22,6 +22,7 @@ use Henry\Infrastructure\User\Filters\EloquentUserFilter;
 use Henry\Infrastructure\User\Repositories\EloquentUserRepository;
 use Henry\Infrastructure\User\Sorters\EloquentUserSorter;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
 
 /**
@@ -51,6 +52,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Redis::enableEvents();
         Paginator::defaultView('vendor.pagination.bulma');
     }
 
