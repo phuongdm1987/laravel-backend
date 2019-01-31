@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace Henry\Infrastructure;
 
-use Henry\Domain\FilterInterface;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * Class AbstractEloquentFilter
+ * Class AbstractEloquentNormalFilter
  * @package Henry\Infrastructure
  */
-abstract class AbstractEloquentFilter
+abstract class AbstractEloquentNormalFilter
 {
-    protected $filters = [];
+    protected $searchField;
+    protected $field;
 
     /**
      * @param Builder $queryBuilder
@@ -21,15 +21,16 @@ abstract class AbstractEloquentFilter
      */
     public function filter($queryBuilder, array $conditions = []): Builder
     {
-        if (!$conditions) {
+        $queryParam = array_get($conditions, $this->searchField);
+
+        if (!$queryParam) {
             return $queryBuilder;
         }
 
-        foreach ($this->filters as $filter) {
-            /** @var FilterInterface $filter */
-            $queryBuilder = app($filter)->filter($queryBuilder, $conditions);
+        if (!\is_array($queryParam)) {
+            return $queryBuilder->where($this->field, $queryParam);
         }
 
-        return $queryBuilder;
+        return $queryBuilder->whereIn($this->field, $queryParam);
     }
 }

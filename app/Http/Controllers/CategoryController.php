@@ -21,6 +21,7 @@ class CategoryController extends Controller
     public function index(Request $request, Category $category)
     {
         $products = GetProductsByCategory::dispatchNow($category, $request->all());
+        $category->load('attributes.attributeValues');
 
         return view('category.index', compact('category', 'products'));
     }

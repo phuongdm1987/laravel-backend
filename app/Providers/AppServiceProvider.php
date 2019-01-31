@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Henry\Domain\AttributeValue\Filters\AttributeValueFilterInterface;
+use Henry\Domain\AttributeValue\Repositories\AttributeValueRepositoryInterface;
+use Henry\Domain\AttributeValue\Sorters\AttributeValueSorterInterface;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\Sorters\CategorySorterInterface;
@@ -12,6 +15,9 @@ use Henry\Domain\Product\Sorters\ProductSorterInterface;
 use Henry\Domain\User\Filters\UserFilterInterface;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
 use Henry\Domain\User\Sorters\UserSorterInterface;
+use Henry\Infrastructure\AttributeValue\Filters\EloquentAttributeValueFilter;
+use Henry\Infrastructure\AttributeValue\Repositories\EloquentAttributeValueRepository;
+use Henry\Infrastructure\AttributeValue\Sorters\EloquentAttributeValueSorter;
 use Henry\Infrastructure\Category\Filters\EloquentCategoryFilter;
 use Henry\Infrastructure\Category\Repositories\EloquentCategoryRepository;
 use Henry\Infrastructure\Category\Sorters\EloquentCategorySorter;
@@ -43,6 +49,10 @@ class AppServiceProvider extends ServiceProvider
         ProductRepositoryInterface::class => EloquentProductRepository::class,
         ProductFilterInterface::class => EloquentProductFilter::class,
         ProductSorterInterface::class => EloquentProductSorter::class,
+
+        AttributeValueRepositoryInterface::class => EloquentAttributeValueRepository::class,
+        AttributeValueFilterInterface::class => EloquentAttributeValueFilter::class,
+        AttributeValueSorterInterface::class => EloquentAttributeValueSorter::class,
     ];
 
     /**

@@ -9,6 +9,7 @@ use Henry\Domain\RepositoryInterface;
 use Henry\Domain\SorterInterface;
 use Henry\Domain\ValueObjects\Order;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -74,7 +75,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function create(array $data): Model
     {
-        $this->model->create($data);
+        return $this->model->create($data);
     }
 
     /**
@@ -105,16 +106,28 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function findById($id): Model
     {
-        $this->model->find($id);
+        return $this->model->find($id);
     }
 
     /**
-     * @param string $query
-     * @return \Illuminate\Database\Eloquent\Builder|Model
+     * @param array $conditions
+     * @return array
      */
-    public function getModelQueryBuilder(string $query = '')
+    public function getIdsBySearch(array $conditions = []): array
     {
-        return $query ? $this->model->search($query) : $this->model->newModelQuery();
+        $queryParam = (string)array_get($conditions, 'q', '');
+
+        if (!$queryParam) {
+            return $conditions;
+        }
+
+        $primaryKey = $this->model->getKeyName();
+        $ids = $this->model->search($queryParam)->get()->pluck($primaryKey)->toArray();
+
+        array_forget($conditions, 'q');
+        $conditions[$primaryKey] = $ids;
+
+        return $conditions;
     }
 
     /**
@@ -130,14 +143,14 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
 
     /**
      * @param array $conditions
-     * @return \Illuminate\Database\Eloquent\Builder|\Laravel\Scout\Builder
+     * @return Builder
      */
-    private function generateQueryBuilder(array $conditions)
+    private function generateQueryBuilder(array $conditions): Builder
     {
-        $queryParam = (string)array_get($conditions, 'q', '');
-        $queryBuild = $this->getModelQueryBuilder($queryParam);
+        $conditions = $this->getIdsBySearch($conditions);
+        $queryBuilder = $this->model->newModelQuery();
 
-        $query = $this->filter->filter($queryBuild, $conditions);
+        $query = $this->filter->filter($queryBuilder, $conditions);
         $orderObject = $this->generateOrderInfoByQueryParams($conditions);
         $query = $this->sorter->order($query, $orderObject);
 

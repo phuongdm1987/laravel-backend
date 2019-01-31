@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace Henry\Infrastructure;
 
-
 use Henry\Domain\ValueObjects\Order;
 use Illuminate\Database\Eloquent\Builder;
-use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Class AbstractEloquentSorter
@@ -17,11 +15,11 @@ abstract class AbstractEloquentSorter
     protected $fields = [];
 
     /**
-     * @param ScoutBuilder|Builder $queryBuilder
+     * @param Builder $queryBuilder
      * @param Order $order
-     * @return ScoutBuilder|Builder
+     * @return Builder
      */
-    public function order($queryBuilder, Order $order)
+    public function order($queryBuilder, Order $order): Builder
     {
         if ($this->assertDontAllowField($order)) {
             return $queryBuilder;

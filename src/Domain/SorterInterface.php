@@ -6,7 +6,6 @@ namespace Henry\Domain;
 
 use Henry\Domain\ValueObjects\Order;
 use Illuminate\Database\Eloquent\Builder;
-use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Interface SorterInterface
@@ -15,9 +14,9 @@ use Laravel\Scout\Builder as ScoutBuilder;
 interface SorterInterface
 {
     /**
-     * @param ScoutBuilder|Builder $queryBuilder
+     * @param Builder $queryBuilder
      * @param Order $order
-     * @return ScoutBuilder|Builder
+     * @return Builder
      */
-    public function order($queryBuilder, Order $order);
+    public function order($queryBuilder, Order $order): Builder;
 }

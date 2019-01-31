@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Henry\Domain;
 
-
 use Illuminate\Database\Eloquent\Builder;
-use Laravel\Scout\Builder as ScoutBuilder;
 
 /**
  * Interface FilterInterface
@@ -14,9 +12,9 @@ use Laravel\Scout\Builder as ScoutBuilder;
 interface FilterInterface
 {
     /**
-     * @param ScoutBuilder|Builder $queryBuilder
+     * @param Builder $queryBuilder
      * @param array $conditions
-     * @return ScoutBuilder|Builder
+     * @return Builder
      */
-    public function filter($queryBuilder, array $conditions = []);
+    public function filter($queryBuilder, array $conditions = []): Builder;
 }

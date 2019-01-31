@@ -7,8 +7,8 @@
             @foreach($attribute->attributeValues as $attributeValue)
                 <label class="panel-block">
                     <input type="checkbox"
-                           {{ in_array($attributeValue->getId(), request('attributes', [])) ? 'checked' : '' }}
-                           name="attributes[]"
+                           {{ in_array($attributeValue->getId(), request('attribute_value_id', [])) ? 'checked' : '' }}
+                           name="attribute_value_id[]"
                            value="{{$attributeValue->getId()}}">
                     {{$attributeValue->getValue()}}
                 </label>

@@ -19,5 +19,6 @@ class EloquentProductFilter extends AbstractEloquentFilter implements ProductFil
     protected $filters = [
         EloquentCategoryIdFilter::class,
         EloquentIdFilter::class,
+        EloquentAttributeValueIdFilter::class,
     ];
 }
