@@ -21,6 +21,7 @@ class CreateAttributeValuesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('attribute_id')->default(0)->index();
             $table->string('value');
+            $table->unsignedBigInteger('amount')->nullable();
         });
     }
 

@@ -5,6 +5,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\Henry\Domain\AttributeValue\AttributeValue::class, function (Faker $faker) {
     return [
-        'value' => $faker->name
+        'value' => $faker->name,
+        'amount' => $faker->randomDigitNotNull
     ];
 });
