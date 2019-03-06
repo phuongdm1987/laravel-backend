@@ -17,40 +17,24 @@
                 <div class="column">
                     <h1 class="is-size-4">{{$product->getName()}}</h1>
                     <p>{{$product->getAmount()->format()}}</p>
-                    <form action="" method="post">
-                        <div class="field is-horizontal">
-                            <div class="field-label is-normal has-text-left">
-                                <label class="label">@lang('form.quantity')</label>
-                            </div>
-                            <div class="field-body">
-                                <div class="columns">
-                                    <div class="column is-one-third">
-                                        <div class="field">
-                                            <div class="control">
-                                                <input class="input" type="number" value="0" placeholder="@lang('form.quantity')">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="field">
-                                            <div class="field-label is-normal has-text-left">
-                                                <label>
-                                                    I agree to the <a href="#">terms and conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <button class="button is-link">@lang('form.add_to_Cart')</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
+            @foreach($product->category->attributes as $attribute)
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label">{{$attribute->getName()}}</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                {{implode(', ', $product->attributeValues
+                                ->where('attribute_id', $attribute->getId())
+                                ->pluck('value')->toArray())}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </section>
 @endsection

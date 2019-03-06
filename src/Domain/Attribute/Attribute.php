@@ -34,6 +34,14 @@ class Attribute extends Model
     }
 
     /**
+     * @return bool
+     */
+    public function isFilter(): bool
+    {
+        return (bool)$this->is_filter;
+    }
+
+    /**
      * @return HasMany
      */
     public function attributeValues(): HasMany
