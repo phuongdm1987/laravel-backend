@@ -6,17 +6,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\LoginApiRequest;
 use App\Jobs\LoginApiUser;
 use App\Jobs\LogoutApiUser;
-use Henry\Application\Http\JsonResponseTrait;
-use App\Http\Controllers\Controller;
 
 /**
  * Class AuthController
  * @package App\Http\Controllers\Api
  */
-class AuthController extends Controller
+class AuthController extends ApiController
 {
-    use JsonResponseTrait;
-
     /**
      * @param LoginApiRequest $request
      * @return mixed
@@ -25,6 +21,10 @@ class AuthController extends Controller
     {
         $response = $this->dispatchNow(LoginApiUser::fromRequest(app(LoginApiRequest::class)));
         $data = json_decode($response->getContent());
+
+        if (isset($data->error)) {
+            return $this->error([$data->error => $data->message], 401);
+        }
 
         return $this->success([
             'status' => 200,

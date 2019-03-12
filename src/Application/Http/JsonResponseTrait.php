@@ -28,4 +28,14 @@ trait JsonResponseTrait
     {
         return response()->json($data);
     }
+
+    /**
+     * @param array $data
+     * @param int $errorCode
+     * @return JsonResponse
+     */
+    public function error(array $data = [], $errorCode = 500): JsonResponse
+    {
+        return response()->json($data, $errorCode);
+    }
 }

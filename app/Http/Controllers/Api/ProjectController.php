@@ -1,24 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
  * Class ProjectController
  * @package App\Http\Controllers
  */
-class ProjectController extends Controller
+class ProjectController extends ApiController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        return response()->json([
+        return $this->success([
             [
                 'name' => 'Project 1',
                 'description' => 'Description 1',

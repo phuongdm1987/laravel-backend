@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('Api')->group(function() {
+Route::namespace('Api')->middleware('guest')->group(function() {
     Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
 });
 
 Route::middleware('auth:api')->namespace('Api')->group(function() {
     Route::get('/logout', 'AuthController@logout');
     Route::get('/products', 'ProductController@index')->name('api.products.index');
+    Route::resource('/projects', 'ProjectController');
 });

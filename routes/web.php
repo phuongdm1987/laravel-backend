@@ -29,6 +29,3 @@ Route::resource('products', 'ProductController');
 
 Route::get('/set-language/{locale}', 'LanguageController@update')
     ->name('setLanguage');
-
-
-Route::resource('/api/project', 'ProjectController');
