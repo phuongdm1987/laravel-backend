@@ -34,8 +34,7 @@ class EloquentUserRepository extends AbstractEloquentRepository implements UserR
      */
     public function findByEmailAddress(string $email): ?Model
     {
-        $queryBuild = $this->getModelQueryBuilder();
-        $query = $this->filter->filter($queryBuild, ['email' => $email]);
+        $query = $this->generateQueryBuilder(['email' => $email]);
         return $query->firstOrFail();
     }
 }

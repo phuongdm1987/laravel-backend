@@ -145,7 +145,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      * @param array $conditions
      * @return Builder
      */
-    private function generateQueryBuilder(array $conditions): Builder
+    protected function generateQueryBuilder(array $conditions): Builder
     {
         $conditions = $this->getIdsBySearch($conditions);
         $queryBuilder = $this->model->newModelQuery();

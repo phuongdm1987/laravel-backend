@@ -26,17 +26,17 @@ class RegisterUser implements ShouldQueue
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * RegisterUser constructor.
@@ -66,9 +66,9 @@ class RegisterUser implements ShouldQueue
 
     /**
      * @param UserRepositoryInterface $userRepository
-     * @return User
+     * @return mixed
      */
-    public function handle(UserRepositoryInterface $userRepository): User
+    public function handle(UserRepositoryInterface $userRepository)
     {
         $this->assertEmailAddressIsUnique($this->email, $userRepository);
 

@@ -34,9 +34,7 @@ class EloquentProductRepository extends AbstractEloquentRepository implements Pr
      */
     public function getTopBySearch(string $query = ''): Collection
     {
-        $queryBuild = $this->getModelQueryBuilder($query);
-
-        $query = $this->filter->filter($queryBuild);
+        $query = $this->generateQueryBuilder(['q' => $query]);
 
         return $query->take(10)->get();
     }

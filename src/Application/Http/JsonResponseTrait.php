@@ -36,6 +36,6 @@ trait JsonResponseTrait
      */
     public function error(array $data = [], $errorCode = 500): JsonResponse
     {
-        return response()->json($data, $errorCode);
+        return response()->json(['errors' => $data], $errorCode);
     }
 }

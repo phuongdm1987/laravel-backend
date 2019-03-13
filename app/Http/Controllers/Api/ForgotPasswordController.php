@@ -43,7 +43,7 @@ class ForgotPasswordController extends ApiController
      */
     protected function sendResetLinkResponse(Request $request, $response): JsonResponse
     {
-        return $this->success(['status' => $response]);
+        return $this->success(['status' => trans($response)]);
     }
 
     /**
@@ -53,6 +53,6 @@ class ForgotPasswordController extends ApiController
      */
     protected function sendResetLinkFailedResponse(Request $request, $response): JsonResponse
     {
-        return $this->error(['email' => $response], 422);
+        return $this->error(['email' => [trans($response)]], 422);
     }
 }

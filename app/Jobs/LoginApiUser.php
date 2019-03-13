@@ -67,10 +67,10 @@ class LoginApiUser implements ShouldQueue
     }
 
     /**
-     * @return Response
+     * @return mixed
      * @throws \Exception
      */
-    public function handle(): Response
+    public function handle()
     {
         $credentials = ['email' => $this->email, 'password' => $this->password];
         if (!auth()->attempt($credentials)) {
@@ -88,6 +88,8 @@ class LoginApiUser implements ShouldQueue
         ];
 
         $request = Request::create('/oauth/token', 'POST', $data);
-        return app()->handle($request);
+        $response = app()->handle($request);
+
+        return json_decode($response->getContent());
     }
 }
