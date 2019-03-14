@@ -84,6 +84,14 @@ class Product extends Model
     }
 
     /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
      * Get the indexable data array for the model.
      *
      * @return array
