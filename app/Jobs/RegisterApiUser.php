@@ -25,7 +25,7 @@ class RegisterApiUser extends RegisterUser
         event(new Registered($user));
 
         $loginApiUserJob = new LoginApiUser(
-            env('MIX_API_CLIENT_ID'),
+            (int)env('MIX_API_CLIENT_ID'),
             env('MIX_API_CLIENT_SECRET'),
             $this->email,
             $this->password
