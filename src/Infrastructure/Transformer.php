@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Henry\Infrastructure;
 
 use League\Fractal\Manager;
+use League\Fractal\Resource\ResourceAbstract;
+use League\Fractal\Serializer\JsonApiSerializer;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -35,14 +37,33 @@ class Transformer
     /**
      * @param $object
      * @param TransformerAbstract $transformer
+     * @param string $resourceKey
      * @return array
      */
-    public function transform($object, TransformerAbstract $transformer): array
+    public function transform($object, TransformerAbstract $transformer, string $resourceKey = ''): array
     {
+        $resource = $this->generateResource($object, $transformer, $resourceKey);
+        $this->manager->parseIncludes(request()->get('include', ''));
+
+        return $this->manager->createData($resource)->toArray();
+    }
+
+    /**
+     * @param $object
+     * @param TransformerAbstract $transformer
+     * @param string $resourceKey
+     * @return ResourceAbstract
+     */
+    private function generateResource(
+        $object,
+        TransformerAbstract $transformer,
+        string $resourceKey
+    ): ResourceAbstract {
         $resource = $this->resourceFactory->make($object);
         $resource->setData($object);
         $resource->setTransformer($transformer);
+        $resource->setResourceKey($resourceKey);
 
-        return $this->manager->createData($resource)->toArray();
+        return $resource;
     }
 }

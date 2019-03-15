@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Henry\Infrastructure\Product\Transformers;
 
 use Henry\Domain\Product\Product;
+use Henry\Infrastructure\Category\Transformers\CategoryTransformer;
+use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
 /**
@@ -12,6 +14,10 @@ use League\Fractal\TransformerAbstract;
  */
 class ProductTransformer extends TransformerAbstract
 {
+    protected $availableIncludes = [
+        'category'
+    ];
+
     /**
      * @param Product $product
      * @return array
@@ -26,5 +32,14 @@ class ProductTransformer extends TransformerAbstract
             'description' => $product->getDescription(),
             'amount' => $product->getAmount()->getValue()
         ];
+    }
+
+    /**
+     * @param Product $product
+     * @return Item
+     */
+    public function includeCategory(Product $product): Item
+    {
+        return $this->item($product->category, new CategoryTransformer, 'categories');
     }
 }

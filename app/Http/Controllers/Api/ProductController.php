@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Jobs\GetNormalProducts;
 use App\Jobs\GetProductsBySearch;
 use Henry\Infrastructure\Product\Transformers\ProductTransformer;
 use Henry\Infrastructure\Transformer;
@@ -37,8 +38,8 @@ class ProductController extends ApiController
     public function index(Request $request): JsonResponse
     {
         /** @var Collection $products */
-        $products = GetProductsBySearch::dispatchNow($request->get('q', ''));
-        $products = $this->transformer->transform($products, new ProductTransformer());
+        $products = GetNormalProducts::dispatchNow($request->all());
+        $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
         return $this->success($products);
     }
