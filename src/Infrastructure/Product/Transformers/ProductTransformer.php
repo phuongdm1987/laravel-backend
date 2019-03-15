@@ -24,13 +24,16 @@ class ProductTransformer extends TransformerAbstract
      */
     public function transform(Product $product): array
     {
+        $currency = $product->getAmount();
+
         return [
             'id' => $product->getId(),
             'name' => $product->getName(),
             'slug' => $product->getSlug(),
             'category_id' => $product->getCategoryId(),
             'description' => $product->getDescription(),
-            'amount' => $product->getAmount()->getValue()
+            'amount' => $currency->getValue(),
+            'amount_format' => $currency->format()
         ];
     }
 
