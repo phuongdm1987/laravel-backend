@@ -35,17 +35,17 @@ interface RepositoryInterface
 
     /**
      * @param array $data
-     * @param $id
+     * @param Model $model
      * @return bool
      */
-    public function update(array $data, $id): bool;
+    public function update(array $data, Model $model): bool;
 
     /**
-     * @param $id
+     * @param Model $model
      * @return bool|null
      * @throws \Exception
      */
-    public function delete($id): ?bool;
+    public function delete(Model $model): ?bool;
 
     /**
      * @param $id

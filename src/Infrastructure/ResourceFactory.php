@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Henry\Infrastructure;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Queue\QueueableCollection;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -28,7 +28,7 @@ class ResourceFactory
             return $resource;
         }
 
-        if ($object instanceof Arrayable) {
+        if ($object instanceof QueueableCollection) {
             return new Collection();
         }
 

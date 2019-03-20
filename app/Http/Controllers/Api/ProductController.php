@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\UpdateProductRequest;
 use App\Jobs\Product\DeleteProduct;
 use App\Jobs\Product\GetNormalProducts;
+use App\Jobs\Product\UpdateProduct;
 use Henry\Domain\Product\Product;
 use Henry\Infrastructure\Product\Transformers\ProductTransformer;
 use Henry\Infrastructure\Transformer;
@@ -43,6 +45,20 @@ class ProductController extends ApiController
         $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
         return $this->success($products);
+    }
+
+    /**
+     * @param UpdateProductRequest $request
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function update(UpdateProductRequest $request, Product $product): JsonResponse
+    {
+        $request->merge(['include' => 'category']);
+        $this->dispatchNow(UpdateProduct::fromRequest($request, $product));
+        $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
+
+        return $this->success($result, 'Update Product Success');
     }
 
     /**

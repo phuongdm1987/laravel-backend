@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->unsignedInteger('category_id')->index();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('amount')->nullable();
             $table->timestamps();
         });

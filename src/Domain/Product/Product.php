@@ -23,6 +23,8 @@ class Product extends Model
 
     protected $with = ['category'];
 
+    protected $fillable = ['category_id', 'name', 'description'];
+
     /**
      * Get the index name for the model.
      *

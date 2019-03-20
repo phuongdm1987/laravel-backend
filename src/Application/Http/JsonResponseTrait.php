@@ -13,19 +13,27 @@ trait JsonResponseTrait
 {
     /**
      * @param array $data
+     * @param string $message
      * @return JsonResponse
      */
-    public function createSuccess(array $data = []): JsonResponse
+    public function createSuccess(array $data = [], string $message = ''): JsonResponse
     {
+        $data['status'] = true;
+        $data['msg'] = $message;
+
         return response()->json($data, 201);
     }
 
     /**
      * @param array $data
+     * @param string $message
      * @return JsonResponse
      */
-    public function success(array $data = []): JsonResponse
+    public function success(array $data = [], string $message = ''): JsonResponse
     {
+        $data['status'] = true;
+        $data['msg'] = $message;
+
         return response()->json($data);
     }
 

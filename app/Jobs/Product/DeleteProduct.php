@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs\Product;
 
 use Henry\Domain\Product\Product;
+use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,11 +33,12 @@ class DeleteProduct implements ShouldQueue
     }
 
     /**
+     * @param ProductRepositoryInterface $productRepository
      * @throws \Exception
      */
-    public function handle(): void
+    public function handle(ProductRepositoryInterface $productRepository): void
     {
         $this->product->attributeValues()->delete();
-        $this->product->delete();
+        $productRepository->delete($this->product);
     }
 }

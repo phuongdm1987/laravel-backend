@@ -80,23 +80,21 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
 
     /**
      * @param array $data
-     * @param $id
+     * @param Model $model
      * @return bool
      */
-    public function update(array $data, $id): bool
+    public function update(array $data, Model $model): bool
     {
-        $model = $this->findById($id);
         return $model->update($data);
     }
 
     /**
-     * @param $id
+     * @param Model $model
      * @return bool|null
      * @throws \Exception
      */
-    public function delete($id): ?bool
+    public function delete(Model $model): ?bool
     {
-        $model = $this->findById($id);
         return $model->delete();
     }
 
