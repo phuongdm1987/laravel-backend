@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GetProductsByCategory;
+use App\Jobs\Product\GetProductsByCategory;
 use Henry\Domain\Category\Category;
 use Illuminate\Http\Request;
 

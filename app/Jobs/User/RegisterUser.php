@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs;
+namespace App\Jobs\User;
 
 use App\Http\Requests\RegisterRequest;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;

@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs;
+namespace App\Jobs\User;
 
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
-use Henry\Domain\User\User;
 use Illuminate\Auth\Events\Registered;
 
 /**

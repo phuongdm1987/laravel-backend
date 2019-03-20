@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\View\Composers;
 
 
-use App\Jobs\GetCategoriesWithTreeFormat;
+use App\Jobs\Category\GetCategoriesWithTreeFormat;
 use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\View\View;
 

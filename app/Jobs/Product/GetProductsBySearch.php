@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs;
+namespace App\Jobs\Product;
 
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;

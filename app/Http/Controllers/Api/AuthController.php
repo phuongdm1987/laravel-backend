@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\LoginApiRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Jobs\LoginApiUser;
-use App\Jobs\LogoutApiUser;
-use App\Jobs\RegisterApiUser;
+use App\Jobs\User\LoginApiUser;
+use App\Jobs\User\LogoutApiUser;
+use App\Jobs\User\RegisterApiUser;
 use Illuminate\Http\JsonResponse;
 
 /**

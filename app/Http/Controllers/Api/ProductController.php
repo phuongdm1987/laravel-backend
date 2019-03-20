@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Jobs\GetNormalProducts;
-use App\Jobs\GetProductsBySearch;
+use App\Jobs\Product\DeleteProduct;
+use App\Jobs\Product\GetNormalProducts;
+use Henry\Domain\Product\Product;
 use Henry\Infrastructure\Product\Transformers\ProductTransformer;
 use Henry\Infrastructure\Transformer;
 use Illuminate\Database\Eloquent\Collection;
@@ -42,5 +43,15 @@ class ProductController extends ApiController
         $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
         return $this->success($products);
+    }
+
+    /**
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function destroy(Product $product): JsonResponse
+    {
+        DeleteProduct::dispatchNow($product);
+        return $this->success(['msg' => 'Delete product success!']);
     }
 }

@@ -1,28 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs;
+namespace App\Jobs\Product;
 
-use Henry\Domain\Category\Category;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 /**
- * Class GetProductsByCategory
+ * Class GetNormalProducts
  * @package App\Jobs
  */
-class GetProductsByCategory implements ShouldQueue
+class GetNormalProducts implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    /**
-     * @var Category
-     */
-    private $category;
     /**
      * @var array
      */
@@ -34,25 +29,22 @@ class GetProductsByCategory implements ShouldQueue
 
     /**
      * Create a new job instance.
-     * @param Category $category
      * @param array $conditions
      * @param int $perPage
      */
-    public function __construct(Category $category, array $conditions = [], $perPage = 15)
+    public function __construct(array $conditions = [], $perPage = 15)
     {
-        $this->category = $category;
         $this->conditions = $conditions;
         $this->perPage = $perPage;
     }
 
     /**
+     * Execute the job.
      * @param ProductRepositoryInterface $productRepository
      * @return LengthAwarePaginator
      */
     public function handle(ProductRepositoryInterface $productRepository): LengthAwarePaginator
     {
-        $params = array_merge($this->conditions, ['category_id' => $this->category->getId()]);
-
-        return $productRepository->withPaginate($params, $this->perPage);
+        return $productRepository->withPaginate($this->conditions, $this->perPage);
     }
 }
