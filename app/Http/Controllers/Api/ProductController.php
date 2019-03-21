@@ -56,7 +56,7 @@ class ProductController extends ApiController
     {
         $request->merge(['include' => 'category']);
         $this->dispatchNow(UpdateProduct::fromRequest($request, $product));
-        $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
+        $result = $this->transformer->transform($product->load('category'), new ProductTransformer(), 'products');
 
         return $this->success($result, 'Update Product Success');
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Henry\Infrastructure\Category\Transformers;
 
 use Henry\Domain\Category\Category;
+use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use League\Fractal\TransformerAbstract;
 
@@ -14,7 +15,8 @@ use League\Fractal\TransformerAbstract;
 class CategoryTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'parent'
+        'parent',
+        'children'
     ];
 
     /**
@@ -39,5 +41,14 @@ class CategoryTransformer extends TransformerAbstract
     public function includeParent(Category $category): Item
     {
         return $this->item($category->parent, new self, 'categories');
+    }
+
+    /**
+     * @param Category $category
+     * @return Collection
+     */
+    public function includeChildren(Category $category): Collection
+    {
+        return $this->collection($category->children, new self, 'categories');
     }
 }

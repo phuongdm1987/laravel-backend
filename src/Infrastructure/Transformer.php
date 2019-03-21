@@ -5,7 +5,6 @@ namespace Henry\Infrastructure;
 
 use League\Fractal\Manager;
 use League\Fractal\Resource\ResourceAbstract;
-use League\Fractal\Serializer\JsonApiSerializer;
 use League\Fractal\TransformerAbstract;
 
 /**

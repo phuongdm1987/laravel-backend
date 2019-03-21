@@ -19,6 +19,8 @@ Route::namespace('Api')->middleware('guest')->group(function() {
     Route::post('/register', 'AuthController@register');
     Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
     Route::resource('/products', 'ProductController');
+    Route::get('/categories/all-tree', 'CategoryController@getAllTree');
+    Route::resource('/categories', 'CategoryController');
 });
 
 Route::middleware('auth:api')->namespace('Api')->group(function() {
