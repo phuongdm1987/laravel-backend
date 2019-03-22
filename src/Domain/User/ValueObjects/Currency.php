@@ -108,6 +108,9 @@ class Currency
      */
     public function format(): string
     {
+        if ($this->number <= 0) {
+            return __('commons.contact');
+        }
         return number_format($this->number, $this->decimals, $this->decPoint, $this->thousandsSep) . $this->currency;
     }
 }

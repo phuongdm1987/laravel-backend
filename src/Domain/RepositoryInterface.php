@@ -29,7 +29,7 @@ interface RepositoryInterface
 
     /**
      * @param array $data
-     * @return mixed
+     * @return Model
      */
     public function create(array $data): Model;
 

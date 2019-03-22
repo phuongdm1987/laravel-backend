@@ -29,10 +29,11 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         $product = $this->route('product');
+        $productId = $product ? $product->id : 0;
 
         return [
             'category_id' => 'required|integer|exists:categories,id',
-            'name' => 'required|string|max:255|unique:products,name,' . $product->id,
+            'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'description' => 'string',
         ];
     }

@@ -41,9 +41,9 @@ class UpdateProduct implements ShouldQueue
     /**
      * @param UpdateProductRequest $request
      * @param Product $product
-     * @return UpdateProduct
+     * @return self
      */
-    public static function fromRequest(UpdateProductRequest $request, Product $product): UpdateProduct
+    public static function fromRequest(UpdateProductRequest $request, Product $product): self
     {
         return new static(
             [

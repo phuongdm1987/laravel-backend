@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\UpdateProductRequest;
 use App\Jobs\Product\DeleteProduct;
 use App\Jobs\Product\GetNormalProducts;
+use App\Jobs\Product\StoreProduct;
 use App\Jobs\Product\UpdateProduct;
 use Henry\Domain\Product\Product;
 use Henry\Infrastructure\Product\Transformers\ProductTransformer;
@@ -49,6 +50,18 @@ class ProductController extends ApiController
 
     /**
      * @param UpdateProductRequest $request
+     * @return JsonResponse
+     */
+    public function store(UpdateProductRequest $request): JsonResponse
+    {
+        $product = $this->dispatchNow(StoreProduct::fromRequest($request));
+        $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
+
+        return $this->success($result, 'Store Product Success');
+    }
+
+    /**
+     * @param UpdateProductRequest $request
      * @param Product $product
      * @return JsonResponse
      */
@@ -56,7 +69,7 @@ class ProductController extends ApiController
     {
         $request->merge(['include' => 'category']);
         $this->dispatchNow(UpdateProduct::fromRequest($request, $product));
-        $result = $this->transformer->transform($product->load('category'), new ProductTransformer(), 'products');
+        $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
 
         return $this->success($result, 'Update Product Success');
     }

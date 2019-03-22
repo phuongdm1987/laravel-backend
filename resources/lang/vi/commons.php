@@ -7,4 +7,5 @@ declare(strict_types=1);
      'language' => 'Ngôn ngữ',
      'vietnamese' => 'Tiếng Việt',
      'english' => 'Tiếng Anh',
+     'contact' => 'Liên hệ'
  ];

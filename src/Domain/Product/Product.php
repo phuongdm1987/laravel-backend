@@ -82,7 +82,7 @@ class Product extends Model
      */
     public function getAmount(): Currency
     {
-        return new Currency($this->amount);
+        return new Currency((float)$this->amount);
     }
 
     /**
