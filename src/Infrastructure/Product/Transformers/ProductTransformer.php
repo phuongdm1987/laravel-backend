@@ -19,11 +19,15 @@ class ProductTransformer extends TransformerAbstract
     ];
 
     /**
-     * @param Product $product
+     * @param Product|null $product
      * @return array
      */
-    public function transform(Product $product): array
+    public function transform(Product $product = null): array
     {
+        if ($product === null) {
+            return [];
+        }
+
         $currency = $product->getAmount();
 
         return [

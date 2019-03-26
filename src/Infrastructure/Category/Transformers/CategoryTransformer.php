@@ -20,11 +20,15 @@ class CategoryTransformer extends TransformerAbstract
     ];
 
     /**
-     * @param Category $category
+     * @param Category|null $category
      * @return array
      */
-    public function transform(Category $category): array
+    public function transform(Category $category = null): array
     {
+        if ($category === null) {
+            return [];
+        }
+        
         return [
             'id' => $category->getId(),
             'name' => $category->getName(),

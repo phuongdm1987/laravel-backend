@@ -20,6 +20,7 @@ Route::namespace('Api')->middleware('guest')->group(function() {
     Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
     Route::resource('/products', 'ProductController');
     Route::get('/categories/all-tree', 'CategoryController@getAllTree');
+    Route::get('/categories/types', 'CategoryController@getTypes');
     Route::resource('/categories', 'CategoryController');
 });
 

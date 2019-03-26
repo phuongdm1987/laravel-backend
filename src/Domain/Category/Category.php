@@ -88,10 +88,7 @@ class Category extends Model
      */
     public function getType(): Type
     {
-        $type = new Type();
-        $type->setType($this->type);
-
-        return $type;
+        return new Type($this->type);
     }
 
     /**

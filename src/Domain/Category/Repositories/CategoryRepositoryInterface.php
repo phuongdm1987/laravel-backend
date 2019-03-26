@@ -15,10 +15,11 @@ use Illuminate\Database\Eloquent\Collection;
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
     /**
-     * @param \Henry\Domain\Category\ValueObjects\Type $type
+     * @param Type|null $type
      * @return Collection
+     * @throws \Exception
      */
-    public function getAllToTree(Type $type): Collection;
+    public function getAllToTree(Type $type = null): Collection;
 
     /**
      * @param array $data

@@ -25,20 +25,11 @@ class Type
 
     /**
      * Type constructor.
-     */
-    public function __construct()
-    {
-        $this->type = self::TYPE_MENU;
-    }
-
-    /**
      * @param string $type
-     * @return $this
      */
-    public function setType(string $type): self
+    public function __construct(string $type)
     {
         $this->type = $this->assertType($type);
-        return $this;
     }
 
     /**

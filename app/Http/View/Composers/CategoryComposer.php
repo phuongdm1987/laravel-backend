@@ -20,8 +20,7 @@ class CategoryComposer
      */
     public function compose(View $view): void
     {
-        $type = new Type();
-        $type->setType(Type::TYPE_CATEGORY);
+        $type = new Type(Type::TYPE_CATEGORY);
         $categories = GetCategoriesWithTreeFormat::dispatchNow($type);
 
         $view->with(compact('categories'));

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Jobs\Product\GetProductsByCategory;
+use App\Jobs\Product\GetNormalProducts;
 use Henry\Domain\Category\Category;
 use Illuminate\Http\Request;
 
@@ -20,7 +20,9 @@ class CategoryController extends Controller
      */
     public function index(Request $request, Category $category)
     {
-        $products = GetProductsByCategory::dispatchNow($category, $request->all());
+        $params = $request->all();
+        $params = array_merge($params, ['category_id' => $category->getId()]);
+        $products = GetNormalProducts::dispatchNow($params);
         $category->load('attributes.attributeValues');
 
         return view('category.index', compact('category', 'products'));

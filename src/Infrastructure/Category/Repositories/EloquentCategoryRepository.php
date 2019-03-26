@@ -30,16 +30,23 @@ class EloquentCategoryRepository extends AbstractEloquentRepository implements C
     }
 
     /**
-     * @param Type $type
+     * @param Type|null $type
      * @return Collection
      * @throws \Exception
      */
-    public function getAllToTree(Type $type): Collection
+    public function getAllToTree(Type $type = null): Collection
     {
 //        $this->rebuildTree();
-        return cache()->remember('category_' . $type->getValue(), 15, function () use($type) {
+        $key = $type ? $type->getValue() : '';
+        return cache()->remember('category_' . $key, 15, function () use($type) {
+            if ($type) {
+                return $this->model
+                    ->where('type', $type->getValue())
+                    ->get()
+                    ->toTree();
+            }
+
             return $this->model
-                ->where('type', $type->getValue())
                 ->get()
                 ->toTree();
         });

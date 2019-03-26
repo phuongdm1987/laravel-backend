@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Jobs\Category\GetCategoriesWithTreeFormat;
+use App\Jobs\Category\GetNormalCategories;
+use App\Jobs\Category\StoreCategory;
+use App\Jobs\Category\UpdateCategory;
+use Henry\Domain\Category\Category;
+use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Infrastructure\Category\Transformers\CategoryTransformer;
 use Henry\Infrastructure\Transformer;
 use Illuminate\Http\JsonResponse;
@@ -42,57 +48,48 @@ class CategoryController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function getTypes(): JsonResponse
     {
-        //
+        return $this->success(['data' => Type::getAll()]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        //
+        $categories = GetNormalCategories::dispatchNow($request->all(), $request->get('per_page', 15));
+        $categories = $this->transformer->transform($categories, new CategoryTransformer(), 'categories');
+
+        return $this->success($categories);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateCategoryRequest $request
+     * @return JsonResponse
      */
-    public function show($id)
+    public function store(UpdateCategoryRequest $request): JsonResponse
     {
-        //
+        $product = $this->dispatchNow(StoreCategory::fromRequest($request));
+        $result = $this->transformer->transform($product, new CategoryTransformer(), 'categories');
+
+        return $this->success($result, 'Store Category Success');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateCategoryRequest $request
+     * @param Category $category
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
-        //
-    }
+        $request->merge(['include' => 'parent']);
+        $this->dispatchNow(UpdateCategory::fromRequest($request, $category));
+        $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $this->success($result, 'Update Category Success');
     }
 }

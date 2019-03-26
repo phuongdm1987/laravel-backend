@@ -19,7 +19,7 @@ class MenuComposer
      */
     public function compose(View $view): void
     {
-        $type = new Type();
+        $type = new Type(Type::TYPE_MENU);
         $menus = GetCategoriesWithTreeFormat::dispatchNow($type);
 
         $view->with(compact('menus'));

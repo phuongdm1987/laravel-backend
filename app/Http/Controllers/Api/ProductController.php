@@ -42,7 +42,7 @@ class ProductController extends ApiController
     public function index(Request $request): JsonResponse
     {
         /** @var Collection $products */
-        $products = GetNormalProducts::dispatchNow($request->all());
+        $products = GetNormalProducts::dispatchNow($request->all(), $request->get('per_page', 15));
         $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
         return $this->success($products);

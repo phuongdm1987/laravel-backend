@@ -113,6 +113,10 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     public function getIdsBySearch(array $conditions = []): array
     {
+        if (!method_exists($this->model, 'search')) {
+            return $conditions;
+        }
+
         $queryParam = (string)array_get($conditions, 'q', '');
 
         if (!$queryParam) {

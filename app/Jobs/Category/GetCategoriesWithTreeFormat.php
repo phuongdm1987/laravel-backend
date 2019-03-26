@@ -22,15 +22,15 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var \Henry\Domain\Category\ValueObjects\Type
+     * @var Type|null
      */
     private $type;
 
     /**
      * GetCategoriesWithTreeFormat constructor.
-     * @param \Henry\Domain\Category\ValueObjects\Type $type
+     * @param Type|null $type
      */
-    public function __construct(Type $type)
+    public function __construct(Type $type = null)
     {
         $this->type = $type;
     }
@@ -41,8 +41,11 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
      */
     public static function fromRequest(Request $request): self
     {
-        $type = new Type();
-        $type->setType($request->get('type', Type::TYPE_MENU));
+        $type = $request->get('type', null);
+
+        if ($type) {
+            $type = new Type($type);
+        }
 
         return new static($type);
     }
