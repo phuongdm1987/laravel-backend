@@ -31,7 +31,7 @@ trait JsonResponseTrait
      */
     public function success(array $data = [], string $message = ''): JsonResponse
     {
-        $data['status'] = true;
+        $data['status'] = $data['status'] ?? true;
         $data['msg'] = $message;
 
         return response()->json($data);

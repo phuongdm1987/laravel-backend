@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Jobs\Category\DeleteCategory;
 use App\Jobs\Category\GetCategoriesWithTreeFormat;
 use App\Jobs\Category\GetNormalCategories;
 use App\Jobs\Category\StoreCategory;
@@ -91,5 +92,20 @@ class CategoryController extends ApiController
         $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 
         return $this->success($result, 'Update Category Success');
+    }
+
+    /**
+     * @param Category $category
+     * @return JsonResponse
+     */
+    public function destroy(Category $category): JsonResponse
+    {
+        $result = DeleteCategory::dispatchNow($category);
+
+        if ($result) {
+            return $this->success([], 'Delete Category Success!');
+        }
+
+        return $this->success(['status' => false], 'Delete Category Fail, This category has products!');
     }
 }

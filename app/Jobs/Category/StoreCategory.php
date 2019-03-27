@@ -62,7 +62,7 @@ class StoreCategory implements ShouldQueue
      */
     public function handle(CategoryRepositoryInterface $categoryRepository): Model
     {
-        cache()->deleteMultiple(['category_category', 'category_menu']);
+        cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
         return $categoryRepository->create([
             'parent_id' => $this->parentId,
             'name' => $this->name,

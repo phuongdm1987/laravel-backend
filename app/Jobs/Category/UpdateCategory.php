@@ -58,9 +58,11 @@ class UpdateCategory implements ShouldQueue
 
     /**
      * @param CategoryRepositoryInterface $categoryRepository
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function handle(CategoryRepositoryInterface $categoryRepository): void
     {
+        cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
         $categoryRepository->update($this->attributes, $this->category);
     }
 }
