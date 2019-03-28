@@ -17,5 +17,5 @@ class EloquentUserSorter extends AbstractEloquentSorter implements UserSorterInt
     /**
      * @var array
      */
-    protected $fields = [];
+    protected $fields = ['id', 'name'];
 }

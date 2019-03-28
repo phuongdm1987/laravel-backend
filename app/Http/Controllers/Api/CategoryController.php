@@ -74,8 +74,8 @@ class CategoryController extends ApiController
      */
     public function store(UpdateCategoryRequest $request): JsonResponse
     {
-        $product = $this->dispatchNow(StoreCategory::fromRequest($request));
-        $result = $this->transformer->transform($product, new CategoryTransformer(), 'categories');
+        $category = $this->dispatchNow(StoreCategory::fromRequest($request));
+        $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 
         return $this->success($result, 'Store Category Success');
     }
@@ -106,6 +106,6 @@ class CategoryController extends ApiController
             return $this->success([], 'Delete Category Success!');
         }
 
-        return $this->success(['status' => false], 'Delete Category Fail, This category has products!');
+        return $this->success(['status' => false], 'Delete Category Fail, This category has categorys!');
     }
 }

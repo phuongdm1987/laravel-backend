@@ -16,5 +16,5 @@ class EloquentAttributeValueSorter extends AbstractEloquentSorter implements Att
     /**
      * @var array
      */
-    protected $fields = [];
+    protected $fields = ['id', 'attribute_id', 'value'];
 }

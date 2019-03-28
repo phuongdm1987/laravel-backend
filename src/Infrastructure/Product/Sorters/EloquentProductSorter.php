@@ -16,5 +16,5 @@ class EloquentProductSorter extends AbstractEloquentSorter implements ProductSor
     /**
      * @var array
      */
-    protected $fields = ['id', 'category_id'];
+    protected $fields = ['id', 'category_id', 'name', 'amount'];
 }

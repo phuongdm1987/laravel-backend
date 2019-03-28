@@ -38,7 +38,7 @@ class DeleteProduct implements ShouldQueue
      */
     public function handle(ProductRepositoryInterface $productRepository): void
     {
-        $this->product->attributeValues()->delete();
+        $this->product->attributeValues()->detach();
         $productRepository->delete($this->product);
     }
 }

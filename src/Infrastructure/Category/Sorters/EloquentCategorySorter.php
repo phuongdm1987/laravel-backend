@@ -16,5 +16,5 @@ class EloquentCategorySorter extends AbstractEloquentSorter implements CategoryS
     /**
      * @var array
      */
-    protected $fields = [];
+    protected $fields = ['id', 'name', 'type', 'parent_id'];
 }

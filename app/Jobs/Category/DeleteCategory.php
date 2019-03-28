@@ -36,14 +36,15 @@ class DeleteCategory implements ShouldQueue
      * @param CategoryRepositoryInterface $categoryRepository
      * @return bool
      * @throws \Exception
+     * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function handle(CategoryRepositoryInterface $categoryRepository): bool
     {
         if (!$this->category->products->isEmpty()) {
             return false;
         }
-
-        $this->category->attributes()->delete();
+        cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
+        $this->category->attributes()->detach();
         $categoryRepository->delete($this->category);
 
         return true;
