@@ -1,22 +1,7 @@
-import Auth from './auth'
-
 class Api {
 
     _call(requestType, url, data = null) {
-        Auth.login()
-        return new Promise((resolve, reject) => {
-            axios[requestType](url, data)
-                .then(response => {
-                    resolve(response)
-                })
-                .catch(({response}) => {
-                    if (response.status === 401) {
-                        Auth.logout()
-                    }
-
-                    reject(response)
-                })
-        })
+        return window.axios[requestType](url, data)
     }
 
     get(url, data = null) {

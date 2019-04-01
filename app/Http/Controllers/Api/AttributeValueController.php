@@ -52,32 +52,33 @@ class AttributeValueController extends ApiController
      */
     public function store(UpdateAttributeValueRequest $request): JsonResponse
     {
-        $attribute = $this->dispatchNow(StoreAttributeValue::fromRequest($request));
-        $result = $this->transformer->transform($attribute, new AttributeValueTransformer(), 'attributeValues');
+        $attributeValue = $this->dispatchNow(StoreAttributeValue::fromRequest($request));
+        $result = $this->transformer->transform($attributeValue, new AttributeValueTransformer(), 'attributeValues');
 
         return $this->success($result, 'Store AttributeValue Success');
     }
 
     /**
      * @param UpdateAttributeValueRequest $request
-     * @param AttributeValue $attribute
+     * @param AttributeValue $attributeValue
      * @return JsonResponse
      */
-    public function update(UpdateAttributeValueRequest $request, AttributeValue $attribute): JsonResponse
+    public function update(UpdateAttributeValueRequest $request, AttributeValue $attributeValue): JsonResponse
     {
-        $this->dispatchNow(UpdateAttributeValue::fromRequest($request, $attribute));
-        $result = $this->transformer->transform($attribute, new AttributeValueTransformer(), 'attributeValues');
+        $request->merge(['include' => 'attribute']);
+        $this->dispatchNow(UpdateAttributeValue::fromRequest($request, $attributeValue));
+        $result = $this->transformer->transform($attributeValue, new AttributeValueTransformer(), 'attributeValues');
 
         return $this->success($result, 'Update AttributeValue Success');
     }
 
     /**
-     * @param AttributeValue $attribute
+     * @param AttributeValue $attributeValue
      * @return JsonResponse
      */
-    public function destroy(AttributeValue $attribute): JsonResponse
+    public function destroy(AttributeValue $attributeValue): JsonResponse
     {
-        DeleteAttributeValue::dispatchNow($attribute);
+        DeleteAttributeValue::dispatchNow($attributeValue);
 
         return $this->success([], 'Delete AttributeValue Success!');
     }

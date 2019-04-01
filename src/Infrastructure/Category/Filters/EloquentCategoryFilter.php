@@ -14,6 +14,7 @@ use Henry\Infrastructure\AbstractEloquentFilter;
 class EloquentCategoryFilter extends AbstractEloquentFilter implements CategoryFilterInterface
 {
     protected $filters = [
-        EloquentQueryFilter::class
+        EloquentQueryFilter::class,
+        EloquentTypeFilter::class
     ];
 }

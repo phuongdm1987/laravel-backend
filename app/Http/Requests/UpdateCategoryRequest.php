@@ -35,7 +35,9 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'parent_id' => 'nullable|integer|exists:categories,id',
             'name' => 'required|string|max:255|unique:categories,name,' . $categoryId,
-            'type' => 'required|string|in:' . implode(',', Type::getAll())
+            'type' => 'required|string|in:' . implode(',', Type::getAll()),
+            'attribute_ids' => 'nullable|array',
+            'attribute_ids.*' => 'integer|exists:attributes,id'
         ];
     }
 
@@ -61,5 +63,13 @@ class UpdateCategoryRequest extends FormRequest
     public function type(): string
     {
         return (string)$this->get('type');
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeIds(): array
+    {
+        return $this->get('attribute_ids', []);
     }
 }

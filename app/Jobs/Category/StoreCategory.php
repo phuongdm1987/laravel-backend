@@ -31,18 +31,24 @@ class StoreCategory implements ShouldQueue
      * @var int|null
      */
     private $parentId;
+    /**
+     * @var array
+     */
+    private $attributeIds;
 
     /**
      * Create a new job instance.
      * @param string $name
      * @param string $type
      * @param int $parentId
+     * @param array $attributeIds
      */
-    public function __construct(string $name, string $type, int $parentId)
+    public function __construct(string $name, string $type, int $parentId, array $attributeIds = [])
     {
         $this->name = $name;
         $this->type = $type;
         $this->parentId = $parentId;
+        $this->attributeIds = $attributeIds;
     }
 
     /**
@@ -51,7 +57,7 @@ class StoreCategory implements ShouldQueue
      */
     public static function fromRequest(UpdateCategoryRequest $request): self
     {
-        return new static($request->name(), $request->type(), $request->parentId());
+        return new static($request->name(), $request->type(), $request->parentId(), $request->attributeIds());
     }
 
     /**
@@ -63,10 +69,14 @@ class StoreCategory implements ShouldQueue
     public function handle(CategoryRepositoryInterface $categoryRepository): Model
     {
         cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
-        return $categoryRepository->create([
+        $category = $categoryRepository->create([
             'parent_id' => $this->parentId,
             'name' => $this->name,
             'type' => $this->type
         ]);
+
+        $category->attributes()->sync($this->attributeIds);
+
+        return $category;
     }
 }

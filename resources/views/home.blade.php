@@ -54,9 +54,3 @@
         </div>
     </section>
 @endsection
-<script>
-    import ProductSuggestion from "../js/components/ProductSuggestion";
-    export default {
-        components: {ProductSuggestion}
-    }
-</script>

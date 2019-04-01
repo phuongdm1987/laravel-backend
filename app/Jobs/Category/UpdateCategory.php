@@ -50,7 +50,8 @@ class UpdateCategory implements ShouldQueue
             [
                 'parent_id' => $request->parentId(),
                 'name' => $request->name(),
-                'type' => $request->type()
+                'type' => $request->type(),
+                'attribute_ids' => $request->attributeIds()
             ],
             $category
         );
@@ -64,5 +65,9 @@ class UpdateCategory implements ShouldQueue
     {
         cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
         $categoryRepository->update($this->attributes, $this->category);
+
+        if (array_has($this->attributes, 'attribute_ids')) {
+            $this->category->attributes()->sync($this->attributes['attribute_ids']);
+        }
     }
 }

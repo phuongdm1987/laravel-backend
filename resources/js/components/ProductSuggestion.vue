@@ -38,7 +38,7 @@
                     return null
                 }
 
-                return this.product.all((products) => this.items = products, query)
+                return this.product.all((products) => this.items = products.data, query)
                     .then(this.setLoaded())
             },
             onItemSelected (item) {

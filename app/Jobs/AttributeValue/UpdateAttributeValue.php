@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Jobs\AttributeValue;
 
+use App\Http\Requests\UpdateAttributeValueRequest;
 use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\AttributeValue\Repositories\AttributeValueRepositoryInterface;
 use Illuminate\Bus\Queueable;
@@ -36,6 +37,22 @@ class UpdateAttributeValue implements ShouldQueue
     {
         $this->attributes = $attributes;
         $this->attributeValue = $attributeValue;
+    }
+
+    /**
+     * @param UpdateAttributeValueRequest $request
+     * @param AttributeValue $attributeValue
+     * @return self
+     */
+    public static function fromRequest(UpdateAttributeValueRequest $request, AttributeValue $attributeValue): self
+    {
+        return new static(
+            [
+                'value' => $request->value(),
+                'attribute_id' => $request->attributeId()
+            ],
+            $attributeValue
+        );
     }
 
     /**

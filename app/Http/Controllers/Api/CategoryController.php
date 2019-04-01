@@ -87,7 +87,7 @@ class CategoryController extends ApiController
      */
     public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
-        $request->merge(['include' => 'parent']);
+        $request->merge(['include' => 'parent,attributes']);
         $this->dispatchNow(UpdateCategory::fromRequest($request, $category));
         $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 

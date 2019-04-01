@@ -13,5 +13,8 @@ use Henry\Infrastructure\AbstractEloquentFilter;
  */
 class EloquentAttributeValueFilter extends AbstractEloquentFilter implements AttributeValueFilterInterface
 {
-
+    protected $filters = [
+        EloquentQueryFilter::class,
+        EloquentAttributeIdFilter::class
+    ];
 }

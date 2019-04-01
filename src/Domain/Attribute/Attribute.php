@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Attribute extends Model
 {
     public $timestamps = false;
+    protected $fillable = ['name', 'is_filter'];
 
     /**
      * @return int

@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class AttributeValue extends Model
 {
     public $timestamps = false;
+    protected $fillable = ['attribute_id', 'value'];
 
     /**
      * @return int
