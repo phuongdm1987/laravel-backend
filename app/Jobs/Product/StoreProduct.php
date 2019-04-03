@@ -31,18 +31,24 @@ class StoreProduct implements ShouldQueue
      * @var string
      */
     private $description;
+    /**
+     * @var array
+     */
+    private $attributeValueIds;
 
     /**
      * Create a new job instance.
      * @param int $categoryId
      * @param string $name
      * @param string $description
+     * @param array $attributeValueIds
      */
-    public function __construct(int $categoryId, string $name, string $description = '')
+    public function __construct(int $categoryId, string $name, string $description = '', array $attributeValueIds = [])
     {
         $this->categoryId = $categoryId;
         $this->name = $name;
         $this->description = $description;
+        $this->attributeValueIds = $attributeValueIds;
     }
 
     /**
@@ -51,7 +57,12 @@ class StoreProduct implements ShouldQueue
      */
     public static function fromRequest(UpdateProductRequest $request): self
     {
-        return new static($request->categoryId(), $request->name(), $request->description());
+        return new static(
+            $request->categoryId(),
+            $request->name(),
+            $request->description(),
+            $request->attributeValueIds()
+        );
     }
 
     /**
@@ -60,10 +71,14 @@ class StoreProduct implements ShouldQueue
      */
     public function handle(ProductRepositoryInterface $productRepository): Model
     {
-        return $productRepository->create([
+        $product = $productRepository->create([
             'category_id' => $this->categoryId,
             'name' => $this->name,
             'description' => $this->description
         ]);
+
+        $product->attributeValues()->sync($this->attributeValueIds);
+
+        return $product;
     }
 }

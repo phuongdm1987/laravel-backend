@@ -41,6 +41,7 @@ class AttributeValueController extends ApiController
     public function index(Request $request): JsonResponse
     {
         $attributeValues = GetNormalAttributeValues::dispatchNow($request->all(), $request->get('per_page', 15));
+        $attributeValues->load('attribute');
         $attributeValues = $this->transformer->transform($attributeValues, new AttributeValueTransformer(), 'attributeValues');
 
         return $this->success($attributeValues);

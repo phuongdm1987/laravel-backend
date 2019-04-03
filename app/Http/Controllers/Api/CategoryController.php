@@ -43,6 +43,7 @@ class CategoryController extends ApiController
     public function getAllTree(Request $request): JsonResponse
     {
         $tree = $this->dispatchNow(GetCategoriesWithTreeFormat::fromRequest($request));
+        $tree->load('children.children.children.children.children', 'attributes');
         $tree = $this->transformer->transform($tree, new CategoryTransformer(), 'categories');
 
         return $this->success($tree);

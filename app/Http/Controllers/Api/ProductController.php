@@ -43,6 +43,7 @@ class ProductController extends ApiController
     {
         /** @var Collection $products */
         $products = GetNormalProducts::dispatchNow($request->all(), $request->get('per_page', 15));
+        $products->load('category.attributes.attributeValues', 'attributeValues');
         $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
         return $this->success($products);
@@ -67,7 +68,7 @@ class ProductController extends ApiController
      */
     public function update(UpdateProductRequest $request, Product $product): JsonResponse
     {
-        $request->merge(['include' => 'category']);
+        $request->merge(['include' => 'category.attributes.attributeValues,attributeValues']);
         $this->dispatchNow(UpdateProduct::fromRequest($request, $product));
         $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
 

@@ -35,6 +35,8 @@ class UpdateProductRequest extends FormRequest
             'category_id' => 'required|integer|exists:categories,id',
             'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'description' => 'string',
+            'attribute_value_ids' => 'nullable|array',
+            'attribute_value_ids.*.attribute_id' => 'integer|exists:attributes,id'
         ];
     }
 
@@ -60,5 +62,13 @@ class UpdateProductRequest extends FormRequest
     public function description(): string
     {
         return (string)$this->get('description','');
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeValueIds(): array
+    {
+        return $this->get('attribute_value_ids', []);
     }
 }

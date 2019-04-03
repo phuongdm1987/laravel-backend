@@ -49,7 +49,8 @@ class UpdateProduct implements ShouldQueue
             [
                 'category_id' => $request->categoryId(),
                 'name' => $request->name(),
-                'description' => $request->description()
+                'description' => $request->description(),
+                'attribute_value_ids' => $request->attributeValueIds()
             ],
             $product
         );
@@ -62,5 +63,9 @@ class UpdateProduct implements ShouldQueue
     public function handle(ProductRepositoryInterface $productRepository): void
     {
         $productRepository->update($this->attributes, $this->product);
+
+        if (array_has($this->attributes, 'attribute_value_ids')) {
+            $this->product->attributeValues()->sync($this->attributes['attribute_value_ids']);
+        }
     }
 }

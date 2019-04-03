@@ -21,7 +21,6 @@ class CreateAttributeValueProductTable extends Migration
             $table->unsignedInteger('attribute_value_id');
             $table->unsignedInteger('attribute_id');
             $table->unsignedInteger('product_id');
-            $table->unsignedBigInteger('amount')->default(0);
             $table->primary(['attribute_value_id', 'product_id']);
         });
     }
