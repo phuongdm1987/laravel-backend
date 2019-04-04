@@ -10,6 +10,7 @@ use App\Jobs\Category\GetNormalCategories;
 use App\Jobs\Category\StoreCategory;
 use App\Jobs\Category\UpdateCategory;
 use Henry\Domain\Category\Category;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Infrastructure\Category\Transformers\CategoryTransformer;
 use Henry\Infrastructure\Transformer;
@@ -26,14 +27,20 @@ class CategoryController extends ApiController
      * @var Transformer
      */
     private $transformer;
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
 
     /**
      * ProductController constructor.
      * @param Transformer $transformer
+     * @param CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(Transformer $transformer)
+    public function __construct(Transformer $transformer, CategoryRepositoryInterface $categoryRepository)
     {
         $this->transformer = $transformer;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -47,6 +54,14 @@ class CategoryController extends ApiController
         $tree = $this->transformer->transform($tree, new CategoryTransformer(), 'categories');
 
         return $this->success($tree);
+    }
+
+    public function show($id)
+    {
+        $category = $this->categoryRepository->findById($id);
+        $category = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
+
+        return $this->success($category);
     }
 
     /**
