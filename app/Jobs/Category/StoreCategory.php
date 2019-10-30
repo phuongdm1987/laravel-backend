@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs\Category;
 
 use App\Http\Requests\UpdateCategoryRequest;
+use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -69,6 +70,7 @@ class StoreCategory implements ShouldQueue
     public function handle(CategoryRepositoryInterface $categoryRepository): Model
     {
         cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
+        /** @var Category $category */
         $category = $categoryRepository->create([
             'parent_id' => $this->parentId,
             'name' => $this->name,

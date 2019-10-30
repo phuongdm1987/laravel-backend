@@ -49,7 +49,13 @@ interface RepositoryInterface
 
     /**
      * @param $id
-     * @return Model
+     * @return Model|null
      */
-    public function findById($id): Model;
+    public function findById($id): ?Model;
+
+    /**
+     * @param array $conditions
+     * @return Model|null
+     */
+    public function findBy(array $conditions = []): ?Model;
 }

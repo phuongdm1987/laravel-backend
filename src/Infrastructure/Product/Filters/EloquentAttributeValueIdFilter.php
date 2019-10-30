@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 class EloquentAttributeValueIdFilter implements ProductFilterInterface
 {
     protected $searchField = 'attribute_value_id';
-    protected $field = 'id';
+    protected $field = 'attribute_value_id';
 
     /**
      * @param Builder $queryBuilder

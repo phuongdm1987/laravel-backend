@@ -60,10 +60,13 @@ class CategoryTransformer extends TransformerAbstract
 
     /**
      * @param Category $category
-     * @return Collection
+     * @return Collection|\League\Fractal\Resource\NullResource
      */
-    public function includeAttributes(Category $category): Collection
+    public function includeAttributes(Category $category)
     {
+        if ($category === null) {
+            return $this->null();
+        }
         return $this->collection($category->attributes, new AttributeTransformer(), 'attributes');
     }
 }

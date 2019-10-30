@@ -15,6 +15,9 @@ use Henry\Domain\Category\Sorters\CategorySorterInterface;
 use Henry\Domain\Product\Filters\ProductFilterInterface;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Henry\Domain\Product\Sorters\ProductSorterInterface;
+use Henry\Domain\ProductUser\Filters\ProductUserFilterInterface;
+use Henry\Domain\ProductUser\Repositories\ProductUserRepositoryInterface;
+use Henry\Domain\ProductUser\Sorters\ProductUserSorterInterface;
 use Henry\Domain\User\Filters\UserFilterInterface;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
 use Henry\Domain\User\Sorters\UserSorterInterface;
@@ -30,6 +33,9 @@ use Henry\Infrastructure\Category\Sorters\EloquentCategorySorter;
 use Henry\Infrastructure\Product\Filters\EloquentProductFilter;
 use Henry\Infrastructure\Product\Repositories\EloquentProductRepository;
 use Henry\Infrastructure\Product\Sorters\EloquentProductSorter;
+use Henry\Infrastructure\ProductUser\Filters\EloquentProductUserFilter;
+use Henry\Infrastructure\ProductUser\Repositories\EloquentProductUserRepository;
+use Henry\Infrastructure\ProductUser\Sorters\EloquentProductUserSorter;
 use Henry\Infrastructure\User\Filters\EloquentUserFilter;
 use Henry\Infrastructure\User\Repositories\EloquentUserRepository;
 use Henry\Infrastructure\User\Sorters\EloquentUserSorter;
@@ -55,6 +61,10 @@ class AppServiceProvider extends ServiceProvider
         ProductRepositoryInterface::class => EloquentProductRepository::class,
         ProductFilterInterface::class => EloquentProductFilter::class,
         ProductSorterInterface::class => EloquentProductSorter::class,
+
+        ProductUserRepositoryInterface::class => EloquentProductUserRepository::class,
+        ProductUserFilterInterface::class => EloquentProductUserFilter::class,
+        ProductUserSorterInterface::class => EloquentProductUserSorter::class,
 
         AttributeRepositoryInterface::class => EloquentAttributeRepository::class,
         AttributeFilterInterface::class => EloquentAttributeFilter::class,

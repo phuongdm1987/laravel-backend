@@ -10,6 +10,7 @@ window.Event = Event
 window.Form = Form
 window.Api = Api
 window.Auth = Auth
+window.Auth.login()
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

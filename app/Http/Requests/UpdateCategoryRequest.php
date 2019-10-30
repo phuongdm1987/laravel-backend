@@ -70,6 +70,6 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function attributeIds(): array
     {
-        return $this->get('attribute_ids', []);
+        return (array)$this->get('attribute_ids', []);
     }
 }

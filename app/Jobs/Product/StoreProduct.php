@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs\Product;
 
 use App\Http\Requests\UpdateProductRequest;
+use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Model;
@@ -71,6 +72,7 @@ class StoreProduct implements ShouldQueue
      */
     public function handle(ProductRepositoryInterface $productRepository): Model
     {
+        /** @var Product $product */
         $product = $productRepository->create([
             'category_id' => $this->categoryId,
             'name' => $this->name,

@@ -29,7 +29,7 @@ class StoreAttributeValue implements ShouldQueue
     private $value;
 
     /**
-     * Create a new job instance.
+     * StoreAttributeValue constructor.
      * @param int $attributeId
      * @param string $value
      */

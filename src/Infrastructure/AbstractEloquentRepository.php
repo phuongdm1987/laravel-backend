@@ -100,18 +100,29 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
 
     /**
      * @param $id
-     * @return Model
+     * @return Model|null
      */
-    public function findById($id): Model
+    public function findById($id): ?Model
     {
         return $this->model->find($id);
     }
 
     /**
      * @param array $conditions
+     * @return Model|null
+     */
+    public function findBy(array $conditions = []): ?Model
+    {
+        $query = $this->generateQueryBuilder($conditions);
+
+        return $query->first();
+    }
+
+    /**
+     * @param array $conditions
      * @return array
      */
-    public function getIdsBySearch(array $conditions = []): array
+    private function getIdsBySearch(array $conditions = []): array
     {
         if (!method_exists($this->model, 'search')) {
             return $conditions;

@@ -25,6 +25,7 @@ Route::get('/home', 'HomeController@index')
 Route::get('/categories/{category}', 'CategoryController@index')
     ->name('category.index');
 
+Route::resource('product-users', 'ProductUserController');
 Route::resource('products', 'ProductController');
 
 Route::get('/set-language/{locale}', 'LanguageController@update')
