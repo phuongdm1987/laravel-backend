@@ -18,7 +18,7 @@ class CreateProductUserAmountHistoriesTable extends Migration
     public function up(): void
     {
         Schema::create('product_user_amount_histories', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedInteger('product_user_id');
             $table->unsignedBigInteger('amount')->default(0);
             $table->timestamps();

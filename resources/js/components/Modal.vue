@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="button is-info" @click="isActive = !isActive">Sale this product</button>
+        <button class="button is-info" @click="toggleActive">Sale this product</button>
         <div class="modal" :class="{'is-active': isActive}">
             <div class="modal-background"></div>
             <div class="modal-card">
@@ -59,7 +59,11 @@
                 this.onCancel.apply(null, arguments)
                 this.isActive = false
                 this.$emit('close')
+            },
+            toggleActive() {
+                this.isActive = !this.isActive
             }
+
         }
     }
 </script>

@@ -26,17 +26,29 @@ RUN apk update && apk add bash && apk add --no-cache \
     php7-gd \
     php7-dom \
     php7-session \
-    php7-zlib
+    php7-zlib \
+    php7-dev
 
 # Add and Enable PHP-PDO Extenstions
 RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-enable pdo_mysql
 
-# Add and PHP-pcntl Extenstions
+# Add PHP-pcntl Extenstions
 RUN docker-php-ext-install pcntl
 
-# Add and PHP-bcmath Extenstions
+# Add PHP-bcmath Extenstions
 RUN docker-php-ext-install bcmath
+
+# Add xdebug
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
+# Copy xdebug configuration for remote debugging
+COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+
+RUN sed -i "s/xdebug.remote_autostart=0/xdebug.remote_autostart=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
+    sed -i "s/xdebug.remote_enable=0/xdebug.remote_enable=1/" /usr/local/etc/php/conf.d/xdebug.ini && \
+    sed -i "s/xdebug.cli_color=0/xdebug.cli_color=1/" /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

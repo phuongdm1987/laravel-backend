@@ -18,8 +18,8 @@ class CreateAttributeValueProductUserTable extends Migration
     public function up(): void
     {
         Schema::create('attribute_value_product_user', function (Blueprint $table) {
-            $table->unsignedInteger('attribute_value_id');
-            $table->unsignedInteger('attribute_id');
+            $table->unsignedBigInteger('attribute_value_id');
+            $table->unsignedBigInteger('attribute_id');
             $table->string('product_user_id');
             $table->primary(['attribute_value_id', 'product_user_id'], 'avpu_avi_pui_primary');
         });

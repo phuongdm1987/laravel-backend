@@ -18,8 +18,8 @@ class CreateAttributeCategoryTable extends Migration
     public function up(): void
     {
         Schema::create('attribute_category', function (Blueprint $table) {
-            $table->unsignedInteger('attribute_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('attribute_id');
+            $table->unsignedBigInteger('category_id');
             $table->boolean('is_filter')->default(0)->index();
             $table->primary(['attribute_id', 'category_id']);
         });
