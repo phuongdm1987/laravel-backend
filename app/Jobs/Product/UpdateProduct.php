@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Arr;
 
 /**
  * Class UpdateProduct
@@ -64,7 +65,7 @@ class UpdateProduct implements ShouldQueue
     {
         $productRepository->update($this->attributes, $this->product);
 
-        if (array_has($this->attributes, 'attribute_value_ids')) {
+        if (Arr::has($this->attributes, 'attribute_value_ids')) {
             $this->product->attributeValues()->sync($this->attributes['attribute_value_ids']);
         }
     }

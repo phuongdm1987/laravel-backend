@@ -5,6 +5,7 @@ namespace Henry\Infrastructure\Product\Filters;
 
 use Henry\Domain\Product\Filters\ProductFilterInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 /**
  * Class EloquentAttributeValueIdFilter
@@ -23,7 +24,7 @@ class EloquentAttributeValueIdFilter implements ProductFilterInterface
     public function filter($queryBuilder, array $conditions = []): Builder
     {
         $field = $this->field;
-        $attributeValueId = array_get($conditions, $this->searchField);
+        $attributeValueId = Arr::get($conditions, $this->searchField);
 
         if (!$attributeValueId) {
             return $queryBuilder;

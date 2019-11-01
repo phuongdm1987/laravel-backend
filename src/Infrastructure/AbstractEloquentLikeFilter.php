@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Henry\Infrastructure;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 /**
  * Class AbstractEloquentLikeFilter
@@ -21,7 +22,7 @@ abstract class AbstractEloquentLikeFilter
      */
     public function filter($queryBuilder, array $conditions = []): Builder
     {
-        $queryParam = array_get($conditions, $this->searchField);
+        $queryParam = Arr::get($conditions, $this->searchField);
 
         if (!$queryParam) {
             return $queryBuilder;

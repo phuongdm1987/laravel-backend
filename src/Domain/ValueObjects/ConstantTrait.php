@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Henry\Domain\ValueObjects;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
 
@@ -25,8 +27,8 @@ trait ConstantTrait
         }
         $constants = $refClass->getConstants();
 
-        return array_where($constants, function($value, $key) use ($prefix) {
-            return starts_with($key, $prefix);
+        return Arr::where($constants, function($value, $key) use ($prefix) {
+            return Str::startsWith($key, $prefix);
         });
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Arr;
 
 /**
  * Class LanguageController
@@ -19,7 +20,7 @@ class LanguageController extends Controller
     {
         $locales = config('language', []);
 
-        if (array_has($locales, $locale)) {
+        if (Arr::has($locales, $locale)) {
             session(['locale' => $locale]);
         }
 

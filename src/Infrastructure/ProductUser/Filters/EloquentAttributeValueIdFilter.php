@@ -6,6 +6,7 @@ namespace Henry\Infrastructure\ProductUser\Filters;
 use Henry\Domain\ProductUser\Filters\ProductUserFilterInterface;
 use Henry\Infrastructure\AbstractEloquentNormalFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 /**
  * Class EloquentAttributeValueIdFilter
@@ -25,7 +26,7 @@ class EloquentAttributeValueIdFilter extends AbstractEloquentNormalFilter implem
     {
         parent::filter($queryBuilder, $conditions);
 
-        $queryParam = array_get($conditions, $this->searchField);
+        $queryParam = Arr::get($conditions, $this->searchField);
 
         if (!$queryParam) {
             return $queryBuilder;

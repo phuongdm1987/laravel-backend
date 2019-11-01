@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Arr;
 
 /**
  * Class UpdateCategory
@@ -67,7 +68,7 @@ class UpdateCategory implements ShouldQueue
         cache()->deleteMultiple(['category_', 'category_category', 'category_menu']);
         $categoryRepository->update($this->attributes, $this->category);
 
-        if (array_has($this->attributes, 'attribute_ids')) {
+        if (Arr::has($this->attributes, 'attribute_ids')) {
             $this->category->attributes()->sync($this->attributes['attribute_ids']);
         }
     }

@@ -12,6 +12,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 /**
  * Class AbstractEloquentRepository
@@ -128,7 +129,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
             return $conditions;
         }
 
-        $queryParam = (string)array_get($conditions, 'q', '');
+        $queryParam = (string)Arr::get($conditions, 'q', '');
 
         if (!$queryParam) {
             return $conditions;
@@ -137,7 +138,7 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
         $primaryKey = $this->model->getKeyName();
         $ids = $this->model->search($queryParam)->get()->pluck($primaryKey)->toArray();
 
-        array_forget($conditions, 'q');
+        Arr::forget($conditions, 'q');
         $conditions[$primaryKey] = $ids;
 
         return $conditions;
@@ -149,8 +150,8 @@ abstract class AbstractEloquentRepository implements RepositoryInterface
      */
     private function generateOrderInfoByQueryParams(array $conditions = []): Order
     {
-        $orderBy = array_get($conditions, 'orderBy', '');
-        $order = array_get($conditions, 'order', 'asc');
+        $orderBy = Arr::get($conditions, 'orderBy', '');
+        $order = Arr::get($conditions, 'order', 'asc');
         return new Order($orderBy, $order);
     }
 

@@ -5,6 +5,7 @@ namespace Henry\Domain\Category\ValueObjects;
 
 
 use Henry\Domain\ValueObjects\ConstantTrait;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -54,7 +55,7 @@ class Type
      */
     private function assertType(string $type): string
     {
-        $isExist = array_where(self::getAll(), function($value, $key) use ($type) {
+        $isExist = Arr::where(self::getAll(), function($value, $key) use ($type) {
             return $type === $value;
         });
 

@@ -11,6 +11,7 @@ namespace Henry\Domain\User\ValueObjects;
 
 
 use Henry\Domain\ValueObjects\ConstantTrait;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -74,7 +75,7 @@ class Currency
      */
     private function assertCurrency(string $currency): string
     {
-        $isExist = array_where(self::getAll(), function ($value, $key) use ($currency) {
+        $isExist = Arr::where(self::getAll(), function ($value, $key) use ($currency) {
             return $currency === $value;
         });
 
