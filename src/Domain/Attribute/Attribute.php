@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Attribute
+ * @property int id
+ * @property string name
  * @package Henry\Domain\Attribute
  */
 class Attribute extends Model
@@ -37,9 +39,11 @@ class Attribute extends Model
     /**
      * @return bool
      */
-    public function isFilter(): bool
+    public function isCanChange(): bool
     {
-        return (bool)$this->is_filter;
+        $canChange = $this->pivot->can_change ?? false;
+
+        return (bool)$canChange;
     }
 
     /**

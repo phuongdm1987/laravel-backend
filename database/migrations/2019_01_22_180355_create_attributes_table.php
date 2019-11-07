@@ -20,7 +20,6 @@ class CreateAttributesTable extends Migration
         Schema::create('attributes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->boolean('is_filter')->default(0);
         });
     }
 

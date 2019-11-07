@@ -7,6 +7,7 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
+use Henry\Domain\User\User;
 use Henry\Domain\User\ValueObjects\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -120,5 +121,13 @@ class Product extends Model
     public function attributeValues(): BelongsToMany
     {
         return $this->belongsToMany(AttributeValue::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'product_users')->withPivot(['amount']);
     }
 }

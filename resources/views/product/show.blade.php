@@ -21,6 +21,7 @@
                             @csrf
                             <input type="hidden" name="product_id" value="{{$product->getId()}}">
                             @foreach($product->category->attributes as $attribute)
+                                @if ($attribute->isCanChange())
                                 <div class="field is-horizontal">
                                     <div class="field-label">
                                         <label class="label">{{$attribute->getName()}}</label>
@@ -39,6 +40,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             @endforeach
                             <div class="field is-horizontal">
                                 <div class="field-label">
@@ -83,6 +85,55 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
+            {{-- List User Product --}}
+            <div class="table-container">
+                <table class="table is-hoverable is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            @foreach($product->category->attributes as $attribute)
+                                @if($attribute->isCanChange())
+                                    <th>{{$attribute->name}}</th>
+                                @endif
+                            @endforeach
+                            <th>Provider</th>
+                            <th>Amount</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>STT</th>
+                            @foreach($product->category->attributes as $attribute)
+                                @if($attribute->isCanChange())
+                                    <th>{{$attribute->name}}</th>
+                                @endif
+                            @endforeach
+                            <th>Provider</th>
+                            <th>Amount</th>
+                            <th>Detail</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach($product->users as $user)
+                        <tr>
+                            <th>{{$loop->iteration}}</th>
+                            @foreach($product->category->attributes as $attribute)
+                                @if($attribute->isCanChange())
+                                <td>
+                                    {{$product->attributeValues
+                                        ->firstWhere('attribute_id', $attribute->getId())->value}}
+                                </td>
+                                @endif
+                            @endforeach
+                            <th>{{$user->name}}</th>
+                            <td class="has-text-right">@money($user->pivot->amount)</td>
+                            <td><button class="button is-info is-outlined is-fullwidth">Detail</button></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

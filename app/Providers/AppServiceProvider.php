@@ -40,6 +40,7 @@ use Henry\Infrastructure\User\Filters\EloquentUserFilter;
 use Henry\Infrastructure\User\Repositories\EloquentUserRepository;
 use Henry\Infrastructure\User\Sorters\EloquentUserSorter;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
 
@@ -84,6 +85,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Redis::enableEvents();
         Paginator::defaultView('vendor.pagination.bulma');
+
+        Blade::directive('money', function ($amount) {
+            return "<?=number_format($amount, 0, ',', '.')?>";
+        });
     }
 
     /**

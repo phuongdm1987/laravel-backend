@@ -67,6 +67,6 @@ class CategoryTransformer extends TransformerAbstract
         if ($category === null) {
             return $this->null();
         }
-        return $this->collection($category->attributes, new AttributeTransformer(), 'attributes');
+        return $this->collection($category->attributes->sortBy('id'), new AttributeTransformer(), 'attributes');
     }
 }

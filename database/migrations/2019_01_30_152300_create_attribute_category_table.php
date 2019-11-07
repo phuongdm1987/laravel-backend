@@ -20,7 +20,7 @@ class CreateAttributeCategoryTable extends Migration
         Schema::create('attribute_category', function (Blueprint $table) {
             $table->unsignedBigInteger('attribute_id');
             $table->unsignedBigInteger('category_id');
-            $table->boolean('is_filter')->default(0)->index();
+            $table->boolean('can_change')->default(0)->index();
             $table->primary(['attribute_id', 'category_id']);
         });
     }

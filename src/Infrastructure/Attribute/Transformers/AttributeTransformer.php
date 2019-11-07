@@ -28,10 +28,14 @@ class AttributeTransformer extends TransformerAbstract
             return [];
         }
 
-        return [
+        $result =  [
             'id' => $attribute->getId(),
             'name' => $attribute->getName(),
         ];
+
+        $result['can_change'] = $attribute->pivot->can_change ?? false;
+
+        return $result;
     }
 
     /**
