@@ -17,10 +17,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Class StoreProductUser
+ * Class StoreProductUserJob
  * @package App\Jobs\ProductUser
  */
-class StoreProductUser implements ShouldQueue
+class StoreProductUserJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -41,7 +41,7 @@ class StoreProductUser implements ShouldQueue
     private $attributeValueIds;
 
     /**
-     * StoreProductUser constructor.
+     * StoreProductUserJob constructor.
      * @param int $productId
      * @param int $userId
      * @param int $amount

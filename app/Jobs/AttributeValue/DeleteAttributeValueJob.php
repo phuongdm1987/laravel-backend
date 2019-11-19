@@ -12,10 +12,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class DeleteAttributeValue
+ * Class DeleteAttributeValueJob
  * @package App\Jobs\AttributeValue
  */
-class DeleteAttributeValue implements ShouldQueue
+class DeleteAttributeValueJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

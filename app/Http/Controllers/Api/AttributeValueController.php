@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 
 
 use App\Http\Requests\UpdateAttributeValueRequest;
-use App\Jobs\AttributeValue\DeleteAttributeValue;
-use App\Jobs\AttributeValue\GetNormalAttributeValues;
-use App\Jobs\AttributeValue\StoreAttributeValue;
-use App\Jobs\AttributeValue\UpdateAttributeValue;
+use App\Jobs\AttributeValue\DeleteAttributeValueJob;
+use App\Jobs\AttributeValue\GetNormalAttributeValuesJob;
+use App\Jobs\AttributeValue\StoreAttributeValueJob;
+use App\Jobs\AttributeValue\UpdateAttributeValueJob;
 use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Infrastructure\AttributeValue\Transformers\AttributeValueTransformer;
 use Henry\Infrastructure\Transformer;
@@ -40,7 +40,7 @@ class AttributeValueController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $attributeValues = GetNormalAttributeValues::dispatchNow($request->all(), $request->get('per_page', 15));
+        $attributeValues = GetNormalAttributeValuesJob::dispatchNow($request->all(), $request->get('per_page', 15));
         $attributeValues->load('attribute');
         $attributeValues = $this->transformer->transform($attributeValues, new AttributeValueTransformer(), 'attributeValues');
 
@@ -53,7 +53,7 @@ class AttributeValueController extends ApiController
      */
     public function store(UpdateAttributeValueRequest $request): JsonResponse
     {
-        $attributeValue = $this->dispatchNow(StoreAttributeValue::fromRequest($request));
+        $attributeValue = $this->dispatchNow(StoreAttributeValueJob::fromRequest($request));
         $result = $this->transformer->transform($attributeValue, new AttributeValueTransformer(), 'attributeValues');
 
         return $this->success($result, 'Store AttributeValue Success');
@@ -67,7 +67,7 @@ class AttributeValueController extends ApiController
     public function update(UpdateAttributeValueRequest $request, AttributeValue $attributeValue): JsonResponse
     {
         $request->merge(['include' => 'attribute']);
-        $this->dispatchNow(UpdateAttributeValue::fromRequest($request, $attributeValue));
+        $this->dispatchNow(UpdateAttributeValueJob::fromRequest($request, $attributeValue));
         $result = $this->transformer->transform($attributeValue, new AttributeValueTransformer(), 'attributeValues');
 
         return $this->success($result, 'Update AttributeValue Success');
@@ -79,7 +79,7 @@ class AttributeValueController extends ApiController
      */
     public function destroy(AttributeValue $attributeValue): JsonResponse
     {
-        DeleteAttributeValue::dispatchNow($attributeValue);
+        DeleteAttributeValueJob::dispatchNow($attributeValue);
 
         return $this->success([], 'Delete AttributeValue Success!');
     }

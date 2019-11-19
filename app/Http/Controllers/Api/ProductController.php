@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UpdateProductRequest;
-use App\Jobs\Product\DeleteProduct;
-use App\Jobs\Product\GetNormalProducts;
-use App\Jobs\Product\StoreProduct;
-use App\Jobs\Product\UpdateProduct;
+use App\Jobs\Product\DeleteProductJob;
+use App\Jobs\Product\GetNormalProductsJob;
+use App\Jobs\Product\StoreProductJob;
+use App\Jobs\Product\UpdateProductJob;
 use Henry\Domain\Product\Product;
 use Henry\Infrastructure\Product\Transformers\ProductTransformer;
 use Henry\Infrastructure\Transformer;
@@ -42,7 +42,7 @@ class ProductController extends ApiController
     public function index(Request $request): JsonResponse
     {
         /** @var Collection $products */
-        $products = GetNormalProducts::dispatchNow($request->all(), $request->get('per_page', 15));
+        $products = GetNormalProductsJob::dispatchNow($request->all(), $request->get('per_page', 15));
         $products->load('category.attributes.attributeValues', 'attributeValues');
         $products = $this->transformer->transform($products, new ProductTransformer(), 'products');
 
@@ -55,7 +55,7 @@ class ProductController extends ApiController
      */
     public function store(UpdateProductRequest $request): JsonResponse
     {
-        $product = $this->dispatchNow(StoreProduct::fromRequest($request));
+        $product = $this->dispatchNow(StoreProductJob::fromRequest($request));
         $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
 
         return $this->success($result, 'Store Product Success');
@@ -69,7 +69,7 @@ class ProductController extends ApiController
     public function update(UpdateProductRequest $request, Product $product): JsonResponse
     {
         $request->merge(['include' => 'category.attributes.attributeValues,attributeValues']);
-        $this->dispatchNow(UpdateProduct::fromRequest($request, $product));
+        $this->dispatchNow(UpdateProductJob::fromRequest($request, $product));
         $result = $this->transformer->transform($product, new ProductTransformer(), 'products');
 
         return $this->success($result, 'Update Product Success');
@@ -81,7 +81,7 @@ class ProductController extends ApiController
      */
     public function destroy(Product $product): JsonResponse
     {
-        DeleteProduct::dispatchNow($product);
+        DeleteProductJob::dispatchNow($product);
         return $this->success(['msg' => 'Delete product success!']);
     }
 }

@@ -13,10 +13,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class StoreAttributeValue
+ * Class StoreAttributeValueJob
  * @package App\Jobs\AttributeValue
  */
-class StoreAttributeValue implements ShouldQueue
+class StoreAttributeValueJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -29,7 +29,7 @@ class StoreAttributeValue implements ShouldQueue
     private $value;
 
     /**
-     * StoreAttributeValue constructor.
+     * StoreAttributeValueJob constructor.
      * @param int $attributeId
      * @param string $value
      */

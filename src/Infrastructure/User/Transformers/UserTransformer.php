@@ -36,7 +36,10 @@ class UserTransformer extends TransformerAbstract
         return [
             'id' => $user->getId(),
             'name' => $user->getName(),
-            'email' => $user->getEmail()
+            'email' => $user->getEmail(),
+            'verified_at' => $user->getVerifiedAt() ? $user->getVerifiedAt()->format('d-m-Y') : null,
+            'created_at' => $user->getCreatedAt()->format('d-m-Y'),
+            'updated_at' => $user->getUpdatedAt()->format('d-m-Y'),
         ];
     }
 }

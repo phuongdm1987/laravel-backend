@@ -12,10 +12,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class GetProductsBySearch
+ * Class GetProductsBySearchJob
  * @package App\Jobs
  */
-class GetProductsBySearch implements ShouldQueue
+class GetProductsBySearchJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -24,7 +24,7 @@ class GetProductsBySearch implements ShouldQueue
     private $query;
 
     /**
-     * GetProductsBySearch constructor.
+     * GetProductsBySearchJob constructor.
      * @param string $query
      */
     public function __construct(string $query = '')

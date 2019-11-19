@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
-use App\Jobs\User\RegisterUser;
+use App\Jobs\User\RegisterUserJob;
 use Henry\Domain\User\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
@@ -63,6 +63,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data): User
     {
-        return $this->dispatchNow(RegisterUser::fromRequest(app(RegisterRequest::class)));
+        return $this->dispatchNow(RegisterUserJob::fromRequest(app(RegisterRequest::class)));
     }
 }

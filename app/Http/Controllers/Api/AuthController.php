@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\LoginApiRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Jobs\User\LoginApiUser;
-use App\Jobs\User\LogoutApiUser;
-use App\Jobs\User\RegisterApiUser;
+use App\Jobs\User\LoginApiUserJob;
+use App\Jobs\User\LogoutApiUserJob;
+use App\Jobs\User\RegisterApiUserJob;
 use Illuminate\Http\JsonResponse;
 
 /**
@@ -22,7 +22,7 @@ class AuthController extends ApiController
      */
     public function login(LoginApiRequest $request): JsonResponse
     {
-        $response = $this->dispatchNow(LoginApiUser::fromRequest($request));
+        $response = $this->dispatchNow(LoginApiUserJob::fromRequest($request));
 
         if (isset($response->error)) {
             return $this->error([$response->error => $response->message], 401);
@@ -40,7 +40,7 @@ class AuthController extends ApiController
      */
     public function logout(): JsonResponse
     {
-        $job = new LogoutApiUser(auth()->user());
+        $job = new LogoutApiUserJob(auth()->user());
         $this->dispatchNow($job);
 
         return $this->success(['status' => 200]);
@@ -52,7 +52,7 @@ class AuthController extends ApiController
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        $response = $this->dispatchNow(RegisterApiUser::fromRequest($request));
+        $response = $this->dispatchNow(RegisterApiUserJob::fromRequest($request));
 
         if (isset($response->error)) {
             return $this->error([$response->error => $response->message], 401);

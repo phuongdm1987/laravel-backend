@@ -13,10 +13,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class UpdateAttributeValue
+ * Class UpdateAttributeValueJob
  * @package App\Jobs\AttributeValue
  */
-class UpdateAttributeValue implements ShouldQueue
+class UpdateAttributeValueJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Henry\Domain\User;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,11 +11,19 @@ use Laravel\Passport\HasApiTokens;
 
 /**
  * Class User
+ * @property int id
+ * @property string name
+ * @property string email
+ * @property Carbon email_verified_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
  * @package Henry\Domain\User
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
+
+    protected $dates = ['email_verified_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -56,5 +65,29 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getVerifiedAt()
+    {
+        return $this->email_verified_at;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getCreatedAt(): Carbon
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getUpdatedAt(): Carbon
+    {
+        return $this->updated_at;
     }
 }

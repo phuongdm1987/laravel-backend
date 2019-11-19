@@ -14,10 +14,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class GetCategoriesWithTreeFormat
+ * Class GetCategoriesWithTreeFormatJob
  * @package App\Jobs
  */
-class GetCategoriesWithTreeFormat implements ShouldQueue
+class GetCategoriesWithTreeFormatJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -27,7 +27,7 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
     private $type;
 
     /**
-     * GetCategoriesWithTreeFormat constructor.
+     * GetCategoriesWithTreeFormatJob constructor.
      * @param Type|null $type
      */
     public function __construct(Type $type = null)
@@ -37,7 +37,7 @@ class GetCategoriesWithTreeFormat implements ShouldQueue
 
     /**
      * @param Request $request
-     * @return GetCategoriesWithTreeFormat
+     * @return GetCategoriesWithTreeFormatJob
      */
     public static function fromRequest(Request $request): self
     {

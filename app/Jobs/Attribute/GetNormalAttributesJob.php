@@ -13,10 +13,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class GetNormalAttributes
+ * Class GetNormalAttributesJob
  * @package App\Jobs\Attribute
  */
-class GetNormalAttributes implements ShouldQueue
+class GetNormalAttributesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

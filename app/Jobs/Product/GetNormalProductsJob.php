@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs\AttributeValue;
+namespace App\Jobs\Product;
 
-use Henry\Domain\AttributeValue\Repositories\AttributeValueRepositoryInterface;
+use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 /**
- * Class GetNormalAttributeValues
- * @package App\Jobs\AttributeValue
+ * Class GetNormalProductsJob
+ * @package App\Jobs
  */
-class GetNormalAttributeValues implements ShouldQueue
+class GetNormalProductsJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -39,11 +39,12 @@ class GetNormalAttributeValues implements ShouldQueue
     }
 
     /**
-     * @param AttributeValueRepositoryInterface $attributeValueRepository
+     * Execute the job.
+     * @param ProductRepositoryInterface $productRepository
      * @return LengthAwarePaginator
      */
-    public function handle(AttributeValueRepositoryInterface $attributeValueRepository): LengthAwarePaginator
+    public function handle(ProductRepositoryInterface $productRepository): LengthAwarePaginator
     {
-        return $attributeValueRepository->withPaginate($this->conditions, $this->perPage);
+        return $productRepository->withPaginate($this->conditions, $this->perPage);
     }
 }

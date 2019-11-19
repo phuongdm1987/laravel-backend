@@ -12,10 +12,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class DeleteProduct
+ * Class DeleteProductJob
  * @package App\Jobs\Product
  */
-class DeleteProduct implements ShouldQueue
+class DeleteProductJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

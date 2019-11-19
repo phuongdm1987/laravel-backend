@@ -24,8 +24,6 @@ class EloquentAttributeValueIdFilter extends AbstractEloquentNormalFilter implem
      */
     public function filter($queryBuilder, array $conditions = []): Builder
     {
-        parent::filter($queryBuilder, $conditions);
-
         $queryParam = Arr::get($conditions, $this->searchField);
 
         if (!$queryParam) {

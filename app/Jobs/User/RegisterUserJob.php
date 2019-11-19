@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Jobs\User;
 
 use App\Http\Requests\RegisterRequest;
+use Carbon\Carbon;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
 use Henry\Domain\User\User;
 use Illuminate\Bus\Queueable;
@@ -16,10 +17,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Class RegisterUser
+ * Class RegisterUserJob
  * @package App\Jobs
  */
-class RegisterUser implements ShouldQueue
+class RegisterUserJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,30 +38,37 @@ class RegisterUser implements ShouldQueue
      * @var string
      */
     protected $password;
+    /**
+     * @var bool
+     */
+    private $activated;
 
     /**
-     * RegisterUser constructor.
+     * RegisterUserJob constructor.
      * @param string $name
      * @param string $email
      * @param string $password
+     * @param bool $activated
      */
-    public function __construct(string $name, string $email, string $password)
+    public function __construct(string $name, string $email, string $password, bool $activated = false)
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
+        $this->activated = $activated;
     }
 
     /**
      * @param RegisterRequest $request
-     * @return RegisterUser
+     * @return RegisterUserJob
      */
     public static function fromRequest(RegisterRequest $request): self
     {
         return new static(
             $request->name(),
             $request->emailAddress(),
-            $request->password()
+            $request->password(),
+            $request->activated()
         );
     }
 
@@ -77,6 +85,11 @@ class RegisterUser implements ShouldQueue
             'email' => $this->email,
             'password' => Hash::make($this->password),
         ]);
+
+        if ($this->activated) {
+            $user->email_verified_at = Carbon::now();
+        }
+
         $user->save();
 
         return $user;
@@ -90,7 +103,7 @@ class RegisterUser implements ShouldQueue
     private function assertEmailAddressIsUnique(string $emailAddress, UserRepositoryInterface $userRepository): bool
     {
         try {
-            $user = $userRepository->findByEmailAddress($emailAddress);
+            $userRepository->findByEmailAddress($emailAddress);
         } catch (ModelNotFoundException $exception) {
             return true;
         }

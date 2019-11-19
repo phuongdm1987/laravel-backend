@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class RegisterUser
+ * Class RegisterUserJob
  * @package App\Http\Requests
  */
 class RegisterRequest extends FormRequest
@@ -57,5 +57,13 @@ class RegisterRequest extends FormRequest
     public function password(): string
     {
         return $this->get('password');
+    }
+
+    /**
+     * @return bool
+     */
+    public function activated(): bool
+    {
+        return (bool)$this->get('activated', false);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\View\Composers;
 
 
-use App\Jobs\Category\GetCategoriesWithTreeFormat;
+use App\Jobs\Category\GetCategoriesWithTreeFormatJob;
 use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\View\View;
 
@@ -21,7 +21,7 @@ class CategoryComposer
     public function compose(View $view): void
     {
         $type = new Type(Type::TYPE_CATEGORY);
-        $categories = GetCategoriesWithTreeFormat::dispatchNow($type);
+        $categories = GetCategoriesWithTreeFormatJob::dispatchNow($type);
 
         $view->with(compact('categories'));
     }

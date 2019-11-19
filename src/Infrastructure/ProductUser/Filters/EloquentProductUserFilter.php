@@ -18,6 +18,7 @@ class EloquentProductUserFilter extends AbstractEloquentFilter implements Produc
      */
     protected $filters = [
         EloquentProductIdFilter::class,
-        EloquentProductIdFilter::class
+        EloquentUserIdFilter::class,
+        EloquentAttributeValueIdFilter::class,
     ];
 }

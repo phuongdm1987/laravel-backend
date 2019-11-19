@@ -4,11 +4,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UpdateCategoryRequest;
-use App\Jobs\Category\DeleteCategory;
-use App\Jobs\Category\GetCategoriesWithTreeFormat;
-use App\Jobs\Category\GetNormalCategories;
-use App\Jobs\Category\StoreCategory;
-use App\Jobs\Category\UpdateCategory;
+use App\Jobs\Category\DeleteCategoryJob;
+use App\Jobs\Category\GetCategoriesWithTreeFormatJob;
+use App\Jobs\Category\GetNormalCategoriesJob;
+use App\Jobs\Category\StoreCategoryJob;
+use App\Jobs\Category\UpdateCategoryJob;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\ValueObjects\Type;
@@ -49,7 +49,7 @@ class CategoryController extends ApiController
      */
     public function getAllTree(Request $request): JsonResponse
     {
-        $tree = $this->dispatchNow(GetCategoriesWithTreeFormat::fromRequest($request));
+        $tree = $this->dispatchNow(GetCategoriesWithTreeFormatJob::fromRequest($request));
         $tree->load('children.children.children.children.children', 'attributes');
         $tree = $this->transformer->transform($tree, new CategoryTransformer(), 'categories');
 
@@ -78,7 +78,7 @@ class CategoryController extends ApiController
      */
     public function index(Request $request): JsonResponse
     {
-        $categories = GetNormalCategories::dispatchNow($request->all(), $request->get('per_page', 15));
+        $categories = GetNormalCategoriesJob::dispatchNow($request->all(), $request->get('per_page', 15));
         $categories = $this->transformer->transform($categories, new CategoryTransformer(), 'categories');
 
         return $this->success($categories);
@@ -90,7 +90,7 @@ class CategoryController extends ApiController
      */
     public function store(UpdateCategoryRequest $request): JsonResponse
     {
-        $category = $this->dispatchNow(StoreCategory::fromRequest($request));
+        $category = $this->dispatchNow(StoreCategoryJob::fromRequest($request));
         $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 
         return $this->success($result, 'Store Category Success');
@@ -104,7 +104,7 @@ class CategoryController extends ApiController
     public function update(UpdateCategoryRequest $request, Category $category): JsonResponse
     {
         $request->merge(['include' => 'parent,attributes']);
-        $this->dispatchNow(UpdateCategory::fromRequest($request, $category));
+        $this->dispatchNow(UpdateCategoryJob::fromRequest($request, $category));
         $result = $this->transformer->transform($category, new CategoryTransformer(), 'categories');
 
         return $this->success($result, 'Update Category Success');
@@ -116,7 +116,7 @@ class CategoryController extends ApiController
      */
     public function destroy(Category $category): JsonResponse
     {
-        $result = DeleteCategory::dispatchNow($category);
+        $result = DeleteCategoryJob::dispatchNow($category);
 
         if ($result) {
             return $this->success([], 'Delete Category Success!');

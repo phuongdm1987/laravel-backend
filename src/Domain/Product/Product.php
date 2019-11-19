@@ -128,6 +128,7 @@ class Product extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'product_users')->withPivot(['amount']);
+        return $this->belongsToMany(User::class, 'product_users')
+            ->withPivot(['amount'])->withTimestamps()->orderBy('pivot_updated_at')->orderBy('pivot_amount');
     }
 }

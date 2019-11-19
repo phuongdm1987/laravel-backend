@@ -7,10 +7,10 @@ use Henry\Domain\User\Repositories\UserRepositoryInterface;
 use Illuminate\Auth\Events\Registered;
 
 /**
- * Class RegisterApiUser
+ * Class RegisterApiUserJob
  * @package App\Jobs
  */
-class RegisterApiUser extends RegisterUser
+class RegisterApiUserJob extends RegisterUserJob
 {
 
     /**
@@ -23,7 +23,7 @@ class RegisterApiUser extends RegisterUser
 
         event(new Registered($user));
 
-        $loginApiUserJob = new LoginApiUser(
+        $loginApiUserJob = new LoginApiUserJob(
             (int)env('MIX_API_CLIENT_ID'),
             env('MIX_API_CLIENT_SECRET'),
             $this->email,

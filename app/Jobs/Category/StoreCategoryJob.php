@@ -14,10 +14,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Class StoreCategory
+ * Class StoreCategoryJob
  * @package App\Jobs\Category
  */
-class StoreCategory implements ShouldQueue
+class StoreCategoryJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

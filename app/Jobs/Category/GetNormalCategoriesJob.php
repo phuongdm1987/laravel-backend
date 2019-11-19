@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Jobs\Product;
+namespace App\Jobs\Category;
 
-use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
 /**
- * Class GetNormalProducts
- * @package App\Jobs
+ * Class GetNormalCategoriesJob
+ * @package App\Jobs\Category
  */
-class GetNormalProducts implements ShouldQueue
+class GetNormalCategoriesJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -40,11 +40,11 @@ class GetNormalProducts implements ShouldQueue
 
     /**
      * Execute the job.
-     * @param ProductRepositoryInterface $productRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      * @return LengthAwarePaginator
      */
-    public function handle(ProductRepositoryInterface $productRepository): LengthAwarePaginator
+    public function handle(CategoryRepositoryInterface $categoryRepository): LengthAwarePaginator
     {
-        return $productRepository->withPaginate($this->conditions, $this->perPage);
+        return $categoryRepository->withPaginate($this->conditions, $this->perPage);
     }
 }

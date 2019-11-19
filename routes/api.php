@@ -24,6 +24,7 @@ Route::namespace('Api')->middleware('guest')->group(function() {
     Route::get('/categories/types', 'CategoryController@getTypes');
     Route::resource('/categories', 'CategoryController');
     Route::resource('/products', 'ProductController');
+    Route::resource('/users', 'UserController');
 });
 
 Route::middleware('auth:api')->namespace('Api')->group(function() {

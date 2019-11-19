@@ -13,10 +13,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Validation\ValidationException;
 
 /**
- * Class LoginApiUser
+ * Class LoginApiUserJob
  * @package App\Jobs
  */
-class LoginApiUser implements ShouldQueue
+class LoginApiUserJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -53,7 +53,7 @@ class LoginApiUser implements ShouldQueue
 
     /**
      * @param LoginApiRequest $request
-     * @return LoginApiUser
+     * @return LoginApiUserJob
      */
     public static function fromRequest(LoginApiRequest $request): self
     {

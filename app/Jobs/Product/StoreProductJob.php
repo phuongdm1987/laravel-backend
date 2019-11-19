@@ -14,10 +14,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
 /**
- * Class StoreProduct
+ * Class StoreProductJob
  * @package App\Jobs\Product
  */
-class StoreProduct implements ShouldQueue
+class StoreProductJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

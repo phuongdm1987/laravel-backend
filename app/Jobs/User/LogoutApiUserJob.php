@@ -13,10 +13,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class LogoutApiUser
+ * Class LogoutApiUserJob
  * @package App\Jobs
  */
-class LogoutApiUser implements ShouldQueue
+class LogoutApiUserJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**
@@ -25,7 +25,7 @@ class LogoutApiUser implements ShouldQueue
     private $user;
 
     /**
-     * LogoutApiUser constructor.
+     * LogoutApiUserJob constructor.
      * @param Authenticatable $user
      */
     public function __construct(Authenticatable $user)

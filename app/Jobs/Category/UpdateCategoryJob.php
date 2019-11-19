@@ -14,10 +14,10 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Arr;
 
 /**
- * Class UpdateCategory
+ * Class UpdateCategoryJob
  * @package App\Jobs\Category
  */
-class UpdateCategory implements ShouldQueue
+class UpdateCategoryJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     /**

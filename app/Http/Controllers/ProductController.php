@@ -51,7 +51,8 @@ class ProductController extends Controller
      */
     public function show(Product $product): View
     {
-        return view('product.show', compact('product'));
+        $productUsers = $product->users()->take(20)->get();
+        return view('product.show', compact('product', 'productUsers'));
     }
 
     /**

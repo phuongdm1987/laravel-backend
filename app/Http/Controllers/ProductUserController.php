@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductUserRequest;
-use App\Jobs\ProductUser\StoreProductUser;
+use App\Jobs\ProductUser\StoreProductUserJob;
 use Henry\Domain\Product\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,7 +43,7 @@ class ProductUserController extends Controller
      */
     public function store(StoreProductUserRequest $request): RedirectResponse
     {
-        $productUser = $this->dispatchNow(StoreProductUser::fromRequest($request));
+        $productUser = $this->dispatchNow(StoreProductUserJob::fromRequest($request));
 
         return redirect()->route('products.show', $productUser->product->getSlug());
     }
