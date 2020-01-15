@@ -17,11 +17,6 @@ class Auth {
     }
 
     login() {
-        let token = window.localStorage.getItem('token')
-        if (token) {
-            return
-        }
-
         axios.post(this.loginEndpoint, {
             client_id: Config.getClientId(),
             client_secret: Config.getClientSecret(),

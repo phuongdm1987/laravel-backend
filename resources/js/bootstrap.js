@@ -3,6 +3,7 @@ import Event from './classes/event'
 import Auth from './classes/auth'
 import Api from './classes/api'
 import Configuration from './configs/config'
+import axios from 'axios'
 
 window._ = require('lodash');
 window.Configuration = Configuration
@@ -10,7 +11,16 @@ window.Event = Event
 window.Form = Form
 window.Api = Api
 window.Auth = Auth
-window.Auth.login()
+
+axios.interceptors.response.use((response) => {
+    return response;
+}, function (error) {
+    // Do something with response error
+    if (error.response.status === 401) {
+        window.Auth.login()
+    }
+    return Promise.reject(error.response);
+});
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support

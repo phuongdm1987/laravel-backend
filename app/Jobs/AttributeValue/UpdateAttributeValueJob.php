@@ -49,6 +49,7 @@ class UpdateAttributeValueJob implements ShouldQueue
         return new static(
             [
                 'value' => $request->value(),
+                'url' => $request->getUrl(),
                 'attribute_id' => $request->attributeId()
             ],
             $attributeValue

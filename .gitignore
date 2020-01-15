@@ -13,3 +13,6 @@ yarn-error.log
 _ide_helper*.php
 /.idea/*
 composer.lock
+/public/js/app.js
+/public/mix-manifest.json
+/public/css/app.css

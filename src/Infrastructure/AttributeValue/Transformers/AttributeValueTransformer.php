@@ -32,6 +32,7 @@ class AttributeValueTransformer extends TransformerAbstract
             'id' => $attributeValue->getId(),
             'attribute_id' => $attributeValue->getAttributeId(),
             'value' => $attributeValue->getValue(),
+            'url' => $attributeValue->getUrl(),
         ];
     }
 

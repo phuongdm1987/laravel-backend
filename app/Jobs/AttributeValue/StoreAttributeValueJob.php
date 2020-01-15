@@ -27,16 +27,22 @@ class StoreAttributeValueJob implements ShouldQueue
      * @var string
      */
     private $value;
+    /**
+     * @var string|null
+     */
+    private $url;
 
     /**
      * StoreAttributeValueJob constructor.
      * @param int $attributeId
      * @param string $value
+     * @param string|null $url
      */
-    public function __construct(int $attributeId, string $value)
+    public function __construct(int $attributeId, string $value, string $url = null)
     {
         $this->attributeId = $attributeId;
         $this->value = $value;
+        $this->url = $url;
     }
 
     /**
@@ -45,7 +51,7 @@ class StoreAttributeValueJob implements ShouldQueue
      */
     public static function fromRequest(UpdateAttributeValueRequest $request): self
     {
-        return new static($request->attributeId(), $request->value());
+        return new static($request->attributeId(), $request->value(), $request->url());
     }
 
     /**
@@ -56,7 +62,8 @@ class StoreAttributeValueJob implements ShouldQueue
     {
         return $attributeValueRepository->create([
             'attribute_id' => $this->attributeId,
-            'value' => $this->value
+            'value' => $this->value,
+            'url' => $this->url
         ]);
     }
 }

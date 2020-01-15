@@ -31,6 +31,7 @@ class UpdateAttributeValueRequest extends FormRequest
         return [
             'attribute_id' => 'nullable|integer|exists:attributes,id',
             'value' => 'required|string|max:255',
+            'url' => 'url|max:255',
         ];
     }
 
@@ -48,5 +49,13 @@ class UpdateAttributeValueRequest extends FormRequest
     public function value(): string
     {
         return (string)$this->get('value');
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return (string)$this->get('url');
     }
 }

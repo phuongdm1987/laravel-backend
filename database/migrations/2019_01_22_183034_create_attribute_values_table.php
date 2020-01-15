@@ -19,8 +19,9 @@ class CreateAttributeValuesTable extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('attribute_id')->default(0)->index();
+            $table->unsignedBigInteger('attribute_id')->default(0)->index();
             $table->string('value');
+            $table->string('url');
         });
     }
 

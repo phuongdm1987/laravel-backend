@@ -19,7 +19,7 @@ class CreateProductUserAmountHistoriesTable extends Migration
     {
         Schema::create('product_user_amount_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('product_user_id');
+            $table->unsignedBigInteger('product_user_id');
             $table->unsignedBigInteger('amount')->default(0);
             $table->timestamps();
         });

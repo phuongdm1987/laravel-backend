@@ -11,12 +11,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class AttributeValue
+ * @property int attribute_id
+ * @property int id
+ * @property string value
+ * @property string url
  * @package Henry\Domain\AttributeValue
  */
 class AttributeValue extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['attribute_id', 'value'];
+    protected $fillable = ['attribute_id', 'value', 'url'];
 
     /**
      * @return int
@@ -32,6 +36,14 @@ class AttributeValue extends Model
     public function getValue(): string
     {
         return $this->value;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return (string)$this->url;
     }
 
     /**
