@@ -1,57 +1,55 @@
 <?php
 declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: henry
- * Date: 04/01/2019
- * Time: 21:58
- */
 
 namespace Henry\Infrastructure\Category\Repositories;
 
 
-use Henry\Infrastructure\EloquentRepository;
 use Henry\Domain\Category\Category;
+use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
+use Henry\Domain\Category\Sorters\CategorySorterInterface;
+use Henry\Domain\Category\ValueObjects\Type;
+use Henry\Infrastructure\AbstractEloquentRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class EloquentCategoryRepository
  * @package Henry\Infrastructure\Category\Repositories
  */
-class EloquentCategoryRepository extends EloquentRepository implements CategoryRepositoryInterface
+class EloquentCategoryRepository extends AbstractEloquentRepository implements CategoryRepositoryInterface
 {
     /**
-     * EloquentRepository constructor.
+     * AbstractEloquentRepository constructor.
      * @param \Henry\Domain\Category\Category $model
+     * @param CategoryFilterInterface $filter
+     * @param CategorySorterInterface $sorter
      */
-    public function __construct(Category $model)
+    public function __construct(Category $model, CategoryFilterInterface $filter, CategorySorterInterface $sorter)
     {
-        parent::__construct($model);
+        parent::__construct($model, $filter, $sorter);
     }
 
     /**
-     * @return Category
-     */
-    public function getModel(): Category
-    {
-        return new Category();
-    }
-
-    /**
+     * @param Type|null $type
      * @return Collection
+     * @throws \Exception
      */
-    public function getAllMenusToTree(): Collection
+    public function getAllToTree(Type $type = null): Collection
     {
-        return $this->model->get()->where('type', Category::TYPE_MENU)->toTree();
-    }
+//        $this->rebuildTree();
+        $key = $type ? $type->getValue() : '';
+        return cache()->remember('category_' . $key, 15, function () use($type) {
+            if ($type) {
+                return $this->model
+                    ->where('type', $type->getValue())
+                    ->get()
+                    ->toTree();
+            }
 
-    /**
-     * @return Collection
-     */
-    public function getAllCategoriesToTree(): Collection
-    {
-        return $this->model->get()->where('type', Category::TYPE_CATEGORY)->toTree();
+            return $this->model
+                ->get()
+                ->toTree();
+        });
     }
 
     /**

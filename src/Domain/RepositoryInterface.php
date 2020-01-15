@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Henry\Domain;
 
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,33 +15,47 @@ use Illuminate\Database\Eloquent\Model;
 interface RepositoryInterface
 {
     /**
+     * @param array $conditions
      * @return Collection
      */
-    public function all(): Collection;
+    public function all(array $conditions = []): Collection;
+
+    /**
+     * @param array $conditions
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    public function withPaginate(array $conditions = [], $perPage = 15): LengthAwarePaginator;
 
     /**
      * @param array $data
-     * @return mixed
+     * @return Model
      */
     public function create(array $data): Model;
 
     /**
      * @param array $data
-     * @param $id
+     * @param Model $model
      * @return bool
      */
-    public function update(array $data, $id): bool;
+    public function update(array $data, Model $model): bool;
 
     /**
-     * @param $id
+     * @param Model $model
      * @return bool|null
      * @throws \Exception
      */
-    public function delete($id): ?bool;
+    public function delete(Model $model): ?bool;
 
     /**
      * @param $id
-     * @return mixed
+     * @return Model|null
      */
-    public function findById($id): Model;
+    public function findById($id): ?Model;
+
+    /**
+     * @param array $conditions
+     * @return Model|null
+     */
+    public function findBy(array $conditions = []): ?Model;
 }

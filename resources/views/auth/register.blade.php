@@ -11,7 +11,10 @@
                 <div class="field">
                     <label class="label" for="name">{{ __('Name') }}</label>
                     <div class="control">
-                        <input class="input{{ $errors->has('name') ? ' is-danger' : '' }}" id="name" name="name" type="text" value="{{ old('name') }}" required autofocus>
+                        <input
+                                class="input{{ $errors->has('name') ? ' is-danger' : '' }}"
+                                value="{{ old('name') }}"
+                                id="name" name="name" type="text" required autofocus>
                     </div>
                     @if ($errors->has('name'))
                         <p class="help is-danger">{{ $errors->first('name') }}</p>
@@ -21,7 +24,10 @@
                 <div class="field">
                     <label class="label" for="email">{{ __('E-Mail Address') }}</label>
                     <div class="control has-icons-left">
-                        <input class="input{{ $errors->has('email') ? ' is-danger' : '' }}" id="email" name="email" type="email" value="{{ old('email') }}" required>
+                        <input
+                                class="input{{ $errors->has('email') ? ' is-danger' : '' }}"
+                                value="{{ old('email') }}"
+                                id="email" name="email" type="email" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -34,7 +40,9 @@
                 <div class="field">
                     <label class="label" for="password">{{ __('Password') }}</label>
                     <div class="control has-icons-left">
-                        <input class="input{{ $errors->has('password') ? ' is-danger' : '' }}" id="password" name="password" type="password" required>
+                        <input
+                                class="input{{ $errors->has('password') ? ' is-danger' : '' }}"
+                                id="password" name="password" type="password" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-key"></i>
                         </span>

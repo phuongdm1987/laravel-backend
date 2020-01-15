@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
 @section('hero-content')
-    <section class="hero is-link is-fullheight-with-navbar is-bold">
+    <section class="hero is-primary is-large">
         <div class="hero-body">
             <div class="container is-fluid">
-                <p class="title">
-                    Fullheight hero with navbar
-                </p>
+                <div class="columns">
+                    <div class="column is-three-fifths is-offset-one-fifth">
+                        <form>
+                            <div class="field">
+                                <product-suggestion></product-suggestion>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -21,7 +27,7 @@
                 </div>
                 <div class="column">
                     <div class="columns is-multiline">
-                        @foreach([1,2,3,4,5,6,7] as $seed)
+                        @foreach($products as $product)
                             <div class="column is-one-third">
                                 <div class="card card-equal-height">
                                     <div class="card-image">
@@ -31,18 +37,18 @@
                                     </div>
                                     <div class="card-content">
                                         <div class="content">
-                                            <h3 class="title is-5">HDD Intel</h3>
-                                            <p class="subtitle is-6">Intel® SSD 545s Series (256GB, 2.5in SATA 6Gb/s, 3D2, TLC)</p>
+                                            <p class="subtitle is-6">{{$product->getName()}}</p>
                                         </div>
                                     </div>
                                     <footer class="card-footer">
-                                        <span href="#" class="card-footer-item has-text-info">1,740,000vnd</span>
-                                        <a href="#" class="card-footer-item has-background-info has-text-white">Detail</a>
+                                        <span class="card-footer-item has-text-info">{{$product->getAmount()->format()}}</span>
+                                        <a href="{{route('products.show', $product->getSlug())}}" class="card-footer-item has-background-info has-text-white">Detail</a>
                                     </footer>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+                    {{$products->appends(request()->all())->links()}}
                 </div>
             </div>
         </div>

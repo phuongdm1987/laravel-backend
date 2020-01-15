@@ -1,0 +1,112 @@
+version: '3'
+services:
+
+  #Laravel App
+  app:
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile
+    image: backend-app
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - mynet
+
+  #Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: backend-nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8800:80"
+      - "4433:443"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/ssl/:/etc/nginx/ssl/
+    networks:
+      - mynet
+
+  #MySQL Service
+  mysql:
+    image: mysql:5.7
+    container_name: backend-mysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33067:3306"
+    environment:
+      MYSQL_DATABASE: backend
+      MYSQL_USER: henry
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: rootsecret
+    volumes:
+      - mysqldata:/var/lib/mysql/
+    networks:
+      - mynet
+
+  #REDIS Service
+  redis:
+    build: ./docker/redis
+    volumes:
+      - redisdata:/data
+    ports:
+      - "7379:6379"
+    container_name: backend-redis
+    networks:
+      - mynet
+
+  ### ElasticSearch ########################################
+  elasticsearch:
+    build: ./docker/elasticsearch
+    container_name: backend-elasticsearch
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=backend-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    depends_on:
+      - app
+    networks:
+      - mynet
+
+  worker:
+    container_name: backend-worker
+    build:
+      context: ./docker/php-worker
+    depends_on:
+      - app
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php-worker/supervisord.d:/etc/supervisord.d
+    networks:
+      - mynet
+
+#Docker Networks
+networks:
+  mynet:
+    driver: bridge
+#Volumes
+volumes:
+  mysqldata:
+    driver: local
+  redisdata:
+    driver: local
+  elasticsearch:
+    driver: local

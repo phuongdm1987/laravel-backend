@@ -15,6 +15,7 @@
 <body>
     <div id="app">
         @include('commons.header')
+        @include('commons.notification')
 
         @yield('hero-content')
 

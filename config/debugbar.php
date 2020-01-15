@@ -9,7 +9,7 @@ return [
      |
      | Debugbar is enabled by default, when debug is set to true in app.php.
      | You can override the value by setting enable to true or false instead of null.
-     | 
+     |
      | You can provide an array of URI's that must be ignored (eg. 'api/*')
      |
      */
@@ -78,8 +78,8 @@ return [
      | in the Messages tab.
      |
      */
-    'error_handler' => false,
-    
+                            'error_handler' => false,
+
     /*
      |--------------------------------------------------------------------------
      | Clockwork integration
@@ -117,11 +117,11 @@ return [
         'mail'            => true,  // Catch mail messages
         'laravel'         => false, // Laravel version and environment
         'events'          => false, // All events fired
-        'default_request' => false, // Regular or special Symfony request logger
+        'default_request' => true, // Regular or special Symfony request logger
         'logs'            => false, // Add the latest log messages
         'files'           => false, // Show the included files
-        'config'          => false, // Display config settings
-        'cache'           => false, // Display cache events
+        'config'          => true, // Display config settings
+        'cache'           => true, // Display cache events
     ],
 
     /*
@@ -142,7 +142,7 @@ return [
             'backtrace'         => true,   // Use a backtrace to find the origin of the query in your files.
             'timeline'          => false,  // Add the queries to the timeline
             'explain' => [                 // Show EXPLAIN output on queries
-                'enabled' => false,
+                'enabled' => true,
                 'types' => ['SELECT'],     // ['SELECT', 'INSERT', 'UPDATE', 'DELETE']; for MySQL 5.6.3+
             ],
             'hints'             => true,    // Show hints for common mistakes

@@ -7,4 +7,5 @@ declare(strict_types=1);
      'language' => 'Language',
      'vietnamese' => 'Vietnamese',
      'english' => 'English',
+     'contact' => 'Contact'
  ];

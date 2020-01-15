@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::namespace('Api')->middleware('guest')->group(function() {
+    Route::post('/login', 'AuthController@login');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
+    Route::resource('/attributes', 'AttributeController');
+    Route::resource('/attribute-values', 'AttributeValueController');
+    Route::get('/categories/all-tree', 'CategoryController@getAllTree');
+    Route::get('/categories/types', 'CategoryController@getTypes');
+    Route::resource('/categories', 'CategoryController');
+    Route::resource('/products', 'ProductController');
+    Route::resource('/users', 'UserController');
+});
+
+Route::middleware('auth:api')->namespace('Api')->group(function() {
+    Route::get('/logout', 'AuthController@logout');
+    Route::get('/products', 'ProductController@index')->name('api.products.index');
+    Route::resource('/projects', 'ProjectController');
 });

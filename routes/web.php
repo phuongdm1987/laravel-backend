@@ -19,15 +19,16 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/set-language/{locale}', function($locale) {
-    $locales = config('language', []);
+Route::middleware(['auth', 'verified'])->group(function() {
+    Route::get('/home', 'HomeController@index')
+        ->name('home');
 
-    if (!array_key_exists($locale, $locales)) {
-        $locale = array_first(array_keys($locales));
-    }
+    Route::get('/categories/{category}', 'CategoryController@index')
+        ->name('category.index');
 
-    session(['locale' => $locale]);
+    Route::resource('product-users', 'ProductUserController');
+    Route::resource('products', 'ProductController');
+});
 
-    return redirect()->back();
-})->name('setLanguage');
+Route::get('/set-language/{locale}', 'LanguageController@update')
+    ->name('setLanguage');

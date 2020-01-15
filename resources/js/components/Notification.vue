@@ -1,5 +1,5 @@
 <template>
-    <div v-show="visible" class="notification is-success">
+    <div v-show="visible" :class="stateClass">
         <button class="delete" @click="hidden"></button>
         <slot></slot>
     </div>
@@ -13,9 +13,20 @@
                 visible: true
             }
         },
+        props: {
+            state: {
+                type: String,
+                default: 'is-success'
+            }
+        },
         methods: {
             hidden() {
                 this.visible = false
+            }
+        },
+        computed: {
+            stateClass() {
+                return 'notification ' + this.state
             }
         }
     }
