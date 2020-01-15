@@ -34,7 +34,7 @@ class AppComposer
      */
     public function compose(View $view): void
     {
-        $this->categoryRepository->rebuildTree();
+//        $this->categoryRepository->rebuildTree();
         $menus = $this->categoryRepository->getAllMenusToTree();
         $categories = $this->categoryRepository->getAllCategoriesToTree();
         $view->with(compact('menus', 'categories'));

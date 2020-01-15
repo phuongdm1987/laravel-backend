@@ -13,7 +13,7 @@
 
     <div id="navbarBasicExample" class="navbar-menu" :class="{'is-active': navbar.is_active}">
         <div class="navbar-start">
-            @include('commons.menu-multi-level', ['menus' => $menus])
+            {!! generateMenusMultiLevel($menus) !!}
         </div>
 
         <div class="navbar-end">

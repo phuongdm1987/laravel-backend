@@ -21,7 +21,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         view()->composer(
-            'layouts.app', AppComposer::class
+            ['commons.header', 'commons.side-bar'], AppComposer::class
         );
     }
 

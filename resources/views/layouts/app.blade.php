@@ -16,7 +16,11 @@
     <div id="app">
         @include('commons.header')
 
+        @yield('hero-content')
+
         @yield('content')
+
+        @include('commons.footer')
     </div>
 
     <!-- Scripts -->

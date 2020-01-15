@@ -1,1 +1,1 @@
-{!! generateMenuMultiLevel($menus) !!}
+
