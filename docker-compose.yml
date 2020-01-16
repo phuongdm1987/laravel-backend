@@ -26,14 +26,16 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - "8081:80"
+      - "4433:443"
     volumes:
       - ./:/var/www/html
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
       - ./docker/nginx/ssl/:/etc/nginx/ssl/
     networks:
       - mynet
+    environment:
+      - VIRTUAL_HOST=vnecos.com,www.vnecos.com
 
   #MySQL Service
   mysql:
@@ -42,7 +44,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "33067:3306"
     environment:
       MYSQL_DATABASE: backend
       MYSQL_USER: henry
