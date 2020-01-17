@@ -27,7 +27,8 @@ RUN apk update && apk add bash && apk add --no-cache \
     php7-dom \
     php7-session \
     php7-zlib \
-    php7-dev
+    php7-dev \
+    npm install -g npm
 
 # Add and Enable PHP-PDO Extenstions
 RUN docker-php-ext-install pdo pdo_mysql
