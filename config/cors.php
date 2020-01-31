@@ -15,7 +15,7 @@ return [
    
     'supportsCredentials' => false,
     'allowedOrigins' => ['*'],
-    'allowedOriginsPatterns' => ['*.backend.local'],
+    'allowedOriginsPatterns' => ['*.backend.local', 'localhost'],
     'allowedHeaders' => ['*'],
     'allowedMethods' => ['*'],
     'exposedHeaders' => [],

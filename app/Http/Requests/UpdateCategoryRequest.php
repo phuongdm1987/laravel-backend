@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 
 use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 
 /**
  * Class UpdateCategoryRequest
@@ -72,5 +73,13 @@ class UpdateCategoryRequest extends FormRequest
     public function attributes(): array
     {
         return (array)$this->get('attributes', []);
+    }
+
+    /**
+     * @return array
+     */
+    public function attributeIds(): array
+    {
+        return Arr::pluck((array)$this->get('attributes', []), 'id');
     }
 }

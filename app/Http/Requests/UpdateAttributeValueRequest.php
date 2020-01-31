@@ -31,7 +31,7 @@ class UpdateAttributeValueRequest extends FormRequest
         return [
             'attribute_id' => 'nullable|integer|exists:attributes,id',
             'value' => 'required|string|max:255',
-            'url' => 'url|max:255',
+            'url' => 'nullable|url|max:255',
         ];
     }
 

@@ -51,7 +51,7 @@ class StoreAttributeValueJob implements ShouldQueue
      */
     public static function fromRequest(UpdateAttributeValueRequest $request): self
     {
-        return new static($request->attributeId(), $request->value(), $request->url());
+        return new static($request->attributeId(), $request->value(), $request->getUrl());
     }
 
     /**
