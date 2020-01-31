@@ -29,6 +29,5 @@ Route::namespace('Api')->middleware('guest')->group(function() {
 
 Route::middleware('auth:api')->namespace('Api')->group(function() {
     Route::get('/logout', 'AuthController@logout');
-    Route::get('/products', 'ProductController@index')->name('api.products.index');
     Route::resource('/projects', 'ProjectController');
 });
