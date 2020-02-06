@@ -9,10 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "ext-fileinfo": "*",
+        "ext-pdo": "*",
         "barryvdh/laravel-cors": "^0.11.2",
         "cviebrock/eloquent-sluggable": "^6.0",
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
         "fideloper/proxy": "^4.0",
+        "intervention/image": "^2.5",
         "kalnoy/nestedset": "^5.0",
         "laravel/framework": "^6.0",
         "laravel/horizon": "^3.0",
@@ -21,8 +24,7 @@
         "laravel/tinker": "^1.0",
         "league/fractal": "^0.17.0",
         "predis/predis": "^1.1",
-        "tamayo/laravel-scout-elastic": "^5.0",
-        "ext-pdo": "*"
+        "tamayo/laravel-scout-elastic": "^5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

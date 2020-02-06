@@ -4,16 +4,13 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\UpdateProductRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Jobs\Product\DeleteProductJob;
-use App\Jobs\Product\StoreProductJob;
 use App\Jobs\User\GetNormalUsersJob;
 use App\Jobs\User\RegisterUserJob;
 use App\Jobs\User\UpdateUserJob;
 use Henry\Domain\Product\Product;
 use Henry\Domain\User\User;
-use Henry\Infrastructure\Product\Transformers\ProductTransformer;
 use Henry\Infrastructure\Transformer;
 use Henry\Infrastructure\User\Transformers\UserTransformer;
 use Illuminate\Database\Eloquent\Collection;
@@ -85,6 +82,7 @@ class UserController extends ApiController
     public function destroy(Product $product): JsonResponse
     {
         DeleteProductJob::dispatchNow($product);
+
         return $this->success(['msg' => 'Delete product success!']);
     }
 }

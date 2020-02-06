@@ -13,7 +13,6 @@ class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize(): bool
@@ -23,7 +22,6 @@ class UpdateProductRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return array
      */
     public function rules(): array
@@ -36,7 +34,7 @@ class UpdateProductRequest extends FormRequest
             'name' => 'required|string|max:255|unique:products,name,' . $productId,
             'description' => 'string',
             'attribute_value_ids' => 'nullable|array',
-            'attribute_value_ids.*.attribute_id' => 'integer|exists:attributes,id'
+            'attribute_value_ids.*.attribute_id' => 'integer|exists:attributes,id',
         ];
     }
 
@@ -45,7 +43,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function categoryId(): int
     {
-        return (int)$this->get('category_id',0);
+        return (int)$this->get('category_id', 0);
     }
 
     /**
@@ -53,7 +51,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function name(): string
     {
-        return (string)$this->get('name','');
+        return (string)$this->get('name', '');
     }
 
     /**
@@ -61,7 +59,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function description(): string
     {
-        return (string)$this->get('description','');
+        return (string)$this->get('description', '');
     }
 
     /**
@@ -70,5 +68,13 @@ class UpdateProductRequest extends FormRequest
     public function attributeValueIds(): array
     {
         return $this->get('attribute_value_ids', []);
+    }
+
+    /**
+     * @return array
+     */
+    public function images(): array
+    {
+        return $this->get('images', []);
     }
 }

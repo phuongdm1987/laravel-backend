@@ -71,13 +71,6 @@ class LoginApiUserJob implements ShouldQueue
      */
     public function handle()
     {
-        $credentials = ['email' => $this->email, 'password' => $this->password];
-        if (!auth()->attempt($credentials)) {
-            throw ValidationException::withMessages([
-                'email' => [__('auth.failed')],
-            ]);
-        }
-
         $data = [
             'grant_type' => 'password',
             'client_id' => $this->clientId,

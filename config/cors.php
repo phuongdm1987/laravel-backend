@@ -12,7 +12,7 @@ return [
     | to accept any value.
     |
     */
-   
+
     'supportsCredentials' => false,
     'allowedOrigins' => ['*'],
     'allowedOriginsPatterns' => ['*.backend.local', 'localhost'],

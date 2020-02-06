@@ -7,11 +7,11 @@ use App\Http\Requests\UpdateProductRequest;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
 /**
  * Class StoreProductJob
@@ -76,7 +76,7 @@ class StoreProductJob implements ShouldQueue
         $product = $productRepository->create([
             'category_id' => $this->categoryId,
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
         ]);
 
         $product->attributeValues()->sync($this->attributeValueIds);
