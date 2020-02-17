@@ -11,6 +11,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Intervention\Image\Facades\Image;
+use Storage;
 
 /**
  * Class UploadImageJob
@@ -45,12 +46,14 @@ class UploadImageJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
-     *
-     * @return void
+     * @return string
      */
-    public function handle(): void
+    public function handle(): string
     {
-        Image::make($this->image);
+        $image = Image::make($this->image);
+        $path = $this->image->hashName(env('UPLOAD_IMAGE_PATH'));
+        Storage::put($path, $image);
+
+        return basename($path);
     }
 }
