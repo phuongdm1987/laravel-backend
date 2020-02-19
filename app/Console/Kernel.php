@@ -1,10 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Laravel\Nova\Trix\PruneStaleAttachments;
 
+/**
+ * Class Kernel
+ * @package App\Console
+ */
 class Kernel extends ConsoleKernel
 {
     /**
@@ -24,8 +30,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+         $schedule->call(function () {
+             (new PruneStaleAttachments) ();
+         })->daily();
     }
 
     /**

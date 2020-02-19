@@ -27,8 +27,15 @@ trait ConstantTrait
         }
         $constants = $refClass->getConstants();
 
-        return Arr::where($constants, function($value, $key) use ($prefix) {
-            return Str::startsWith($key, $prefix);
-        });
+        $allConstants = [];
+
+        foreach ($constants as $key => $constant) {
+            if (!Str::startsWith($key, $prefix)) {
+                continue;
+            }
+            $allConstants[$constant] = $constant;
+        }
+
+        return $allConstants;
     }
 }

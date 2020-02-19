@@ -21,7 +21,7 @@ class CreateAttributeValuesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('attribute_id')->default(0)->index();
             $table->string('value');
-            $table->string('url');
+            $table->string('url')->nullable();
         });
     }
 

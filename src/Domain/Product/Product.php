@@ -13,14 +13,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 /**
  * Class Product
  * @package Henry\Domain\Product
  */
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use Sluggable, CustomizeSlugEngine, Searchable;
+    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait;
 
     protected $with = ['category'];
 
@@ -28,7 +31,6 @@ class Product extends Model
 
     /**
      * Get the index name for the model.
-     *
      * @return string
      */
     public function searchableAs(): string
@@ -38,7 +40,6 @@ class Product extends Model
 
     /**
      * Get the route key for the model.
-     *
      * @return string
      */
     public function getRouteKeyName(): string
@@ -49,25 +50,9 @@ class Product extends Model
     /**
      * @return int
      */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return int
-     */
     public function getCategoryId(): int
     {
         return $this->category_id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -96,7 +81,6 @@ class Product extends Model
 
     /**
      * Get the indexable data array for the model.
-     *
      * @return array
      */
     public function toSearchableArray(): array
@@ -105,6 +89,22 @@ class Product extends Model
             'id' => $this->getId(),
             'name' => $this->getName(),
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -130,5 +130,20 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'product_users')
             ->withPivot(['amount'])->withTimestamps()->orderBy('pivot_updated_at')->orderBy('pivot_amount');
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->width(130)
+            ->height(130);
+        $this->addMediaConversion('medium-size')
+            ->width(390)
+            ->height(390);
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('images');
     }
 }
