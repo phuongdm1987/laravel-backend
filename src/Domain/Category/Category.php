@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
+use Laravel\Nova\Actions\Actionable;
 
 /**
  * Class Category
@@ -20,7 +21,7 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Category extends Model
 {
-    use Sluggable, CustomizeSlugEngine, NodeTrait {
+    use Sluggable, CustomizeSlugEngine, Actionable, NodeTrait {
         NodeTrait::replicate as replicateNode;
         Sluggable::replicate as replicateSlug;
     }

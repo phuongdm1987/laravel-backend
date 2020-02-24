@@ -8,6 +8,7 @@ use Henry\Domain\Category\Category;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Nova\Actions\Actionable;
 
 /**
  * Class Attribute
@@ -17,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Attribute extends Model
 {
+    use Actionable;
+
     public $timestamps = false;
     protected $fillable = ['name', 'is_filter'];
 

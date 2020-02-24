@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
@@ -84,6 +85,8 @@ class Category extends Resource
                     ];
                 })
                 ->searchable(),
+
+            HasMany::make('Products'),
         ];
     }
 
@@ -104,7 +107,9 @@ class Category extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new \App\Nova\Filters\Category\Type()
+        ];
     }
 
     /**

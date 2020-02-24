@@ -12,6 +12,7 @@ use Henry\Domain\User\ValueObjects\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
@@ -23,7 +24,7 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Product extends Model implements HasMedia
 {
-    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait;
+    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable;
 
     protected $with = ['category'];
 
@@ -120,7 +121,7 @@ class Product extends Model implements HasMedia
      */
     public function attributeValues(): BelongsToMany
     {
-        return $this->belongsToMany(AttributeValue::class);
+        return $this->belongsToMany(AttributeValue::class)->withPivot(['attribute_id']);
     }
 
     /**

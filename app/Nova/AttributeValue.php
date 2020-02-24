@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Filters\AttributeValue\Attribute;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -86,7 +87,9 @@ class AttributeValue extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Attribute()
+        ];
     }
 
     /**

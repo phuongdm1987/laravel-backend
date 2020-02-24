@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Nova\Actions\Actionable;
 use Laravel\Passport\HasApiTokens;
 
 /**
@@ -21,7 +22,7 @@ use Laravel\Passport\HasApiTokens;
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, Actionable;
 
     protected $dates = ['email_verified_at'];
 

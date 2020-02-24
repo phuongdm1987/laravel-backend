@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use App\Nova\Filters\Product\Category;
+use App\Nova\Filters\Product\Timestamp;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -58,13 +62,27 @@ class Product extends Resource
                 ->enableExistingMedia()
                 ->withResponsiveImages(),
 
+            BelongsTo::make('Category')
+                ->sortable()
+                ->searchable()
+                ->nullable()
+                ->rules('nullable', 'exists:categories,id')
+                ->updateRules('not_in:{{resourceId}}'),
+
             Text::make('Name')
                 ->sortable()
                 ->rules('required', 'max:255')
                 ->creationRules('unique:products,name')
                 ->updateRules('unique:products,name,{{resourceId}}'),
 
-            Trix::make('Description')->withFiles('image'),
+            Text::make('Slug')
+                ->sortable()
+                ->exceptOnForms(),
+
+            Trix::make('Description')->withFiles('image')->stacked(),
+
+            BelongsToMany::make('AttributeValues')
+                ->searchable(),
         ];
     }
 
@@ -85,7 +103,11 @@ class Product extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [
+            new Category(),
+            new Timestamp('created_at'),
+            new Timestamp('updated_at'),
+        ];
     }
 
     /**

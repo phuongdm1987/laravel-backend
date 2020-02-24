@@ -8,6 +8,7 @@ use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Nova\Actions\Actionable;
 
 /**
  * Class AttributeValue
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class AttributeValue extends Model
 {
+    use Actionable;
+
     public $timestamps = false;
     protected $fillable = ['attribute_id', 'value', 'url'];
 
