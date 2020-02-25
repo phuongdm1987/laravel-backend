@@ -178,6 +178,7 @@ return [
         App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\ViewServiceProvider::class,
+        App\Providers\EavServiceProvider::class,
 
     ],
 

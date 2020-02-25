@@ -7,8 +7,6 @@ use Henry\Domain\Category\ValueObjects\Type;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
@@ -78,14 +76,6 @@ class Category extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
-            BelongsToMany::make('Attributes')
-                ->fields(function () {
-                    return [
-                        Boolean::make('Can Change')
-                    ];
-                })
-                ->searchable(),
-
             HasMany::make('Products'),
         ];
     }
@@ -108,7 +98,7 @@ class Category extends Resource
     public function filters(Request $request)
     {
         return [
-            new \App\Nova\Filters\Category\Type()
+            new \App\Nova\Filters\Category\Type(),
         ];
     }
 
@@ -134,7 +124,6 @@ class Category extends Resource
 
     /**
      * Get the search result subtitle for the resource.
-     *
      * @return string
      */
     public function subtitle()

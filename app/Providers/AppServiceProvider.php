@@ -6,13 +6,11 @@ namespace App\Providers;
 use Henry\Domain\Attribute\Filters\AttributeFilterInterface;
 use Henry\Domain\Attribute\Repositories\AttributeRepositoryInterface;
 use Henry\Domain\Attribute\Sorters\AttributeSorterInterface;
-use Henry\Domain\AttributeValue\Filters\AttributeValueFilterInterface;
-use Henry\Domain\AttributeValue\Repositories\AttributeValueRepositoryInterface;
-use Henry\Domain\AttributeValue\Sorters\AttributeValueSorterInterface;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\Sorters\CategorySorterInterface;
 use Henry\Domain\Product\Filters\ProductFilterInterface;
+use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Henry\Domain\Product\Sorters\ProductSorterInterface;
 use Henry\Domain\ProductUser\Filters\ProductUserFilterInterface;
@@ -24,9 +22,6 @@ use Henry\Domain\User\Sorters\UserSorterInterface;
 use Henry\Infrastructure\Attribute\Filters\EloquentAttributeFilter;
 use Henry\Infrastructure\Attribute\Repositories\EloquentAttributeRepository;
 use Henry\Infrastructure\Attribute\Sorters\EloquentAttributeSorter;
-use Henry\Infrastructure\AttributeValue\Filters\EloquentAttributeValueFilter;
-use Henry\Infrastructure\AttributeValue\Repositories\EloquentAttributeValueRepository;
-use Henry\Infrastructure\AttributeValue\Sorters\EloquentAttributeValueSorter;
 use Henry\Infrastructure\Category\Filters\EloquentCategoryFilter;
 use Henry\Infrastructure\Category\Repositories\EloquentCategoryRepository;
 use Henry\Infrastructure\Category\Sorters\EloquentCategorySorter;
@@ -43,6 +38,11 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
+use Rinvex\Attributes\Models\Attribute;
+use Rinvex\Attributes\Models\Type\Boolean;
+use Rinvex\Attributes\Models\Type\Integer;
+use Rinvex\Attributes\Models\Type\Text;
+use Rinvex\Attributes\Models\Type\Varchar;
 
 /**
  * Class AppServiceProvider
@@ -70,10 +70,6 @@ class AppServiceProvider extends ServiceProvider
         AttributeRepositoryInterface::class => EloquentAttributeRepository::class,
         AttributeFilterInterface::class => EloquentAttributeFilter::class,
         AttributeSorterInterface::class => EloquentAttributeSorter::class,
-
-        AttributeValueRepositoryInterface::class => EloquentAttributeValueRepository::class,
-        AttributeValueFilterInterface::class => EloquentAttributeValueFilter::class,
-        AttributeValueSorterInterface::class => EloquentAttributeValueSorter::class,
     ];
 
     /**
@@ -88,6 +84,15 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('money', function ($amount) {
             return "<?=number_format($amount, 0, ',', '.')?>";
         });
+
+        Attribute::typeMap([
+            'varchar' => Varchar::class,
+            'boolean' => Boolean::class,
+            'text' => Text::class,
+            'integer' => Integer::class,
+        ]);
+
+        app('rinvex.attributes.entities')->push(Product::class);
     }
 
     /**

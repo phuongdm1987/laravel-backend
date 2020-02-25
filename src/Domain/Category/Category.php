@@ -5,12 +5,10 @@ namespace Henry\Domain\Category;
 
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Henry\Domain\Attribute\Attribute;
 use Henry\Domain\Category\ValueObjects\Type;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\Product\Product;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Kalnoy\Nestedset\NodeTrait;
 use Laravel\Nova\Actions\Actionable;
@@ -98,13 +96,5 @@ class Category extends Model
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function attributes(): BelongsToMany
-    {
-        return $this->belongsToMany(Attribute::class)->withPivot(['can_change']);
     }
 }

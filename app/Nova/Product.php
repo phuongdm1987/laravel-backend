@@ -8,7 +8,6 @@ use App\Nova\Filters\Product\Timestamp;
 use Ebess\AdvancedNovaMediaLibrary\Fields\Images;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
@@ -48,7 +47,7 @@ class Product extends Resource
      */
     public function fields(Request $request)
     {
-        return [
+        return array_merge([
             ID::make()->sortable(),
 
             Images::make('Images', 'images')
@@ -65,9 +64,7 @@ class Product extends Resource
             BelongsTo::make('Category')
                 ->sortable()
                 ->searchable()
-                ->nullable()
-                ->rules('nullable', 'exists:categories,id')
-                ->updateRules('not_in:{{resourceId}}'),
+                ->rules('nullable', 'exists:categories,id'),
 
             Text::make('Name')
                 ->sortable()
@@ -80,10 +77,8 @@ class Product extends Resource
                 ->exceptOnForms(),
 
             Trix::make('Description')->withFiles('image')->stacked(),
-
-            BelongsToMany::make('AttributeValues')
-                ->searchable(),
-        ];
+        ],
+            $this->attributeFields());
     }
 
     /**

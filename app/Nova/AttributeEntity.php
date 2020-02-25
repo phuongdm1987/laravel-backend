@@ -3,32 +3,28 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
-use App\Nova\Filters\AttributeValue\Attribute;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
 
 /**
- * Class AttributeValue
+ * Class AttributeEntity
  * @package App\Nova
- * @method getUrl()
- * @method getValue()
  */
-class AttributeValue extends Resource
+class AttributeEntity extends Resource
 {
-    public static $with = ['attribute'];
     /**
      * The model the resource corresponds to.
      * @var string
      */
-    public static $model = \Henry\Domain\AttributeValue\AttributeValue::class;
+    public static $model = \Henry\Domain\AttributeEntity\AttributeEntity::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      * @var string
      */
-    public static $title = 'value';
+    public static $title = 'entity_type';
 
     /**
      * The columns that should be searched.
@@ -36,7 +32,7 @@ class AttributeValue extends Resource
      */
     public static $search = [
         'id',
-        'value',
+        'entity_type',
     ];
 
     /**
@@ -49,24 +45,19 @@ class AttributeValue extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Value')
-                ->sortable()
-                ->rules('required', 'max:255')
-                ->creationRules('unique:attribute_values,value')
-                ->updateRules('unique:attribute_values,value,{{resourceId}}'),
-
-            Text::make('Url')
-                ->nullable()
-                ->displayUsing(function ($url) {
-                    return '<a target="_blank" class="no-underline font-bold dim text-primary" href="' . $url . '">' . $url . '</a>';
-                })
-                ->asHtml()
-                ->rules('url', 'nullable'),
-
-            BelongsTo::make('Attribute')
-                ->sortable()
-                ->searchable()
-                ->rules('required', 'exists:attributes,id'),
+            BelongsTo::make(__('Attribute'), 'Attribute')
+                ->rules('required')
+            ,
+            Select::make(__('Entity Type'), 'entity_type')
+                ->options(
+                    array_combine(
+                        app('rinvex.attributes.entities')->toArray(),
+                        app('rinvex.attributes.entities')->toArray()
+                    )
+                )
+                ->rules('required')
+            ,
+//            Number::make(__('Entity Id'), 'entity_id'), // not used???
         ];
     }
 
@@ -87,9 +78,7 @@ class AttributeValue extends Resource
      */
     public function filters(Request $request)
     {
-        return [
-            new Attribute()
-        ];
+        return [];
     }
 
     /**
@@ -110,15 +99,5 @@ class AttributeValue extends Resource
     public function actions(Request $request)
     {
         return [];
-    }
-
-    /**
-     * Get the search result subtitle for the resource.
-     *
-     * @return string|null
-     */
-    public function subtitle()
-    {
-        return 'Attribute: ' . $this->attribute->name;
     }
 }

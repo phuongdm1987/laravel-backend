@@ -4,12 +4,11 @@ declare(strict_types=1);
 namespace App\Nova;
 
 use Illuminate\Http\Request;
-use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 /**
  * Class Attribute
@@ -19,31 +18,28 @@ class Attribute extends Resource
 {
     /**
      * The model the resource corresponds to.
-     *
      * @var string
      */
     public static $model = \Henry\Domain\Attribute\Attribute::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
-     *
      * @var string
      */
     public static $title = 'name';
 
     /**
      * The columns that should be searched.
-     *
      * @var array
      */
     public static $search = [
-        'id','name'
+        'id',
+        'name',
     ];
 
     /**
      * Get the fields displayed by the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -51,28 +47,35 @@ class Attribute extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Name')
-                ->sortable()
-                ->rules('required', 'max:255')
-                ->creationRules('unique:attributes,name')
-                ->updateRules('unique:attributes,name,{{resourceId}}'),
+            Select::make(__('Type'), 'type')
+                ->options(
+                    array_combine(
+                        array_keys(\Rinvex\Attributes\Models\Attribute::typeMap()),
+                        array_keys(array_change_key_case(\Rinvex\Attributes\Models\Attribute::typeMap(), CASE_UPPER))
+                    )
+                )
+                ->rules('required')
+            ,
+            Text::make(__('Group'), 'group'),
+            Text::make(__('Name'), 'name')
+            ,
+            Boolean::make(__('Is Required'), 'is_required')
+                ->rules('required')
+            ,
+            Boolean::make(__('Is Collection'), 'is_collection')
+                ->rules('required')
+            ,
+            Text::make(__('Default'), 'default')
+            ,
 
-            BelongsToMany::make('Categories')
-                ->fields(function () {
-                    return [
-                        Boolean::make('Can Change')
-                    ];
-                })
-                ->searchable(),
-
-            HasMany::make('AttributeValues'),
+            HasMany::make(__('Attribute Entities'), 'AttributeEntities')
+                ->rules('required'),
         ];
     }
 
     /**
      * Get the cards available for the request.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -82,8 +85,7 @@ class Attribute extends Resource
 
     /**
      * Get the filters available for the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -93,8 +95,7 @@ class Attribute extends Resource
 
     /**
      * Get the lenses available for the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -104,8 +105,7 @@ class Attribute extends Resource
 
     /**
      * Get the actions available for the resource.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)

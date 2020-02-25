@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Henry\Domain\Product;
 
 use Cviebrock\EloquentSluggable\Sluggable;
-use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\User\User;
@@ -14,6 +13,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
+use Rinvex\Attributes\Traits\Attributable;
+use Rinvex\Support\Traits\HasTranslations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -24,7 +25,9 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Product extends Model implements HasMedia
 {
-    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable;
+    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable, Attributable, HasTranslations {
+        Attributable::setAttribute insteadof HasTranslations;
+    }
 
     protected $with = ['category'];
 
@@ -119,20 +122,16 @@ class Product extends Model implements HasMedia
     /**
      * @return BelongsToMany
      */
-    public function attributeValues(): BelongsToMany
-    {
-        return $this->belongsToMany(AttributeValue::class)->withPivot(['attribute_id']);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'product_users')
             ->withPivot(['amount'])->withTimestamps()->orderBy('pivot_updated_at')->orderBy('pivot_amount');
     }
 
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
