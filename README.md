@@ -10,6 +10,8 @@ Project write to learn laravel, design pattern, new technologies
 - run `yarn dev` or `npm run dev` to compile asset
 - run `php artisan migrate` to create database
 - run `php artisan db:seed` to seed database
+- run `php artisan rinvex:migrate:attributes` to create EAV database
+- run `php artisan passport:install` to add access token
 
 ## deploy on product
 - add id_rsa (ssh private key) to ~/.ssh/id_rsa
