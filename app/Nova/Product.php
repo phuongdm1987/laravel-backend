@@ -56,7 +56,6 @@ class Product extends Resource
                 ->conversionOnIndexView('thumb')
                 ->conversionOnForm('thumb')
                 ->fullSize()
-                ->rules('required', 'array', 'size:3')
                 ->singleImageRules('dimensions:min_width=100')
                 ->enableExistingMedia()
                 ->withResponsiveImages(),
@@ -76,7 +75,9 @@ class Product extends Resource
                 ->sortable()
                 ->exceptOnForms(),
 
-            Trix::make('Description')->withFiles('image')->stacked(),
+            Trix::make('Description')
+                ->withFiles('image')
+                ->stacked(),
         ],
             $this->attributeFields());
     }

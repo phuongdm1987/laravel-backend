@@ -15,6 +15,7 @@ use Laravel\Nova\Actions\Actionable;
 use Laravel\Scout\Searchable;
 use Rinvex\Attributes\Traits\Attributable;
 use Rinvex\Support\Traits\HasTranslations;
+use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -25,11 +26,12 @@ use Spatie\MediaLibrary\Models\Media;
  */
 class Product extends Model implements HasMedia
 {
-    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable, Attributable, HasTranslations {
+    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable;
+    use Attributable, HasTranslations {
         Attributable::setAttribute insteadof HasTranslations;
     }
 
-    protected $with = ['category'];
+    protected $with = ['category', 'eav'];
 
     protected $fillable = ['category_id', 'name', 'description'];
 
@@ -130,7 +132,7 @@ class Product extends Model implements HasMedia
 
     /**
      * @param Media|null $media
-     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     * @throws InvalidManipulation
      */
     public function registerMediaConversions(Media $media = null)
     {
