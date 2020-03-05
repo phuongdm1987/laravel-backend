@@ -31,7 +31,7 @@ class Product extends Model implements HasMedia
         Attributable::setAttribute insteadof HasTranslations;
     }
 
-    protected $with = ['category', 'eav'];
+    protected $with = ['category'];
 
     protected $fillable = ['category_id', 'name', 'description'];
 

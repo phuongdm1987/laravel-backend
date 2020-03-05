@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Henry\Domain\Attribute\Attribute;
+use Henry\Domain\AttributeEntity\AttributeEntity;
+
 return [
 
     // Attributes Database Tables
@@ -20,8 +23,8 @@ return [
     // Attributes Models
     'models' => [
 
-        'attribute' => \Rinvex\Attributes\Models\Attribute::class,
-        'attribute_entity' => \Rinvex\Attributes\Models\AttributeEntity::class,
+        'attribute' => Attribute::class,
+        'attribute_entity' => AttributeEntity::class,
 
     ]
 

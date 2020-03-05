@@ -9,6 +9,8 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
+use Naxon\NovaFieldSortable\Concerns\SortsIndexEntries;
+use Naxon\NovaFieldSortable\Sortable;
 
 /**
  * Class Attribute
@@ -16,6 +18,10 @@ use Laravel\Nova\Fields\Text;
  */
 class Attribute extends Resource
 {
+    use SortsIndexEntries;
+
+    public static $defaultSortField = 'sort_order';
+
     /**
      * The model the resource corresponds to.
      * @var string
@@ -39,13 +45,14 @@ class Attribute extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function fields(Request $request)
     {
         return [
             ID::make()->sortable(),
+            Sortable::make(__('Sort Order'), 'id')->onlyOnIndex(),
 
             Select::make(__('Type'), 'type')
                 ->options(
@@ -75,7 +82,7 @@ class Attribute extends Resource
 
     /**
      * Get the cards available for the request.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -85,7 +92,7 @@ class Attribute extends Resource
 
     /**
      * Get the filters available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -95,7 +102,7 @@ class Attribute extends Resource
 
     /**
      * Get the lenses available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -105,7 +112,7 @@ class Attribute extends Resource
 
     /**
      * Get the actions available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function actions(Request $request)
