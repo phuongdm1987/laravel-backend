@@ -15,6 +15,11 @@ use Laravel\Nova\Actions\Actionable;
 
 /**
  * Class Category
+ * @property int created_by
+ * @property int id
+ * @property string name
+ * @property string slug
+ * @property string type
  * @package Henry\Domain\Category
  */
 class Category extends Model
@@ -88,6 +93,14 @@ class Category extends Model
     public function getType(): Type
     {
         return new Type($this->type);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedById(): int
+    {
+        return $this->created_by;
     }
 
     /**

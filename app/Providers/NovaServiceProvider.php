@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -7,6 +8,10 @@ use Laravel\Nova\Cards\Help;
 use Laravel\Nova\Nova;
 use Laravel\Nova\NovaApplicationServiceProvider;
 
+/**
+ * Class NovaServiceProvider
+ * @package App\Providers
+ */
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
     /**
@@ -43,7 +48,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         Gate::define('viewNova', function ($user) {
             return in_array($user->email, [
-                'phuongdm1987@gmail.com'
+                'phuongdm1987@gmail.com',
+                'doanct1987@yahoo.com'
             ]);
         });
     }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Observers\ProductObserver;
 use Henry\Domain\Attribute\Filters\AttributeFilterInterface;
 use Henry\Domain\Attribute\Repositories\AttributeRepositoryInterface;
 use Henry\Domain\Attribute\Sorters\AttributeSorterInterface;
@@ -93,6 +94,8 @@ class AppServiceProvider extends ServiceProvider
         ]);
 
         app('rinvex.attributes.entities')->push(Product::class);
+
+        Product::observe(ProductObserver::class);
     }
 
     /**

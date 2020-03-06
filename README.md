@@ -15,6 +15,11 @@ Project write to learn laravel, design pattern, new technologies
 - run `php artisan cache:clear` to clear cache
 - run `php artisan storage:link` to make storage link
 
+## how to use
+- Authentication with user/pass: phuongdm1987@gmail.com/secret
+- go to /horizon to manager queues
+- go to /nova to administration panel
+
 ## deploy on product
 - add id_rsa (ssh private key) to ~/.ssh/id_rsa
 - change user in php Dockerfile to root

@@ -22,6 +22,11 @@ use Spatie\MediaLibrary\Models\Media;
 
 /**
  * Class Product
+ * @property int created_by
+ * @property int category_id
+ * @property string slug
+ * @property int amount
+ * @property string description
  * @package Henry\Domain\Product
  */
 class Product extends Model implements HasMedia
@@ -83,6 +88,14 @@ class Product extends Model implements HasMedia
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedById(): int
+    {
+        return $this->created_by;
     }
 
     /**

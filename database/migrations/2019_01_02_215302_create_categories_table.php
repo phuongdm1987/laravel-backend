@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class CreateCategoriesTable
@@ -21,8 +21,11 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->enum('type', ['category', 'menu'])->default('menu');
+            $table->enum('type', ['category', 'menu'])
+                ->default('menu')
+                ->index();
             $table->nestedSet();
+            $table->unsignedBigInteger('created_by')->index();
         });
     }
 

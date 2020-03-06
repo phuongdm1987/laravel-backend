@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace App\Nova;
 
+use Henry\Domain\User\ValueObjects\ProfileId;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Gravatar;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 
 /**
@@ -49,6 +52,12 @@ class User extends Resource
             ID::make()->sortable(),
 
             Gravatar::make(),
+
+            Select::make('Profile Id')
+                ->options(ProfileId::getAll())
+                ->displayUsingLabels()
+                ->sortable()
+                ->rules('required', 'integer', Rule::in(array_keys(ProfileId::getAll()))),
 
             Text::make('Name')
                 ->sortable()
