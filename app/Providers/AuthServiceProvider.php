@@ -3,9 +3,13 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Policies\AttributeEntityPolicy;
+use App\Policies\AttributePolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
+use Henry\Domain\Attribute\Attribute;
+use Henry\Domain\AttributeEntity\AttributeEntity;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Product\Product;
 use Henry\Domain\User\User;
@@ -27,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Product::class => ProductPolicy::class,
         Category::class => CategoryPolicy::class,
+        Attribute::class => AttributePolicy::class,
+        AttributeEntity::class => AttributeEntityPolicy::class,
     ];
 
     /**

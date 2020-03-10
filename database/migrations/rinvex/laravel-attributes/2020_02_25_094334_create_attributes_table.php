@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateAttributesTable
+ */
 class CreateAttributesTable extends Migration
 {
     /**
@@ -27,6 +30,7 @@ class CreateAttributesTable extends Migration
             $table->boolean('is_required')->default(false);
             $table->boolean('is_collection')->default(false);
             $table->text('default')->nullable();
+            $table->unsignedBigInteger('created_by')->index();
             $table->timestamps();
 
             // Indexes

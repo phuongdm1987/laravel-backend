@@ -3,10 +3,15 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Observers\AttributeEntityObserver;
+use App\Observers\AttributeObserver;
+use App\Observers\CategoryObserver;
 use App\Observers\ProductObserver;
 use Henry\Domain\Attribute\Filters\AttributeFilterInterface;
 use Henry\Domain\Attribute\Repositories\AttributeRepositoryInterface;
 use Henry\Domain\Attribute\Sorters\AttributeSorterInterface;
+use Henry\Domain\AttributeEntity\AttributeEntity;
+use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\Sorters\CategorySorterInterface;
@@ -96,6 +101,9 @@ class AppServiceProvider extends ServiceProvider
         app('rinvex.attributes.entities')->push(Product::class);
 
         Product::observe(ProductObserver::class);
+        Category::observe(CategoryObserver::class);
+        \Henry\Domain\Attribute\Attribute::observe(AttributeObserver::class);
+        AttributeEntity::observe(AttributeEntityObserver::class);
     }
 
     /**

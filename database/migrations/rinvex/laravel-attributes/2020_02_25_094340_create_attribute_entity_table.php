@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
+/**
+ * Class CreateAttributeEntityTable
+ */
 class CreateAttributeEntityTable extends Migration
 {
     /**
@@ -21,6 +24,7 @@ class CreateAttributeEntityTable extends Migration
             $table->integer('attribute_id')->unsigned();
             $table->string('entity_type');
             $table->integer('entity_id')->unsigned()->nullable(); // TODO: Making this nullable for now as it breaks the basic features
+            $table->unsignedBigInteger('created_by')->index();
             $table->timestamps();
 
             // Indexes

@@ -8,11 +8,20 @@ use Laravel\Nova\Actions\Actionable;
 
 /**
  * Class AttributeEntity
+ * @property int created_by
  * @package Henry\Domain\AttributeEntity
  */
 class AttributeEntity extends \Rinvex\Attributes\Models\AttributeEntity
 {
     use Actionable;
+
+    /**
+     * @return int
+     */
+    public function getCreatedById(): int
+    {
+        return $this->created_by;
+    }
 
     /**
      * @return BelongsTo

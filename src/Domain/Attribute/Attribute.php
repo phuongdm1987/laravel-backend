@@ -10,11 +10,20 @@ use Laravel\Nova\Actions\Actionable;
  * Class Attribute
  * @property int id
  * @property string name
+ * @property int created_by
  * @package Henry\Domain\Attribute
  */
 class Attribute extends \Rinvex\Attributes\Models\Attribute
 {
     use Actionable;
+
+    /**
+     * @return int
+     */
+    public function getCreatedById(): int
+    {
+        return $this->created_by;
+    }
 
     /**
      * @return HasMany
