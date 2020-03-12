@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function viewAny(User $contextUser)
     {
-        return true;
+        return $contextUser->getProfile()->isSuperAdmin();
     }
 
     /**
@@ -45,7 +45,7 @@ class UserPolicy
      */
     public function create(User $contextUser)
     {
-        return false;
+        return $contextUser->getProfile()->isSuperAdmin();
     }
 
     /**

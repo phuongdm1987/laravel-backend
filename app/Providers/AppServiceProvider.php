@@ -7,6 +7,7 @@ use App\Observers\AttributeEntityObserver;
 use App\Observers\AttributeObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\ProductObserver;
+use App\Observers\UserObserver;
 use Henry\Domain\Attribute\Filters\AttributeFilterInterface;
 use Henry\Domain\Attribute\Repositories\AttributeRepositoryInterface;
 use Henry\Domain\Attribute\Sorters\AttributeSorterInterface;
@@ -25,6 +26,7 @@ use Henry\Domain\ProductUser\Sorters\ProductUserSorterInterface;
 use Henry\Domain\User\Filters\UserFilterInterface;
 use Henry\Domain\User\Repositories\UserRepositoryInterface;
 use Henry\Domain\User\Sorters\UserSorterInterface;
+use Henry\Domain\User\User;
 use Henry\Infrastructure\Attribute\Filters\EloquentAttributeFilter;
 use Henry\Infrastructure\Attribute\Repositories\EloquentAttributeRepository;
 use Henry\Infrastructure\Attribute\Sorters\EloquentAttributeSorter;
@@ -104,6 +106,7 @@ class AppServiceProvider extends ServiceProvider
         Category::observe(CategoryObserver::class);
         \Henry\Domain\Attribute\Attribute::observe(AttributeObserver::class);
         AttributeEntity::observe(AttributeEntityObserver::class);
+        User::observe(UserObserver::class);
     }
 
     /**

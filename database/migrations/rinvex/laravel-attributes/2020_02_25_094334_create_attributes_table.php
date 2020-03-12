@@ -30,7 +30,7 @@ class CreateAttributesTable extends Migration
             $table->boolean('is_required')->default(false);
             $table->boolean('is_collection')->default(false);
             $table->text('default')->nullable();
-            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by')->index()->default(0);
             $table->timestamps();
 
             // Indexes

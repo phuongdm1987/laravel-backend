@@ -24,7 +24,7 @@ class CreateAttributeEntityTable extends Migration
             $table->integer('attribute_id')->unsigned();
             $table->string('entity_type');
             $table->integer('entity_id')->unsigned()->nullable(); // TODO: Making this nullable for now as it breaks the basic features
-            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by')->index()->default(0);
             $table->timestamps();
 
             // Indexes

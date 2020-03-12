@@ -25,7 +25,7 @@ class CreateCategoriesTable extends Migration
                 ->default('menu')
                 ->index();
             $table->nestedSet();
-            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by')->index()->default(0);
         });
     }
 

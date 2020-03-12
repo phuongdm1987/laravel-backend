@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->unsignedBigInteger('amount')->nullable();
-            $table->unsignedBigInteger('created_by')->index();
+            $table->unsignedBigInteger('created_by')->index()->default(0);
             $table->timestamps();
         });
     }
