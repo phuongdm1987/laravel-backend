@@ -27,10 +27,8 @@ abstract class Resource extends NovaResource
      */
     public static function indexQuery(NovaRequest $request, $query)
     {
-        if ($request->user()->getProfile()->isSuperAdmin()) {
-            return $query;
-        }
-        return $query->where('created_by', $request->user()->id);
+        return $query;
+//        return $query->where('created_by', $request->user()->id);
     }
 
     /**
@@ -41,7 +39,8 @@ abstract class Resource extends NovaResource
      */
     public static function scoutQuery(NovaRequest $request, $query)
     {
-        return $query->where('created_by', $request->user()->id);
+        return $query;
+//        return $query->where('created_by', $request->user()->id);
     }
 
     /**

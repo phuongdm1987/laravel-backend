@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 
 use App\Jobs\Product\GetNormalProductsJob;
 use Henry\Domain\Category\Category;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 /**
  * Class CategoryController
@@ -16,14 +18,13 @@ class CategoryController extends Controller
     /**
      * @param Request $request
      * @param Category $category
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Factory|View
      */
     public function index(Request $request, Category $category)
     {
         $params = $request->all();
         $params = array_merge($params, ['category_id' => $category->getId()]);
         $products = GetNormalProductsJob::dispatchNow($params);
-        $category->load('attributes.attributeValues');
 
         return view('category.index', compact('category', 'products'));
     }

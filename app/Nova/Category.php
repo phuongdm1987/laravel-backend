@@ -43,7 +43,7 @@ class Category extends Resource
 
     /**
      * Get the fields displayed by the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -52,7 +52,7 @@ class Category extends Resource
             ID::make()->sortable(),
 
             Select::make('Type')
-                ->displayUsing(function ($type) {
+                ->displayUsing(static function ($type) {
                     return mb_strtoupper($type);
                 })
                 ->options(Type::getAll())
@@ -82,7 +82,7 @@ class Category extends Resource
 
     /**
      * Get the cards available for the request.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -92,19 +92,19 @@ class Category extends Resource
 
     /**
      * Get the filters available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function filters(Request $request)
     {
         return [
-            new \App\Nova\Filters\Category\Type(),
+            new Filters\Category\Type(),
         ];
     }
 
     /**
      * Get the lenses available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -114,7 +114,7 @@ class Category extends Resource
 
     /**
      * Get the actions available for the resource.
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function actions(Request $request)

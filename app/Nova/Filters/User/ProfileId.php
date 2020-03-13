@@ -1,19 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Nova\Filters\Product;
+namespace App\Nova\Filters\User;
 
-use App;
-use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Laravel\Nova\Filters\Filter;
 
 /**
- * Class Category
- * @package App\Nova\Filters\Product
+ * Class ProfileId
+ * @package App\Nova\Filters\User
  */
-class Category extends Filter
+class ProfileId extends Filter
 {
     /**
      * The filter's component.
@@ -27,12 +25,12 @@ class Category extends Filter
      *
      * @param Request $request
      * @param Builder $query
-     * @param  mixed  $value
+     * @param mixed $value
      * @return Builder
      */
     public function apply(Request $request, $query, $value)
     {
-       return $query->where('category_id', $value);
+        return $query->where('profile_id', $value);
     }
 
     /**
@@ -41,9 +39,8 @@ class Category extends Filter
      * @param Request $request
      * @return array
      */
-    public function options(Request $request): array
+    public function options(Request $request)
     {
-        $categoryRepository = App::make(CategoryRepositoryInterface::class);
-        return $categoryRepository->all()->pluck('id', 'name')->toArray();
+        return array_flip(\Henry\Domain\User\ValueObjects\ProfileId::getAll());
     }
 }

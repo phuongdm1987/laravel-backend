@@ -65,7 +65,7 @@ class ProfileId
      */
     private function assertProfileId(int $profileId): int
     {
-        $isExist = Arr::where(self::getAll(), function ($value, $key) use ($profileId) {
+        $isExist = Arr::where(self::getAll(), static function ($value, $key) use ($profileId) {
             return $profileId === $key;
         });
 

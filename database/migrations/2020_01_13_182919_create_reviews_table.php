@@ -21,7 +21,8 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('reviewer_id');
             $table->unsignedBigInteger('product_id');
-            $table->text('content');
+            $table->string('title', 255);
+            $table->longText('content')->nullable();
             $table->tinyInteger('rate')->default(5);
             $table->timestamps();
         });
