@@ -18,6 +18,14 @@ class Attribute extends \Rinvex\Attributes\Models\Attribute
     use Actionable;
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * @return int
      */
     public function getCreatedById(): int

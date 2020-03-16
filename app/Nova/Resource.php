@@ -17,7 +17,7 @@ use Laravel\Nova\Resource as NovaResource;
  */
 abstract class Resource extends NovaResource
 {
-    protected static $defaultSortField = 'sort_order';
+    public static $defaultSortField = 'sort_order';
 
     /**
      * Build an "index" query for the given resource.
