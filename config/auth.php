@@ -1,5 +1,7 @@
 <?php
 
+use Henry\Domain\User\User;
+
 return [
 
     /*
@@ -68,7 +70,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => \Henry\Domain\User\User::class,
+            'model' => User::class,
         ],
 
         // 'users' => [

@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class CategoryPolicy
 {
     use HandlesAuthorization;
+    use VoyagerCategoryPolicyTrait;
 
     /**
      * Determine whether the user can view any categories.
@@ -35,9 +36,9 @@ class CategoryPolicy
      */
     public function view(User $user, Category $category)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $category->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $category->created_by);
     }
 
     /**
@@ -60,9 +61,9 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $category->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $category->created_by);
     }
 
     /**
@@ -74,7 +75,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -86,7 +87,7 @@ class CategoryPolicy
      */
     public function restore(User $user, Category $category)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -98,6 +99,6 @@ class CategoryPolicy
      */
     public function forceDelete(User $user, Category $category)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 }

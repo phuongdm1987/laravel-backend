@@ -21,7 +21,6 @@ use Laravel\Nova\Actions\Actionable;
  */
 class Review extends Model
 {
-    use Actionable;
 
     protected $with = ['reviewer', 'product'];
     protected $fillable = ['reviewer_id', 'product_id', 'title', 'content', 'rate'];

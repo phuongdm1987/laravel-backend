@@ -13,6 +13,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class UserPolicy
 {
     use HandlesAuthorization;
+    use VoyagerUserPolicyTrait;
 
     /**
      * Determine whether the user can view any models.
@@ -22,7 +23,7 @@ class UserPolicy
      */
     public function viewAny(User $contextUser)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -34,7 +35,7 @@ class UserPolicy
      */
     public function view(User $contextUser, User $user)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -45,7 +46,7 @@ class UserPolicy
      */
     public function create(User $contextUser)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -57,7 +58,7 @@ class UserPolicy
      */
     public function update(User $contextUser, User $user)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -69,7 +70,7 @@ class UserPolicy
      */
     public function delete(User $contextUser, User $user)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -81,7 +82,7 @@ class UserPolicy
      */
     public function restore(User $contextUser, User $user)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -93,6 +94,6 @@ class UserPolicy
      */
     public function forceDelete(User $contextUser, User $user)
     {
-        return $contextUser->getProfile()->isSuperAdmin();
+        return $contextUser->hasRole(User::ROLE_SUPER_ADMIN);
     }
 }

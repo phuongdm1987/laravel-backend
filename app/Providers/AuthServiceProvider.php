@@ -3,18 +3,15 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Policies\AttributeEntityPolicy;
 use App\Policies\AttributePolicy;
 use App\Policies\CategoryPolicy;
 use App\Policies\ProductPolicy;
 use App\Policies\UserPolicy;
 use Henry\Domain\Attribute\Attribute;
-use Henry\Domain\AttributeEntity\AttributeEntity;
 use Henry\Domain\Category\Category;
 use Henry\Domain\Product\Product;
 use Henry\Domain\User\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Laravel\Passport\Passport;
 
 /**
  * Class AuthServiceProvider
@@ -32,7 +29,6 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Category::class => CategoryPolicy::class,
         Attribute::class => AttributePolicy::class,
-        AttributeEntity::class => AttributeEntityPolicy::class,
     ];
 
     /**
@@ -43,9 +39,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Passport::routes();
-        Passport::tokensExpireIn(now()->addDays(15));
-        Passport::refreshTokensExpireIn(now()->addDays(30));
-        Passport::personalAccessTokensExpireIn(now()->addMonths(6));
     }
 }

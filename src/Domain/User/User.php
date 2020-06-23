@@ -4,27 +4,26 @@ declare(strict_types=1);
 namespace Henry\Domain\User;
 
 use Carbon\Carbon;
-use Henry\Domain\User\ValueObjects\ProfileId;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Nova\Actions\Actionable;
-use Laravel\Passport\HasApiTokens;
 
 /**
  * Class User
  * @property int id
- * @property int profile_id
  * @property string name
  * @property string email
  * @property Carbon email_verified_at
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property int created_by
  * @package Henry\Domain\User
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
-    use HasApiTokens, Notifiable, Actionable;
+    use Notifiable;
+
+    public const ROLE_SUPER_ADMIN = 'super-admin';
+    public const ROLE_ADMIN = 'admin';
 
     protected $dates = ['email_verified_at'];
 
@@ -71,14 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    /**
-     * @return ProfileId
-     */
-    public function getProfile(): ProfileId
-    {
-        return new ProfileId($this->profile_id);
     }
 
     /**

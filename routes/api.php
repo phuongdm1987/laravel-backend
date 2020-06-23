@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('Api')->middleware('guest')->group(function() {
+Route::namespace('Api')->middleware(['guest', 'throttle:60,1'])->group(function() {
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@register');
     Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
@@ -26,7 +26,7 @@ Route::namespace('Api')->middleware('guest')->group(function() {
     Route::resource('/products', 'ProductController')->only(['index', 'show']);
 });
 
-Route::middleware('auth:api')->namespace('Api')->group(function() {
+Route::middleware(['auth:api', 'throttle:60,1'])->namespace('Api')->group(function() {
     Route::resource('/attributes', 'AttributeController')->except(['index', 'show']);
     Route::resource('/attribute-values', 'AttributeValueController')->except(['index', 'show']);
     Route::resource('/categories', 'CategoryController')->except(['index', 'show']);

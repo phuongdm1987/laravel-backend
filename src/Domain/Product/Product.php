@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Henry\Domain\Product;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\Category\Category;
 use Henry\Domain\CustomizeSlugEngine;
 use Henry\Domain\User\User;
@@ -11,14 +11,6 @@ use Henry\Domain\User\ValueObjects\Currency;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Laravel\Nova\Actions\Actionable;
-use Laravel\Scout\Searchable;
-use Rinvex\Attributes\Traits\Attributable;
-use Rinvex\Support\Traits\HasTranslations;
-use Spatie\Image\Exceptions\InvalidManipulation;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 
 /**
  * Class Product
@@ -29,12 +21,9 @@ use Spatie\MediaLibrary\Models\Media;
  * @property string description
  * @package Henry\Domain\Product
  */
-class Product extends Model implements HasMedia
+class Product extends Model
 {
-    use Sluggable, CustomizeSlugEngine, Searchable, HasMediaTrait, Actionable;
-    use Attributable, HasTranslations {
-        Attributable::setAttribute insteadof HasTranslations;
-    }
+    use CustomizeSlugEngine;
 
     protected $with = ['category'];
 
@@ -99,18 +88,6 @@ class Product extends Model implements HasMedia
     }
 
     /**
-     * Get the indexable data array for the model.
-     * @return array
-     */
-    public function toSearchableArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-        ];
-    }
-
-    /**
      * @return int
      */
     public function getId(): int
@@ -129,9 +106,25 @@ class Product extends Model implements HasMedia
     /**
      * @return BelongsTo
      */
+    public function createdBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    /**
+     * @return BelongsTo
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function attributeValues(): BelongsToMany
+    {
+        return $this->belongsToMany(AttributeValue::class);
     }
 
     /**
@@ -141,24 +134,5 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsToMany(User::class, 'product_users')
             ->withPivot(['amount'])->withTimestamps()->orderBy('pivot_updated_at')->orderBy('pivot_amount');
-    }
-
-    /**
-     * @param Media|null $media
-     * @throws InvalidManipulation
-     */
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('thumb')
-            ->width(130)
-            ->height(130);
-        $this->addMediaConversion('medium-size')
-            ->width(390)
-            ->height(390);
-    }
-
-    public function registerMediaCollections()
-    {
-        $this->addMediaCollection('images');
     }
 }

@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class ProductPolicy
 {
     use HandlesAuthorization;
+    use VoyagerProductPolicyTrait;
 
     /**
      * Determine whether the user can view any products.
@@ -35,9 +36,9 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $product->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $product->created_by);
     }
 
     /**
@@ -60,9 +61,9 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $product->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $product->created_by);
     }
 
     /**
@@ -74,7 +75,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -86,7 +87,7 @@ class ProductPolicy
      */
     public function restore(User $user, Product $product)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -98,6 +99,6 @@ class ProductPolicy
      */
     public function forceDelete(User $user, Product $product)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 }

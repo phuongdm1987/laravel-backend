@@ -14,6 +14,7 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class AttributePolicy
 {
     use HandlesAuthorization;
+    use VoyagerAttributePolicyTrait;
 
     /**
      * Determine whether the user can view any attributes.
@@ -35,9 +36,9 @@ class AttributePolicy
      */
     public function view(User $user, Attribute $attribute)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $attribute->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $attribute->created_by);
     }
 
     /**
@@ -60,9 +61,9 @@ class AttributePolicy
      */
     public function update(User $user, Attribute $attribute)
     {
-        return $user->getProfile()->isSuperAdmin()
-            || ($user->getProfile()->isAdmin()
-                && $user->getId() === $attribute->getCreatedById());
+        return $user->hasRole(User::ROLE_SUPER_ADMIN)
+            || ($user->hasRole(User::ROLE_ADMIN)
+                && $user->getId() === $attribute->created_by);
     }
 
     /**
@@ -74,7 +75,7 @@ class AttributePolicy
      */
     public function delete(User $user, Attribute $attribute)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -86,7 +87,7 @@ class AttributePolicy
      */
     public function restore(User $user, Attribute $attribute)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 
     /**
@@ -98,6 +99,6 @@ class AttributePolicy
      */
     public function forceDelete(User $user, Attribute $attribute)
     {
-        return $user->getProfile()->isSuperAdmin();
+        return $user->hasRole(User::ROLE_SUPER_ADMIN);
     }
 }

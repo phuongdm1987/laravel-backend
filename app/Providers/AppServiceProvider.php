@@ -3,16 +3,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Observers\AttributeEntityObserver;
-use App\Observers\AttributeObserver;
-use App\Observers\CategoryObserver;
 use App\Observers\ProductObserver;
 use App\Observers\UserObserver;
 use Henry\Domain\Attribute\Filters\AttributeFilterInterface;
 use Henry\Domain\Attribute\Repositories\AttributeRepositoryInterface;
 use Henry\Domain\Attribute\Sorters\AttributeSorterInterface;
-use Henry\Domain\AttributeEntity\AttributeEntity;
-use Henry\Domain\Category\Category;
 use Henry\Domain\Category\Filters\CategoryFilterInterface;
 use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Category\Sorters\CategorySorterInterface;
@@ -46,11 +41,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
-use Rinvex\Attributes\Models\Attribute;
-use Rinvex\Attributes\Models\Type\Boolean;
-use Rinvex\Attributes\Models\Type\Integer;
-use Rinvex\Attributes\Models\Type\Text;
-use Rinvex\Attributes\Models\Type\Varchar;
 
 /**
  * Class AppServiceProvider
@@ -93,19 +83,7 @@ class AppServiceProvider extends ServiceProvider
             return "<?=number_format($amount, 0, ',', '.')?>";
         });
 
-        Attribute::typeMap([
-            'varchar' => Varchar::class,
-            'boolean' => Boolean::class,
-            'text' => Text::class,
-            'integer' => Integer::class,
-        ]);
-
-        app('rinvex.attributes.entities')->push(Product::class);
-
         Product::observe(ProductObserver::class);
-        Category::observe(CategoryObserver::class);
-        \Henry\Domain\Attribute\Attribute::observe(AttributeObserver::class);
-        AttributeEntity::observe(AttributeEntityObserver::class);
         User::observe(UserObserver::class);
     }
 

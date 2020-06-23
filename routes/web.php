@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,14 +14,13 @@ declare(strict_types=1);
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
 });
 
-Auth::routes(['verify' => true]);
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::middleware(['auth', 'verified'])->group(function() {
+Route::middleware(['auth', 'verified'])->group(static function() {
     Route::get('/home', 'HomeController@index')
         ->name('home');
 
@@ -32,3 +33,12 @@ Route::middleware(['auth', 'verified'])->group(function() {
 
 Route::get('/set-language/{locale}', 'LanguageController@update')
     ->name('setLanguage');
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+Route::group(['prefix' => 'admin'], static function () {
+    Voyager::routes();
+});

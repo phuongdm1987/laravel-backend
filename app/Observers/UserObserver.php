@@ -22,6 +22,8 @@ class UserObserver
     {
         // created user by super admin
         if (auth()->id() > 0) {
+            $user->created_by = auth()->id();
+            $user->save();
             event(new Registered($user));
         }
     }

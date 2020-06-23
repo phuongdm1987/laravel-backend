@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use Henry\Domain\User\ValueObjects\ProfileId;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,16 +18,13 @@ class CreateUsersTable extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('profile_id')
-                ->default(ProfileId::PROFILE_NORMAL)
-                ->index();
+            $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedBigInteger('created_by')->index()->default(0);
+            $table->unsignedBigInteger('created_by')->nullable()->index()->default(0);
             $table->timestamps();
         });
     }
