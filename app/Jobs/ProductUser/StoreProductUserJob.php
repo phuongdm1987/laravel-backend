@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Jobs\ProductUser;
 
-use App\Http\Requests\StoreProductUserRequest;
+use App\Http\Requests\Product\StoreProductUserRequest;
 use Henry\Domain\AttributeValue\AttributeValue;
 use Henry\Domain\AttributeValue\Repositories\AttributeValueRepositoryInterface;
 use Henry\Domain\ProductUser\ProductUser;
@@ -56,7 +56,7 @@ class StoreProductUserJob implements ShouldQueue
     }
 
     /**
-     * @param StoreProductUserRequest $request
+     * @param \App\Http\Requests\Product\StoreProductUserRequest $request
      * @return self
      */
     public static function fromRequest(StoreProductUserRequest $request): self

@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace App\Jobs\Product;
 
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 
 /**

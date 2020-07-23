@@ -90,21 +90,9 @@
                                 </div>
                             @endforeach
 
-                            <fieldset class="col-md-12">
-                                <legend>Attributes</legend>
-                                @foreach($attributes as $attribute)
-                                    <div class="form-group @if($row->type == 'hidden') hidden @endif col-md-{{ $display_options->width ?? 12 }} {{ $errors->has($row->field) ? 'has-error' : '' }}" @if(isset($display_options->id)){{ "id=$display_options->id" }}@endif>
-                                        <label class="control-label" for="name">{{ $attribute->getName() }} ({{ $attribute->getSuffix() }})</label>
-                                        <select class="form-control select2" name="attribute_value[]" multiple>
-                                            @foreach($attribute->attributeValues as $attributeValue)
-                                                <option value="{{ $attributeValue->getId() }}" {!! in_array($attributeValue->getId(), old('attribute_value', $attributeValues)) ? 'selected' : '' !!}>
-                                                    {{ $attributeValue->value }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                @endforeach
-                            </fieldset>
+                            <div id="attribute-wapper">
+                                @include('vendor.voyager.products.attributes')
+                            </div>
 
                         </div><!-- panel-body -->
 
@@ -225,6 +213,21 @@
                 $('#confirm_delete_modal').modal('hide');
             });
             $('[data-toggle="tooltip"]').tooltip();
+
+            $('select[name="category_id"]').change(function() {
+                var categoryId = $(this).val() || 0;
+                var params = {
+                    categoryId: categoryId,
+                    productId: {{ $product->getId() }},
+                    _token: '{{ csrf_token() }}'
+                };
+
+                $.post('{{ route('products.attributes.categories') }}', params, function (response) {
+                    $('#attribute-wapper').html(response);
+                }).then(function(newResponse) {
+                    $('.select2[name="attribute_value[]"]').select2();
+                });
+            })
         });
     </script>
 @stop

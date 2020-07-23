@@ -29,6 +29,11 @@ Route::middleware(['auth', 'verified'])->group(static function() {
 
     Route::resource('product-users', 'ProductUserController');
     Route::resource('products', 'ProductController');
+
+    Route::namespace('Admin')->group(function() {
+        Route::post('/products/attributes/categories', 'ProductController@getAttributesByCategoryId')
+            ->name('products.attributes.categories');
+    });
 });
 
 Route::get('/set-language/{locale}', 'LanguageController@update')

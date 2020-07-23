@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\GetAttributesRequest;
 use App\Jobs\Product\SyncAttributeValues;
+use Henry\Domain\Category\Repositories\CategoryRepositoryInterface;
 use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use TCG\Voyager\Events\BreadDataUpdated;
 use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
@@ -23,20 +26,29 @@ class ProductController extends VoyagerBaseController
      * @var ProductRepositoryInterface
      */
     private $productRepository;
+    /**
+     * @var CategoryRepositoryInterface
+     */
+    private $categoryRepository;
 
     /**
      * ProductController constructor.
      * @param ProductRepositoryInterface $productRepository
+     * @param CategoryRepositoryInterface $categoryRepository
      */
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(
+        ProductRepositoryInterface $productRepository,
+        CategoryRepositoryInterface $categoryRepository
+    )
     {
         $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function edit(Request $request, $id)
@@ -95,7 +107,8 @@ class ProductController extends VoyagerBaseController
                 'dataTypeContent',
                 'isModelTranslatable',
                 'attributes',
-                'attributeValues'
+                'attributeValues',
+                'product'
             )
         );
     }
@@ -141,5 +154,27 @@ class ProductController extends VoyagerBaseController
             'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
         ]);
+    }
+
+    /**
+     * @param GetAttributesRequest $request
+     * @return View
+     */
+    public function getAttributesByCategoryId(GetAttributesRequest $request)
+    {
+        $category = $this->categoryRepository->findById($request->categoryId());
+        /** @var Product $product */
+        $product = $this->productRepository->findById($request->productId());
+
+        $attributes = $category->attributes;
+        $attributeValues = $product->attributeValues->pluck('id')->toArray();
+
+        return view(
+            'vendor.voyager.products.attributes',
+            compact(
+                'attributes',
+                'attributeValues'
+            )
+        );
     }
 }

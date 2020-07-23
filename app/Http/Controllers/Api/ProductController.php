@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
 use App\Jobs\Product\DeleteProductJob;
 use App\Jobs\Product\GetNormalProductsJob;
 use App\Jobs\Product\StoreProductJob;
@@ -50,7 +50,7 @@ class ProductController extends ApiController
     }
 
     /**
-     * @param UpdateProductRequest $request
+     * @param \App\Http\Requests\Product\UpdateProductRequest $request
      * @return JsonResponse
      */
     public function store(UpdateProductRequest $request): JsonResponse
@@ -62,7 +62,7 @@ class ProductController extends ApiController
     }
 
     /**
-     * @param UpdateProductRequest $request
+     * @param \App\Http\Requests\Product\UpdateProductRequest $request
      * @param Product $product
      * @return JsonResponse
      */

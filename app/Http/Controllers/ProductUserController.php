@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductUserRequest;
+use App\Http\Requests\Product\StoreProductUserRequest;
 use App\Jobs\ProductUser\StoreProductUserJob;
 use Henry\Domain\Product\Product;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +38,7 @@ class ProductUserController extends Controller
     }
 
     /**
-     * @param StoreProductUserRequest $request
+     * @param \App\Http\Requests\Product\StoreProductUserRequest $request
      * @return RedirectResponse
      */
     public function store(StoreProductUserRequest $request): RedirectResponse
