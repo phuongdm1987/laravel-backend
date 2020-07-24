@@ -6,7 +6,7 @@
             <select class="form-control select2" name="attribute_value[]" multiple>
                 @foreach($attribute->attributeValues as $attributeValue)
                     <option value="{{ $attributeValue->getId() }}" {!! in_array($attributeValue->getId(), old('attribute_value', $attributeValues)) ? 'selected' : '' !!}>
-                        {{ $attributeValue->value }}
+                        {{ $attributeValue->getValue() }}
                     </option>
                 @endforeach
             </select>
