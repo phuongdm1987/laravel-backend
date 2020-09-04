@@ -20,30 +20,27 @@
 
 @section('content')
     <section class="section">
-        <div class="container is-fluid">
-            <div class="columns">
-                <div class="column is-one-quarter is-hidden-touch">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3">
                     @include('commons.side-bar')
                 </div>
-                <div class="column">
-                    <div class="columns is-multiline">
+                <div class="col-sm-9">
+                    <div class="row row-cols-3">
                         @foreach($products as $product)
-                            <div class="column is-one-third">
-                                <div class="card card-equal-height">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
-                                            <img src="https://maychuhanoi.vn/uploads/2018/11/29/270x230_maychuhanoi-image-1543461000.jpg" alt="Placeholder image">
-                                        </figure>
+                            <div class="col mb-4">
+                                <div class="card-desk h-100">
+                                    <div class="card-header">
+                                        <h5><a href="{{route('products.show', $product->getSlug())}}">{{$product->getName()}}</a></h5>
                                     </div>
-                                    <div class="card-content">
-                                        <div class="content">
-                                            <p class="subtitle is-6">{{$product->getName()}}</p>
-                                        </div>
+                                    <img class="card-img-top" src="https://maychuhanoi.vn/uploads/2018/11/29/270x230_maychuhanoi-image-1543461000.jpg" alt="Placeholder image">
+                                    <div class="card-body">
+                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                                     </div>
-                                    <footer class="card-footer">
-                                        <span class="card-footer-item has-text-info">{{$product->getAmount()->format()}}</span>
-                                        <a href="{{route('products.show', $product->getSlug())}}" class="card-footer-item has-background-info has-text-white">Detail</a>
-                                    </footer>
+                                    <div class="card-footer clearfix">
+                                        <span class="card-link float-left">{{$product->getAmount()->format()}}</span>
+                                        <a href="{{route('products.show', $product->getSlug())}}" class="card-link float-right">Detail</a>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach

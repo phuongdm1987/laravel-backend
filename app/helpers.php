@@ -63,14 +63,15 @@ if (!function_exists('generateCategoriesMultiLevel')) {
                 $isActive = true;
             }
 
-            $classActive = $isActive ? ' class="is-active"' : '';
+            $class = 'list-group-item d-flex justify-content-between align-items-center';
+            $class .= $isActive ? ' is-active' : '';
             $url = route('category.index', $category->getSlug());
 
             /** @var Category $category */
             if ($category->isLeaf()) {
-                $html[] = '<li><a' . $classActive . ' href="' . $url . '">' . $category->getName() . '</a></li>';
+                $html[] = '<li class="' . $class . '"><a href="' . $url . '">' . $category->getName() . '</a></li>';
             } else {
-                $html[] = '<li><a' . $classActive . ' href="' . $url . '">' . $category->getName() . '</a>';
+                $html[] = '<li class="' . $class . '"><a href="' . $url . '">' . $category->getName() . '</a>';
                 $html[] = '<ul>';
                 $html[] = generateCategoriesMultiLevel($category->children);
                 $html[] = '</ul>';

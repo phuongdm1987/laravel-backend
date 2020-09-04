@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use Henry\Domain\Voyager\VoyagerCreator;
 use Henry\Domain\Voyager\VoyagerEditor;
 use Henry\Domain\Voyager\VoyagerReader;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -95,18 +96,70 @@ abstract class AbstractVoyagerController extends VoyagerBaseController
         return $voyagerReader;
     }
 
+    protected function getCreateInfo(Request $request)
+    {
+        [$slug, $dataType, $dataTypeContent, $isSoftDeleted] = $this->getCommonInfo($request);
+
+        // Check permission
+        $this->authorize('add', app($dataType->model_name));
+
+        foreach ($dataType->addRows as $key => $row) {
+            $dataType->addRows[$key]['col_width'] = $row->details->width ?? 100;
+        }
+
+        // If a column has a relationship associated with it, we do not want to show that field
+        $this->removeRelationshipField($dataType, 'add');
+
+        // Check if BREAD is Translatable
+        $isModelTranslatable = is_bread_translatable($dataTypeContent);
+
+        // Eagerload Relations
+        $this->eagerLoadRelations($dataTypeContent, $dataType, 'add', $isModelTranslatable);
+
+        $view = 'voyager::bread.edit-add';
+
+        if (view()->exists("voyager::$slug.edit-add")) {
+            $view = "voyager::$slug.edit-add";
+        }
+
+        $voyagerCreator = new VoyagerCreator($view);
+        $voyagerCreator->setDataType($dataType);
+        $voyagerCreator->setDataTypeContent($dataTypeContent);
+        $voyagerCreator->setIsModelTranslatable($isModelTranslatable);
+
+        return $voyagerCreator;
+    }
+
     /**
      * @param Request $request
      * @param $id
      * @return array
      */
-    private function getCommonInfo(Request $request, $id): array
+    private function getCommonInfo(Request $request, $id = null): array
     {
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
         $isSoftDeleted = false;
+
+        $dataTypeContent = $this->getDataTypeContent($dataType, $id);
+
+        return [$slug, $dataType, $dataTypeContent, $isSoftDeleted];
+    }
+
+    /**
+     * @param $dataType
+     * @param $id
+     * @return bool|mixed
+     */
+    private function getDataTypeContent($dataType, $id)
+    {
+        if ($id === null) {
+            return (strlen($dataType->model_name) != 0)
+                ? new $dataType->model_name()
+                : false;
+        }
 
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
@@ -127,6 +180,6 @@ abstract class AbstractVoyagerController extends VoyagerBaseController
             $dataTypeContent = DB::table($dataType->name)->where('id', $id)->first();
         }
 
-        return [$slug, $dataType, $dataTypeContent, $isSoftDeleted];
+        return $dataTypeContent;
     }
 }

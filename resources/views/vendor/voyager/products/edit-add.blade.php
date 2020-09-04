@@ -14,7 +14,7 @@
                 var categoryId = $(this).val() || 0;
                 var params = {
                     categoryId: categoryId,
-                    productId: {{ $product->getId() }},
+                    productId: {{ $product ? $product->getId() : 0 }},
                     _token: '{{ csrf_token() }}'
                 };
 

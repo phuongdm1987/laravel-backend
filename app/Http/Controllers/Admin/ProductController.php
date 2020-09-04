@@ -77,7 +77,6 @@ class ProductController extends AbstractVoyagerController
         );
     }
 
-
     /**
      * @param Request $request
      * @param $id
@@ -154,20 +153,46 @@ class ProductController extends AbstractVoyagerController
     }
 
     /**
+     * @param Request $request
+     * @return View
+     * @throws AuthorizationException
+     */
+    public function create(Request $request): View
+    {
+        $voyagerCreator = $this->getCreateInfo($request);
+
+        return Voyager::view(
+            $voyagerCreator->getView(),
+            [
+                'dataType' => $voyagerCreator->getDataType(),
+                'dataTypeContent' => $voyagerCreator->getDataTypeContent(),
+                'isModelTranslatable' => $voyagerCreator->isModelTranslatable(),
+                'attributes' => [],
+                'attributeValues' => [],
+                'product' => null,
+            ]
+        );
+    }
+
+    /**
      * @param GetAttributesRequest $request
      * @return View
      */
     public function getAttributesByCategoryId(GetAttributesRequest $request)
     {
         $category = $this->categoryRepository->findById($request->categoryId());
-        /** @var Product $product */
-        $product = $this->productRepository->findById($request->productId());
-
         $attributes = $category->attributes;
-        $attributeValues = $product->attributeValues->pluck('id')->toArray();
+
+        if ($request->productId() <= 0) {
+            $attributeValues = [];
+        } else {
+            /** @var Product $product */
+            $product = $this->productRepository->findById($request->productId());
+            $attributeValues = $product->attributeValues->pluck('id')->toArray();
+        }
 
         return view(
-            'vendor.voyager.products.attributes',
+            'vendor.voyager.products.attributes-edit',
             compact(
                 'attributes',
                 'attributeValues'

@@ -30,7 +30,7 @@ class GetAttributesRequest extends FormRequest
     {
         $rules = [
             'categoryId' => 'required|integer|exists:categories,id',
-            'productId' => 'required|integer|exists:products,id',
+            'productId' => 'nullable|integer',
         ];
 
         return $rules;
@@ -49,6 +49,6 @@ class GetAttributesRequest extends FormRequest
      */
     public function productId(): int
     {
-        return (int)$this->get('productId',0);
+        return (int)$this->get('productId');
     }
 }

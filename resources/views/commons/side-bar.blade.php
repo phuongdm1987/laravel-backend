@@ -1,5 +1,5 @@
 <aside class="menu">
-    <ul class="menu-list">
+    <ul class="list-group">
         {!! generateCategoriesMultiLevel($categories) !!}
     </ul>
 
