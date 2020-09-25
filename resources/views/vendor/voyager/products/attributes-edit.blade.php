@@ -1,4 +1,4 @@
-<fieldset class="col-md-12">
+    <fieldset class="col-md-12">
     <legend>Attributes</legend>
     @foreach($attributes as $attribute)
         <div class="form-group col-md-12">

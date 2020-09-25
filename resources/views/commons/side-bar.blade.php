@@ -1,9 +1,9 @@
 <aside class="menu">
-    <ul class="list-group">
-        {!! generateCategoriesMultiLevel($categories) !!}
-    </ul>
-
-        @if(isset($category))
-            @include('commons.attributes')
-        @endif
+    @if(isset($category))
+        @include('commons.attributes')
+    @else
+        <div class="list-group">
+            {!! generateCategoriesMultiLevel($categories) !!}
+        </div>
+    @endif
 </aside>

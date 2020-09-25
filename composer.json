@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "cviebrock/eloquent-sluggable": "^7.0",
+        "davejamesmiller/laravel-breadcrumbs": "^5.3",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^2.0",
         "kalnoy/nestedset": "^5.0",

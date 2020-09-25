@@ -64,18 +64,17 @@ if (!function_exists('generateCategoriesMultiLevel')) {
             }
 
             $class = 'list-group-item d-flex justify-content-between align-items-center';
-            $class .= $isActive ? ' is-active' : '';
+            $class .= $isActive ? ' active' : '';
             $url = route('category.index', $category->getSlug());
 
             /** @var Category $category */
             if ($category->isLeaf()) {
-                $html[] = '<li class="' . $class . '"><a href="' . $url . '">' . $category->getName() . '</a></li>';
+                $html[] = '<a class="' . $class . '" href="' . $url . '">' . $category->getName() . '</a>';
             } else {
-                $html[] = '<li class="' . $class . '"><a href="' . $url . '">' . $category->getName() . '</a>';
-                $html[] = '<ul>';
+                $html[] = '<a class="' . $class . '" href="' . $url . '">' . $category->getName() . '</a>';
+                $html[] = '<div>';
                 $html[] = generateCategoriesMultiLevel($category->children);
-                $html[] = '</ul>';
-                $html[] = '</li>';
+                $html[] = '</div>';
             }
         }
 

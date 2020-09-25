@@ -10,8 +10,10 @@ use Henry\Domain\Product\Product;
 use Henry\Domain\Product\Repositories\ProductRepositoryInterface;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataUpdated;
 use TCG\Voyager\Facades\Voyager;
 
@@ -150,6 +152,47 @@ class ProductController extends AbstractVoyagerController
             'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
         ]);
+    }
+
+    /**
+     * POST BRE(A)D - Store data.
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function store(Request $request)
+    {
+        $slug = $this->getSlug($request);
+
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+
+        // Check permission
+        $this->authorize('add', app($dataType->model_name));
+
+        // Validate fields with ajax
+        $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
+        $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
+
+        $this->dispatchNow(new SyncAttributeValues($request->get('attribute_value', []), (int)$data->getId()));
+
+        event(new BreadDataAdded($dataType, $data));
+
+        if (!$request->has('_tagging')) {
+            if (auth()->user()->can('browse', $data)) {
+                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+            } else {
+                $redirect = redirect()->back();
+            }
+
+            return $redirect->with([
+                'message'    => __('voyager::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+                'alert-type' => 'success',
+            ]);
+        } else {
+            return response()->json(['success' => true, 'data' => $data]);
+        }
     }
 
     /**

@@ -52,7 +52,12 @@ class ProductController extends Controller
     public function show(Product $product): View
     {
         $productUsers = $product->users()->take(20)->get();
-        return view('product.show', compact('product', 'productUsers'));
+        $attributes = $product->category->attributes;
+        $attributeValues = $product->attributeValues->pluck('id')->toArray();
+        return view(
+            'product.show',
+            compact('product', 'productUsers', 'attributes', 'attributeValues')
+        );
     }
 
     /**

@@ -15,16 +15,20 @@
                     </div>
                 </div>
                 <div class="column">
-                    @foreach($product->getEntityAttributes() as $attribute)
+                    @foreach($attributes as $attribute)
                         <div class="field is-horizontal">
                             <div class="field-label">
                                 <label class="label">{{$attribute->getName()}}</label>
                             </div>
-                            <div class="field-body">
-                                <div class="field">
-                                    <div class="control">{{$product->getEntityAttribute($attribute->slug)}}</div>
+                            @foreach($attribute->attributeValues as $attributeValue)
+                                @if(in_array($attributeValue->getId(), $attributeValues, true))
+                                <div class="field-body">
+                                    <div class="field">
+                                        <div class="control">{{$attributeValue->getValue()}}</div>
+                                    </div>
                                 </div>
-                            </div>
+                                @endif
+                            @endforeach
                         </div>
                     @endforeach
                 </div>
