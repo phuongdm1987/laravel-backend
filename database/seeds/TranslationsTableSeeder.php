@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Category;
@@ -7,6 +10,10 @@ use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Page;
 use TCG\Voyager\Models\Translation;
 
+/**
+ * Class TranslationsTableSeeder
+ * @package Database\Seeders
+ */
 class TranslationsTableSeeder extends Seeder
 {
     /**

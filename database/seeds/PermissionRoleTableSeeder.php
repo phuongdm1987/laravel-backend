@@ -1,9 +1,16 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Permission;
 use TCG\Voyager\Models\Role;
 
+/**
+ * Class PermissionRoleTableSeeder
+ * @package Database\Seeders
+ */
 class PermissionRoleTableSeeder extends Seeder
 {
     /**
@@ -11,7 +18,7 @@ class PermissionRoleTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $role = Role::where('name', 'admin')->firstOrFail();
 

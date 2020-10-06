@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\DataRow;
@@ -8,6 +11,10 @@ use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Page;
 use TCG\Voyager\Models\Permission;
 
+/**
+ * Class PagesTableSeeder
+ * @package Database\Seeders
+ */
 class PagesTableSeeder extends Seeder
 {
     /**
@@ -15,7 +22,7 @@ class PagesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         //Data Type
         $dataType = $this->dataType('slug', 'pages');

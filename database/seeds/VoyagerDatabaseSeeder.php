@@ -1,8 +1,14 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Traits\Seedable;
 
+/**
+ * Class VoyagerDatabaseSeeder
+ */
 class VoyagerDatabaseSeeder extends Seeder
 {
     use Seedable;
@@ -14,7 +20,7 @@ class VoyagerDatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->seed('DataTypesTableSeeder');
         $this->seed('DataRowsTableSeeder');

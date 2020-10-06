@@ -1,14 +1,21 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Permission;
 
+/**
+ * Class PermissionsTableSeeder
+ * @package Database\Seeders
+ */
 class PermissionsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
      */
-    public function run()
+    public function run(): void
     {
         $keys = [
             'browse_admin',

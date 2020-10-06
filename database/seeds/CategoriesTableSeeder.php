@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Category;
@@ -8,6 +11,10 @@ use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Permission;
 
+/**
+ * Class CategoriesTableSeeder
+ * @package Database\Seeders
+ */
 class CategoriesTableSeeder extends Seeder
 {
     /**
@@ -15,7 +22,7 @@ class CategoriesTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         //Data Type
         $dataType = $this->dataType('name', 'categories');

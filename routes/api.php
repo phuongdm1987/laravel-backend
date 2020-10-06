@@ -1,6 +1,14 @@
 <?php
 declare(strict_types=1);
 
+use App\Http\Controllers\Api\AttributeController;
+use App\Http\Controllers\Api\AttributeValueController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\UploadImageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,24 +22,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::namespace('Api')->middleware(['guest', 'throttle:60,1'])->group(function() {
-    Route::post('/login', 'AuthController@login');
-    Route::post('/register', 'AuthController@register');
-    Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail');
-    Route::resource('/attributes', 'AttributeController')->only(['index', 'show']);
-    Route::resource('/attribute-values', 'AttributeValueController')->only(['index', 'show']);
-    Route::get('/categories/all-tree', 'CategoryController@getAllTree');
-    Route::get('/categories/types', 'CategoryController@getTypes');
-    Route::resource('/categories', 'CategoryController')->only(['index', 'show']);
-    Route::resource('/products', 'ProductController')->only(['index', 'show']);
+Route::middleware(['guest', 'throttle:60,1'])->group(function() {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::resource('/attributes', AttributeController::class)->only(['index', 'show']);
+    Route::resource('/attribute-values', AttributeValueController::class)->only(['index', 'show']);
+    Route::get('/categories/all-tree', [CategoryController::class, 'getAllTree']);
+    Route::get('/categories/types', [CategoryController::class, 'getTypes']);
+    Route::resource('/categories', CategoryController::class)->only(['index', 'show']);
+    Route::resource('/products', ProductController::class)->only(['index', 'show']);
 });
 
-Route::middleware(['auth:api', 'throttle:60,1'])->namespace('Api')->group(function() {
-    Route::resource('/attributes', 'AttributeController')->except(['index', 'show']);
-    Route::resource('/attribute-values', 'AttributeValueController')->except(['index', 'show']);
-    Route::resource('/categories', 'CategoryController')->except(['index', 'show']);
-    Route::resource('/products', 'ProductController')->except(['index', 'show']);
-    Route::resource('/upload/images', 'UploadImageController');
-    Route::get('/logout', 'AuthController@logout');
-    Route::resource('/projects', 'ProjectController');
+Route::middleware(['auth:api', 'throttle:60,1'])->group(function() {
+    Route::resource('/attributes', AttributeController::class)->except(['index', 'show']);
+    Route::resource('/attribute-values', AttributeValueController::class)->except(['index', 'show']);
+    Route::resource('/categories', CategoryController::class)->except(['index', 'show']);
+    Route::resource('/products', ProductController::class)->except(['index', 'show']);
+    Route::resource('/upload/images', UploadImageController::class);
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::resource('/projects', ProjectController::class);
 });

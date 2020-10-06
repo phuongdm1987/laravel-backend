@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -6,6 +9,10 @@ use Illuminate\Support\Str;
 use TCG\Voyager\Models\Role;
 use TCG\Voyager\Models\User;
 
+/**
+ * Class UsersTableSeeder
+ * @package Database\Seeders
+ */
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -13,7 +20,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         if (User::count() === 0) {
             $role = Role::where('name', 'admin')->firstOrFail();

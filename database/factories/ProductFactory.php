@@ -1,13 +1,36 @@
 <?php
 declare(strict_types=1);
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\Henry\Domain\Product\Product::class, function (Faker $faker) {
-    return [
-        'name' => $faker->unique()->name,
-        'slug' => $faker->unique()->slug,
-        'description' => $faker->paragraph,
-        'amount' => $faker->randomDigit,
-    ];
-});
+use Henry\Domain\Product\Product;
+use Illuminate\Database\Eloquent\Factory;
+
+/**
+ * Class ProductFactory
+ * @package Database\Factories
+ */
+class ProductFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Product::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->unique()->name,
+            'slug' => $this->faker->unique()->slug,
+            'description' => $this->faker->paragraph,
+            'amount' => $this->faker->randomDigit,
+        ];
+    }
+}

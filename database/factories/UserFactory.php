@@ -1,31 +1,51 @@
 <?php
 declare(strict_types=1);
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
+
+use Henry\Domain\User\User;
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Str;
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+/**
+ * Class UserFactory
+ * @package Database\Factories
+ */
+class UserFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = User::class;
 
-$factory->define(\Henry\Domain\User\User::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => Str::random(10),
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->name,
+            'email' => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'remember_token' => Str::random(10),
+        ];
+    }
 
-$factory->state(\Henry\Domain\User\User::class, 'superAdmin', [
-    'name' => 'Henry',
-    'email' => 'phuongdm1987@gmail.com'
-]);
+    /**
+     * @return UserFactory
+     */
+    public function superAdmin(): UserFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'Henry',
+                'email' => 'phuongdm1987@gmail.com'
+            ];
+        });
+    }
+}

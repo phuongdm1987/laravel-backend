@@ -1,17 +1,49 @@
 <?php
 declare(strict_types=1);
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\Henry\Domain\Category\Category::class, function (Faker $faker) {
-    $types = ['category' => 'category', 'menu' => 'menu'];
-    return [
-        'name' => $faker->unique()->name,
-        'slug' => $faker->unique()->slug,
-        'type' => $faker->randomKey($types),
-    ];
-});
+use Henry\Domain\Category\Category;
+use Illuminate\Database\Eloquent\Factory;
 
-$factory->state(\Henry\Domain\Category\Category::class, 'category', [
-    'type' => 'category',
-]);
+/**
+ * Class CategoryFactory
+ * @package Database\Factories
+ */
+class CategoryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Category::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition(): array
+    {
+        $types = ['category' => 'category', 'menu' => 'menu'];
+
+        return [
+            'name' => $this->faker->unique()->name,
+            'slug' => $this->faker->unique()->slug,
+            'type' => $this->faker->randomKey($types),
+        ];
+    }
+
+    /**
+     * @return CategoryFactory
+     */
+    public function category(): CategoryFactory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'category',
+            ];
+        });
+    }
+}

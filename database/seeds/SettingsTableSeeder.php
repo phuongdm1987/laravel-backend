@@ -1,14 +1,21 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\Setting;
 
+/**
+ * Class SettingsTableSeeder
+ * @package Database\Seeders
+ */
 class SettingsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
      */
-    public function run()
+    public function run(): void
     {
         $setting = $this->findSetting('site.title');
         if (!$setting->exists) {

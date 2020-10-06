@@ -1,15 +1,22 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\DataRow;
 use TCG\Voyager\Models\DataType;
 
+/**
+ * Class DataRowsTableSeeder
+ * @package Database\Seeders
+ */
 class DataRowsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
      */
-    public function run()
+    public function run(): void
     {
         $userDataType = DataType::where('slug', 'users')->firstOrFail();
         $menuDataType = DataType::where('slug', 'menus')->firstOrFail();

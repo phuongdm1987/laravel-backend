@@ -1,11 +1,34 @@
 <?php
 declare(strict_types=1);
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\Henry\Domain\Attribute\Attribute::class, function (Faker $faker) {
-    return [
-        'name' => $faker->unique()->name,
-        'is_filter' => random_int(0, 1)
-    ];
-});
+use Exception;
+use Henry\Domain\Attribute\Attribute;
+use Illuminate\Database\Eloquent\Factory;
+
+/**
+ * Class AttributeFactory
+ * @package Database\Factories
+ */
+class AttributeFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Attribute::class;
+
+    /**
+     * @return array
+     * @throws Exception
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => $this->faker->unique()->name,
+            'is_filter' => random_int(0, 1),
+        ];
+    }
+}

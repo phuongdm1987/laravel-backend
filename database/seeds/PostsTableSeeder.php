@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\DataRow;
@@ -8,12 +11,16 @@ use TCG\Voyager\Models\MenuItem;
 use TCG\Voyager\Models\Permission;
 use TCG\Voyager\Models\Post;
 
+/**
+ * Class PostsTableSeeder
+ * @package Database\Seeders
+ */
 class PostsTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
      */
-    public function run()
+    public function run(): void
     {
         //Data Type
         $dataType = $this->dataType('slug', 'posts');

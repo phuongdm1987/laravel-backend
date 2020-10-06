@@ -1,14 +1,21 @@
 <?php
+declare(strict_types=1);
+
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use TCG\Voyager\Models\DataType;
 
+/**
+ * Class DataTypesTableSeeder
+ * @package Database\Seeders
+ */
 class DataTypesTableSeeder extends Seeder
 {
     /**
      * Auto generated seed file.
      */
-    public function run()
+    public function run(): void
     {
         $dataType = $this->dataType('slug', 'users');
         if (!$dataType->exists) {
